@@ -12,7 +12,7 @@ end
 s = ""
 
 File.delete('..\DAT_PAYERS.tlv')
-$stdout = File.open('..\DAT_PAYERS.tlv', 'w')
+tlv = File.open('..\DAT_PAYERS.tlv', 'w')
 
 s = put_tlv('DF8001','DAT_PAYERS.tlv')
 s << put_tlv('DF8340','GazpromCheAccounts')
@@ -36,6 +36,28 @@ table.each do |record|
 
   s = 'FF804B' + s.length.to_s(16).rjust(3,'0') + s
 
-  puts s
+  tlv.puts s
   s = ""
 end
+
+csv =  File.open('..\GazpromVol.csv', 'w')
+
+i = 0
+
+s = 'AccountID;ACCOUNT;NAME;ADDRESS'
+csv.puts s
+
+s = ''
+
+table.each do |record|
+  i += 1
+  s = i.to_s
+  s << ';"' + record.op_pa_cnt.encode('cp1251') + '";'
+  s << '"' + record.op_pa_fio.encode('cp1251') + '";'
+  s << '"' + record.op_pa_adr.encode('cp1251') + '"'
+
+  csv.puts s
+  s = ''
+end
+
+csv.close

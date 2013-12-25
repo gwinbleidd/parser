@@ -9,7 +9,7 @@ class TLVFileConfig
   end
 
   def tag
-    @tag = load_settings["header"]["tag"]
+    @tag = load_settings["header"]["block"]
   end
 
   def filename
