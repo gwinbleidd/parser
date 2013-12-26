@@ -1,6 +1,6 @@
 class Dictionary
 
-  def get_records(filename)
+  def get_records(filename, delimiter)
     @records = Hash.new
 
     @dictionary = File.new(filename)
@@ -9,7 +9,7 @@ class Dictionary
 
     @dictionary.each do |line|
       index += 1
-      @records[index] = line.to_s.encode('UTF-8')
+      @records[index] = split_line(line, delimiter)
     end
 
     @dictionary.close
@@ -20,10 +20,13 @@ class Dictionary
   def split_line(line, delimiter)
     @split_line = Hash.new
 
-    line_a = line.to_s.split(delimiter)
+    index = 0
 
-    line_a.each do |column|
-
+    line.to_s.split(delimiter).each do |arr|
+      index += 1
+      @split_line["column" + index.to_s] = arr
     end
+
+    @split_line
   end
 end
