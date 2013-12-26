@@ -3,16 +3,12 @@ class Dictionary
   def get_records(filename, delimiter)
     @records = Hash.new
 
-    @dictionary = File.new(filename)
-
     index = 0
 
-    @dictionary.each do |line|
+    filename.each do |line|
       index += 1
       @records[index] = split_line(line, delimiter)
     end
-
-    @dictionary.close
 
     @records
   end

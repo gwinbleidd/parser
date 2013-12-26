@@ -1,33 +1,16 @@
 require '../app/dictionary'
 
-#dictionary = File.new('../dictionaries/street.txt')
-#
-#records = Hash.new
-#
-#index = 0
-#
-#dictionary.each do |line|
-#  index += 1
-#  records[index] = Hash.new
-#
-#  index1 = 0
-#
-#  line.to_s.split(179.chr('cp866')).each do |arr|
-#    index1 += 1
-#    records[index]["column" + index1.to_s] = arr.to_s.encode('UTF-8')
-#  end
-#
-#  records.each  do |k,v|
-#    v.each do |key, value|
-#      puts "#{k}, #{key}, #{value}"
-#    end
-#  end
-#end
+dict_866 = File.open('../dictionaries/street.txt')
+dict_utf8 = Array.new
+
+dict_866.each do |record|
+  dict_utf8.push record.to_s.encode('UTF-8', 'cp866')
+end
 
 dict = Dictionary.new
 
-dict.get_records('../dictionaries/street.txt', 179.chr('cp866')).each  do |k,v|
-    v.each do |key, value|
-      puts "#{k}, #{key}, #{value.to_s.encode('UTF-8')}"
-    end
+dict.get_records(dict_utf8, 179.chr('cp866').encode('UTF-8')).each  do |k,v|
+  v.each do |key, value|
+    puts "#{k}, #{key}, #{value.to_s.encode('UTF-8')}"
   end
+end
