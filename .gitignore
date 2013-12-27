@@ -3,3 +3,4 @@ Gemfile.lock
 *.dbf
 *.tlv
 *.csv
+records.yml
