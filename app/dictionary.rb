@@ -6,6 +6,36 @@ class Dictionary
     @get_config ||= YAML.load(File.read file_path(dict_name))
   end
 
+  def to_regexp(fields, delimiter)
+    @to_regexp = '^'.to_s
+
+    fields_re = Array.new
+
+    fields.each { |field_key, field_value|
+      case field_value['type']
+        when 'string'  then fields_re[field_key.to_s.delete('column').to_i - 1] = '\w'
+        when 'number' then fields_re[field_key.to_s.delete('column').to_i - 1] = '\d'
+        else
+          1 == 1
+      end
+
+      if field_value['length'].to_s.empty?
+        fields_re[field_key.to_s.delete('column').to_i - 1] << '+'
+      else
+        fields_re[field_key.to_s.delete('column').to_i - 1] << '{' + field_value['length'].to_s + '}'
+      end
+    }
+
+    fields_re.each { |re|
+      @to_regexp << re
+      @to_regexp << '\\' + delimiter.to_s
+    }
+
+    @to_regexp[-1] = '$'
+
+    @to_regexp
+  end
+
   def get_records(dict_name)
     @get_records = Hash.new
 
