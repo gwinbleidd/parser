@@ -20,7 +20,7 @@ class Dictionary
 
         filename_utf8 = Array.new
         filename.each { |record|
-          filename_utf8.push record.to_s.encode('UTF-8', dictionary_value['encoding'].to_s)
+          filename_utf8.push record.to_s.encode('UTF-8', dictionary_value['encoding'].to_s).delete("\n")
         }
 
         index = 0
