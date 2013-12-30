@@ -6,7 +6,7 @@ class Dictionary
     @get_config ||= YAML.load(File.read file_path(dict_name))
   end
 
-  def is_record!(line, delimiter, fields)
+  def is_record(line, delimiter, fields)
     splitted_line = split_line(line, delimiter)
 
     if splitted_line.size == fields.size
@@ -40,7 +40,7 @@ class Dictionary
         filename.each { |line|
           index += 1
           line = line.to_s.encode('UTF-8', dictionary_value['encoding'].to_s).delete("\n")
-          @get_records[dictionary_key.to_s][index] = is_record!(line, delimiter.encode('UTF-8'), dictionary_value['fields'])
+          @get_records[dictionary_key.to_s][index] = is_record(line, delimiter.encode('UTF-8'), dictionary_value['fields'])
         }
       end
     end
