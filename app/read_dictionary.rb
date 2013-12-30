@@ -3,17 +3,17 @@ require 'yaml'
 
 dict = Dictionary.new
 
-puts dict.get_config('fryazinovo')['dictionaries']['abonent']
+#puts dict.get_config('fryazinovo')['dictionaries']['abonent']
 
-#dict.get_records('fryazinovo').each  do |k,v|
-#  v.each do |key, value|
-#    puts "#{k}, #{key}, #{value.to_s.encode('UTF-8')}"
-#  end
-#end
+dict.get_records('fryazinovo')['street'].each  do |k,v|
+  v.each do |key, value|
+    puts "#{k}, #{key}, #{value}"
+  end
+end
+
+#puts dict.get_records('fryazinovo')['city'][1]
 
 #yml = File.new('../records.yml', 'w+')
 #
 #yml.puts dict.get_records('fryazinovo').to_yaml
 
-
-puts dict.to_regexp(dict.get_config('fryazinovo')['dictionaries']['abonent']['fields'], dict.get_config('fryazinovo')['dictionaries']['abonent']['delimiter'].chr(dict.get_config('fryazinovo')['dictionaries']['abonent']['encoding']).encode('UTF-8'))
