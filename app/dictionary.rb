@@ -13,8 +13,10 @@ class Dictionary
 
     fields.each { |field_key, field_value|
       case field_value['type']
-        when 'string'  then fields_re[field_key.to_s.delete('column').to_i - 1] = '\w'
-        when 'number' then fields_re[field_key.to_s.delete('column').to_i - 1] = '\d'
+        when 'string' then
+          fields_re[field_key.to_s.delete('column').to_i - 1] = '\w'
+        when 'number' then
+          fields_re[field_key.to_s.delete('column').to_i - 1] = '\d'
         else
           1 == 1
       end
@@ -31,9 +33,7 @@ class Dictionary
       @to_regexp << '\\' + delimiter.to_s
     }
 
-    @to_regexp[-1] = '$'
-
-    @to_regexp
+    @to_regexp = @to_regexp.chop.chop + '$'
   end
 
   def get_records(dict_name)
@@ -79,7 +79,7 @@ class Dictionary
   end
 
   private
-    def file_path(dict_name)
-      "../conf/#{dict_name}/config.yml"
-    end
+  def file_path(dict_name)
+    "../conf/#{dict_name}/config.yml"
+  end
 end
