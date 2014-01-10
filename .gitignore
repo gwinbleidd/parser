@@ -14,3 +14,10 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+
+.idea
+Gemfile.lock
+*.dbf
+*.tlv
+*.csv
+records.yml

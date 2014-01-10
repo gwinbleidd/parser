@@ -2,16 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f706045f-a2d8-444c-b070-14f8edabc222" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Rakefile" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/config/database.yml" />
+      <change type="DELETED" beforePath="D:\git\parser\README.rdoc" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile" afterPath="$PROJECT_DIR$/Gemfile" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/dictionary.rb" afterPath="$PROJECT_DIR$/app/dictionary.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/directories.rb" afterPath="$PROJECT_DIR$/app/directories.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/tlvfileconfig.rb" afterPath="$PROJECT_DIR$/app/tlvfileconfig.rb" />
-      <change type="MOVED" beforePath="D:\git\parser\conf\directories.yml" afterPath="$PROJECT_DIR$/config/directories.yml" />
-      <change type="MOVED" beforePath="D:\git\parser\conf\file\tlv_file.yml" afterPath="$PROJECT_DIR$/config/file/tlv_file.yml" />
-      <change type="MOVED" beforePath="D:\git\parser\conf\fryazinovo\config.yml" afterPath="$PROJECT_DIR$/config/fryazinovo/config.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="parser.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -31,7 +24,7 @@
     <SUITE FILE_PATH="coverage/parser@headerparser__1_.coverage" NAME="headerparser (1) Coverage Results" MODIFIED="1387958910963" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app" MODULE_NAME="parser" />
     <SUITE FILE_PATH="coverage/parser@headerconfig.coverage" NAME="headerconfig Coverage Results" MODIFIED="1387796803892" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app" MODULE_NAME="parser" />
     <SUITE FILE_PATH="coverage/parser@filereader.coverage" NAME="filereader Coverage Results" MODIFIED="1387802873053" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app" MODULE_NAME="parser" />
-    <SUITE FILE_PATH="coverage/parser@read_dictionary.coverage" NAME="read_dictionary Coverage Results" MODIFIED="1389335258736" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app" MODULE_NAME="parser" />
+    <SUITE FILE_PATH="coverage/parser@read_dictionary.coverage" NAME="read_dictionary Coverage Results" MODIFIED="1389335988512" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app" MODULE_NAME="parser" />
     <SUITE FILE_PATH="coverage/parser@dictionary.coverage" NAME="dictionary Coverage Results" MODIFIED="1388125708933" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app" MODULE_NAME="parser" />
     <SUITE FILE_PATH="coverage/parser@Rakefile.coverage" NAME="Rakefile Coverage Results" MODIFIED="1389335472094" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="parser" />
   </component>
@@ -59,16 +52,25 @@
       <file leaf-file-name="read_dictionary.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/read_dictionary.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="0" selection-start="398" selection-end="398" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="425">
+            <state line="11" column="27" selection-start="255" selection-end="255" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="425">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="database.yml" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name=".gitignore" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="17" column="10" selection-start="472" selection-end="472" vertical-scroll-proportion="0.4898305" vertical-offset="0" max-vertical-offset="590">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="database.yml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config/database.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="40" selection-start="549" selection-end="549" vertical-scroll-proportion="0.6338983" vertical-offset="0" max-vertical-offset="590">
+            <state line="22" column="40" selection-start="549" selection-end="549" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="527">
               <folding />
             </state>
           </provider>
@@ -124,7 +126,6 @@
         <option value="$PROJECT_DIR$/conf/directories.yml" />
         <option value="$PROJECT_DIR$/app/directories.rb" />
         <option value="$PROJECT_DIR$/GemFile" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$APPLICATION_HOME_DIR$/rubystubs193/fixnum.rb" />
         <option value="$PROJECT_DIR$/DAT_PAYERS.tlv" />
         <option value="$PROJECT_DIR$/conf/file/header.yml" />
@@ -142,6 +143,7 @@
         <option value="$PROJECT_DIR$/config/database.yml" />
         <option value="$PROJECT_DIR$/Gemfile" />
         <option value="$PROJECT_DIR$/Rakefile" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -205,7 +207,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="config" />
+              <option name="myItemId" value="db" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -221,7 +223,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="RakeTaksPopup.undocumentedIncluded" value="false" />
   </component>
-  <component name="RunManager" selected="Ruby.Rakefile">
+  <component name="RunManager" selected="Ruby.read_dictionary">
     <configuration default="false" name="tlvfileconfig (1)" type="RubyRunConfigurationType" factoryName="Ruby" temporary="true">
       <module name="parser" />
       <RUBY_RUN_CONFIG NAME="RUBY_ARGS" VALUE="-e $stdout.sync=true;$stderr.sync=true;load($0=ARGV.shift)" />
@@ -413,8 +415,8 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Ruby.Rakefile" />
-        <item index="1" class="java.lang.String" itemvalue="Ruby.read_dictionary" />
+        <item index="0" class="java.lang.String" itemvalue="Ruby.read_dictionary" />
+        <item index="1" class="java.lang.String" itemvalue="Ruby.Rakefile" />
         <item index="2" class="java.lang.String" itemvalue="Ruby.dictionary" />
         <item index="3" class="java.lang.String" itemvalue="Ruby.dbf2tlv" />
         <item index="4" class="java.lang.String" itemvalue="Ruby.tlvfileconfig (1)" />
@@ -448,7 +450,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1296" height="1000" extended-state="7" />
+    <frame x="-8" y="-8" width="1296" height="1000" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32897604" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -499,28 +501,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/directories.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="0" selection-start="67" selection-end="67" vertical-scroll-proportion="0.0" vertical-offset="85" max-vertical-offset="816">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DAT_PAYERS.tlv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="6" selection-start="243" selection-end="249" vertical-scroll-proportion="0.0" vertical-offset="34" max-vertical-offset="237830" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/file/tlv_file.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="7" selection-start="15" selection-end="15" vertical-scroll-proportion="0.0" vertical-offset="17" max-vertical-offset="289" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/headerparser.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="64" selection-start="599" selection-end="599" vertical-scroll-proportion="0.0" vertical-offset="323" max-vertical-offset="425" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/recordparser.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="39" column="51" selection-start="1176" selection-end="1176" vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="867" />
@@ -634,11 +614,6 @@
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="102" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Gemfile.lock">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2720" />
-      </provider>
-    </entry>
     <entry file="file://C:/ruby/lib/ruby/gems/1.9.1/gems/dbf-2.0.7/lib/dbf/column/base.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="140" column="42" selection-start="3853" selection-end="3853" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2550" />
@@ -647,11 +622,6 @@
     <entry file="file://C:/ruby/lib/ruby/gems/1.9.1/gems/dbf-2.0.7/lib/dbf/record.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="16" column="34" selection-start="440" selection-end="440" vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="1717" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="23" selection-start="30" selection-end="30" vertical-scroll-proportion="0.093235835" vertical-offset="0" max-vertical-offset="547" />
       </provider>
     </entry>
     <entry file="file://$APPLICATION_HOME_DIR$/rubystubs193/fixnum.rb">
@@ -743,13 +713,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/read_dictionary.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="0" selection-start="398" selection-end="398" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="425">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Gemfile">
       <provider selected="true" editor-type-id="text-editor">
         <state line="19" column="76" selection-start="517" selection-end="517" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="867">
@@ -773,7 +736,62 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/config/database.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="40" selection-start="549" selection-end="549" vertical-scroll-proportion="0.6338983" vertical-offset="0" max-vertical-offset="590">
+        <state line="22" column="40" selection-start="549" selection-end="549" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="527">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/seeds.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="590">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="565">
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LICENSE">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="565">
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="com.intellij.persistence.database.editor.CsvTableFileEditorProvider">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Gemfile.lock">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2125">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.ru">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="590">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/read_dictionary.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="27" selection-start="255" selection-end="255" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="425">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="10" selection-start="472" selection-end="472" vertical-scroll-proportion="0.4898305" vertical-offset="0" max-vertical-offset="590">
           <folding />
         </state>
       </provider>
