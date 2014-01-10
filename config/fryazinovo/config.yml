@@ -5,8 +5,8 @@ dictionaries:
     delimiter: 179
     fields:
       column1:
-        name: id
-        type: number
+        name: streetId
+        type: string
       column2:
         name: streetName
         type: string
@@ -17,8 +17,8 @@ dictionaries:
     delimiter: 179
     fields:
       column1:
-        name: id
-        type: number
+        name: cityId
+        type: string
       column2:
         name: cityName
         type: string
@@ -30,7 +30,7 @@ dictionaries:
       fields:
         column1:
           name: accountNr
-          type: number
+          type: string
           length: 10
         column2:
           name: lastName
@@ -43,10 +43,10 @@ dictionaries:
           type: string
         column5:
           name: cityId
-          type: number
+          type: string
         column6:
           name: streetId
-          type: number
+          type: string
         column7:
           name: houseNr
           type: string
@@ -70,5 +70,5 @@ dictionaries:
           type: string
         column14:
           name: currAcc
-          type: number
+          type: string
           length: 20
