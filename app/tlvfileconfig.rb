@@ -47,6 +47,6 @@ class TLVFileConfig
   private
 
     def file_path
-      "../conf/file/#{CONFIG_FILE}"
+      "../config/file/#{CONFIG_FILE}"
     end
 end

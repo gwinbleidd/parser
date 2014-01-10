@@ -1,0 +1,74 @@
+dictionaries:
+  street:
+    format: txt
+    encoding: cp866
+    delimiter: 179
+    fields:
+      column1:
+        name: id
+        type: number
+      column2:
+        name: streetName
+        type: string
+
+  city:
+    format: txt
+    encoding: cp866
+    delimiter: 179
+    fields:
+      column1:
+        name: id
+        type: number
+      column2:
+        name: cityName
+        type: string
+
+  abonent:
+      format: txt
+      encoding: cp866
+      delimiter: 179
+      fields:
+        column1:
+          name: accountNr
+          type: number
+          length: 10
+        column2:
+          name: lastName
+          type: string
+        column3:
+          name: firstName
+          type: string
+        column4:
+          name: secondName
+          type: string
+        column5:
+          name: cityId
+          type: number
+        column6:
+          name: streetId
+          type: number
+        column7:
+          name: houseNr
+          type: string
+        column8:
+          name: flatNr
+          type: string
+        column9:
+          name: debtSum
+          type: string
+        column10:
+          name: coldWater1
+          type: string
+        column11:
+          name: coldWater2
+          type: string
+        column12:
+          name: hotWater1
+          type: string
+        column13:
+          name: hotWater2
+          type: string
+        column14:
+          name: currAcc
+          type: number
+          length: 20

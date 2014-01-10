@@ -63,6 +63,6 @@ class Dictionary
 
   private
   def file_path(dict_name)
-    "../conf/#{dict_name}/config.yml"
+    "../config/#{dict_name}/config.yml"
   end
 end

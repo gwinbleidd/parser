@@ -35,7 +35,7 @@ class Directory
       end
 
       def file_path
-       "../conf/#{CONFIG_FILE}"
+       "../config/#{CONFIG_FILE}"
       end
 
   end
