@@ -13,12 +13,12 @@ class DictionaryConfig
       dict_record = Dictionary.new
       dict_record.name = dict_name
       dict_record.config = File.read file_path(dict_name)
-      dict_record.config_md5 = Digest::MD5.file(file_path(dict_name)).hexdigest
+      dict_record.config_md5 = Digest::MD5.file(file_path(dict_name)).hexdigest.to_s
       dict_record.save
-    elsif dict_record.config_md5 != Digest::MD5.file(file_path(dict_name)).hexdigest
+    elsif dict_record.config_md5 != Digest::MD5.file(file_path(dict_name)).hexdigest.to_s
       dict_record.name = dict_name
       dict_record.config = File.read file_path(dict_name)
-      dict_record.config_md5 = Digest::MD5.file(file_path(dict_name)).hexdigest
+      dict_record.config_md5 = Digest::MD5.file(file_path(dict_name)).hexdigest.to_s
       dict_record.save
     end
     @get_config ||= YAML.load(File.read file_path(dict_name))

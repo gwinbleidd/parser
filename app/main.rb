@@ -17,15 +17,19 @@ end
 dict = DictionaryConfig.new
 
 records = dict.get_records('fryazinovo')
+#
+#dict.config['dictionaries'].each { |key, value|
+#  table = Hash.new
+#  table['name'] = (dict.name.to_s.downcase + '_' + key.to_s.downcase)
+#  table['fields'] = value['fields']
+#  #table[dict.name.to_s.capitalize + key.to_s.capitalize] = value
+#  DictionaryMigration.up(table)
+#  dictionary = create_activerecord_class(table['name'])
+#  records[key].each {|k,v|
+#    dictionary.create v
+#  }
+#}
 
-dict.config['dictionaries'].each { |key, value|
-  table = Hash.new
-  table['name'] = (dict.name.to_s.downcase + '_' + key.to_s.downcase)
-  table['fields'] = value['fields']
-  #table[dict.name.to_s.capitalize + key.to_s.capitalize] = value
-  DictionaryMigration.up(table)
-  dictionary = create_activerecord_class(table['name'])
-  records[key].each {|k,v|
-    dictionary.create v
-  }
-}
+dictionary = create_activerecord_class('fryazinovo_street')
+
+puts dictionary
