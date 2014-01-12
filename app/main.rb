@@ -16,9 +16,9 @@ def create_activerecord_class table_name
   end
 end
 
-conf = DictionaryConfig.new
+conf = DictionaryConfig.new('fryazinovo')
 
-dict = DictionaryRecords.new
+dict = DictionaryRecords.new(conf.config)
 
 #records = dict.get_records('fryazinovo')
 #
@@ -55,8 +55,6 @@ dict = DictionaryRecords.new
 #
 #puts "#{record.streetId}, #{record.streetName}"
 
-config = conf.get_config('fryazinovo')
-
-puts config
-
-puts dict.get_records(config)
+File.open("../records.yml", "w+") do |file|
+  file.write dict.records.to_yaml
+end

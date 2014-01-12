@@ -1,9 +1,11 @@
 class DictionaryRecords
-  def get_records(config)
-    @get_records = Hash.new
+  attr_accessor :records
+
+  def initialize(config)
+    get_records = Hash.new
 
     config['dictionaries'].each do |dictionary_key, dictionary_value|
-      @get_records[dictionary_key.to_s] = Hash.new
+      get_records[dictionary_key.to_s] = Hash.new
 
       dict_name = config['name']
 
@@ -16,12 +18,12 @@ class DictionaryRecords
         filename.each { |line|
           index += 1
           line = line.to_s.encode('UTF-8', dictionary_value['encoding'].to_s).delete("\n")
-          @get_records[dictionary_key.to_s][index] = is_record(line, delimiter.encode('UTF-8'), dictionary_value['fields'])
+          get_records[dictionary_key.to_s][index] = is_record(line, delimiter.encode('UTF-8'), dictionary_value['fields'])
         }
       end
     end
 
-    @get_records
+    self.records = get_records
   end
 
   private

@@ -5,9 +5,9 @@ require './models/dictionary'
 require 'digest/md5'
 
 class DictionaryConfig
-  attr_accessor :config, :name, :get_config
+  attr_accessor :config, :name, :primary_keys, :key_columns
 
-  def get_config(dict_name)
+  def initialize(dict_name)
     dict_record = Dictionary.find_by(:name => dict_name)
     if dict_record == nil
       dict_record = Dictionary.new
@@ -21,11 +21,14 @@ class DictionaryConfig
       dict_record.config_md5 = Digest::MD5.file(file_path(dict_name)).hexdigest.to_s
       dict_record.save
     end
-    @get_config ||= YAML.load(File.read file_path(dict_name))
 
-    @get_config['name'] = dict_name
+    self.config||= YAML.load(File.read file_path(dict_name))
+    self.config['name']= dict_name
 
-    @get_config
+    self.name= dict_name
+
+    self.primary_keys= get_primary_keys(self.name)
+    self.key_columns= get_key_columns(self.name)
   end
 
   def get_primary_keys(dict_name)
