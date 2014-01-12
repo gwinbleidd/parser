@@ -6,10 +6,13 @@ dictionaries:
     fields:
       column1:
         name: streetId
-        type: string
+        type: integer
+        pk: yes
+        changeable: no
       column2:
         name: streetName
         type: string
+        changeable: yes
 
   city:
     format: txt
@@ -18,10 +21,13 @@ dictionaries:
     fields:
       column1:
         name: cityId
-        type: string
+        type: integer
+        pk: yes
+        changeable: no
       column2:
         name: cityName
         type: string
+        changeable: yes
 
   abonent:
       format: txt
@@ -32,43 +38,58 @@ dictionaries:
           name: accountNr
           type: string
           length: 10
+          pk: yes
+          changeable: no
         column2:
           name: lastName
           type: string
+          changeable: yes
         column3:
           name: firstName
           type: string
+          changeable: yes
         column4:
           name: secondName
           type: string
+          changeable: yes
         column5:
           name: cityId
-          type: string
+          type: integer
+          changeable: yes
         column6:
           name: streetId
-          type: string
+          type: integer
+          changeable: yes
         column7:
           name: houseNr
           type: string
+          changeable: yes
         column8:
           name: flatNr
           type: string
+          changeable: yes
         column9:
           name: debtSum
           type: string
+          changeable: yes
         column10:
           name: coldWater1
           type: string
+          changeable: yes
         column11:
           name: coldWater2
           type: string
+          changeable: yes
         column12:
           name: hotWater1
           type: string
+          changeable: yes
         column13:
           name: hotWater2
           type: string
+          changeable: yes
         column14:
           name: currAcc
           type: string
           length: 20
+          changeable: yes
