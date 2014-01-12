@@ -33,23 +33,25 @@ records = dict.get_records('fryazinovo')
 
 key_columns = Hash.new
 
-dict.config['dictionaries']['street']['fields'].each {|key, value|
-  puts "#{key}, #{value}"
+#dict.config['dictionaries']['street']['fields'].each {|key, value|
+#  puts "#{key}, #{value}"
+#
+#  if value['key'] != nil
+#    if key_columns[value['key'].to_sym] == nil
+#      key_columns[value['key'].to_sym] = Hash.new
+#    end
+#    key_columns[value['key'].to_sym][value['name'].to_sym] = ''
+#  end
+#}
+#key_columns[:ak1][:streetId] = 29
+#key_columns[:ak1][:streetName] = 'ул. Авксентьевского'.encode('UTF-8')
+#
+#puts key_columns
+#
+#dictionary = create_activerecord_class('fryazinovo_street')
+#
+#record = dictionary.find_by key_columns[:ak1]
+#
+#puts "#{record.streetId}, #{record.streetName}"
 
-  if value['key'] != nil
-    if key_columns[value['key'].to_sym] == nil
-      key_columns[value['key'].to_sym] = Hash.new
-    end
-    key_columns[value['key'].to_sym][value['name'].to_sym] = ''
-  end
-}
-key_columns[:ak1][:streetId] = 29
-key_columns[:ak1][:streetName] = 'ул. Авксентьевского'.encode('UTF-8')
-
-puts key_columns
-
-dictionary = create_activerecord_class('fryazinovo_street')
-
-record = dictionary.find_by key_columns[:ak1]
-
-puts "#{record.streetId}, #{record.streetName}"
+puts dict.get_key_columns('fryazinovo')

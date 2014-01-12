@@ -41,17 +41,48 @@ class DictionaryConfig
     @is_record
   end
 
+  def get_key_columns(dict_name)
+    if self.name == nil
+      self.name= dict_name
+    end
+
+    if self.config == nil
+      self.config= get_config(self.name)
+    end
+
+    @get_key_columns = Hash.new
+
+    self.config['dictionaries'].each { |key, value|
+      @get_key_columns[key] = Hash.new
+
+      value['fields'].each { |k, v|
+        if v['key'] != nil
+          if @get_key_columns[key][v['key'].to_sym] == nil
+            @get_key_columns[key][v['key'].to_sym] = Hash.new
+          end
+          @get_key_columns[key][v['key'].to_sym][v['name'].to_sym] = ''
+        end
+      }
+    }
+
+    @get_key_columns
+  end
+
   def get_records(dict_name)
     @get_records = Hash.new
 
-    self.name= dict_name
-    self.config= get_config(self.name)
+    if self.name == nil
+      self.name= dict_name
+    end
+    if self.config == nil
+      self.config= get_config(self.name)
+    end
 
     config['dictionaries'].each do |dictionary_key, dictionary_value|
       @get_records[dictionary_key.to_s] = Hash.new
 
       if dictionary_value['format'] == 'txt'
-        filename = File.open('../dictionaries/' + dict_name + '/' + dictionary_key.to_s + '.' + dictionary_value['format'].to_s)
+        filename = File.open('../dictionaries/' + dict_name + '/' + dictionary_key.to_s + '.txt')
         delimiter = dictionary_value['delimiter'].to_i.chr(dictionary_value['encoding'].to_s)
 
        index = 0
