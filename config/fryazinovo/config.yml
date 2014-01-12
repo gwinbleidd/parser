@@ -42,7 +42,6 @@ dictionaries:
           name: accountNr
           type: string
           length: 10
-          pk: yes
           changeable: no
           key: ak1
         column2:

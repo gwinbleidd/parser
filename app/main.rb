@@ -54,4 +54,4 @@ key_columns = Hash.new
 #
 #puts "#{record.streetId}, #{record.streetName}"
 
-puts dict.get_key_columns('fryazinovo')
+puts dict.get_primary_keys('fryazinovo')
