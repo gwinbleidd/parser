@@ -8,11 +8,13 @@ dictionaries:
         name: streetId
         type: integer
         pk: yes
+        key: ak1
         changeable: no
       column2:
         name: streetName
         type: string
         changeable: yes
+        key: ak1
 
   city:
     format: txt
@@ -24,10 +26,12 @@ dictionaries:
         type: integer
         pk: yes
         changeable: no
+        key: ak1
       column2:
         name: cityName
         type: string
         changeable: yes
+        key: ak1
 
   abonent:
       format: txt
@@ -40,6 +44,7 @@ dictionaries:
           length: 10
           pk: yes
           changeable: no
+          key: ak1
         column2:
           name: lastName
           type: string
@@ -93,3 +98,4 @@ dictionaries:
           type: string
           length: 20
           changeable: yes
+          key: ak1

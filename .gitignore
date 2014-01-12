@@ -21,3 +21,4 @@ Gemfile.lock
 *.tlv
 *.csv
 records.yml
+dictionaries/*
