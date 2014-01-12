@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'rubygems'
 require 'active_record'
 require 'yaml'
@@ -30,6 +31,25 @@ records = dict.get_records('fryazinovo')
 #  }
 #}
 
+key_columns = Hash.new
+
+dict.config['dictionaries']['street']['fields'].each {|key, value|
+  puts "#{key}, #{value}"
+
+  if value['key'] != nil
+    if key_columns[value['key'].to_sym] == nil
+      key_columns[value['key'].to_sym] = Hash.new
+    end
+    key_columns[value['key'].to_sym][value['name'].to_sym] = ''
+  end
+}
+key_columns[:ak1][:streetId] = 29
+key_columns[:ak1][:streetName] = 'ул. Авксентьевского'.encode('UTF-8')
+
+puts key_columns
+
 dictionary = create_activerecord_class('fryazinovo_street')
 
-puts dictionary
+record = dictionary.find_by key_columns[:ak1]
+
+puts "#{record.streetId}, #{record.streetName}"
