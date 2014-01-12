@@ -6,6 +6,7 @@ require 'logger'
 require './models/dictionary'
 require '../app/dictionary_config'
 require '../db/dictionary_migration'
+require '../app/dictionary_records'
 
 require File.join(File.dirname(__FILE__), '../config/environment.rb')
 
@@ -15,9 +16,11 @@ def create_activerecord_class table_name
   end
 end
 
-dict = DictionaryConfig.new
+conf = DictionaryConfig.new
 
-records = dict.get_records('fryazinovo')
+dict = DictionaryRecords.new
+
+#records = dict.get_records('fryazinovo')
 #
 #dict.config['dictionaries'].each { |key, value|
 #  table = Hash.new
@@ -30,8 +33,6 @@ records = dict.get_records('fryazinovo')
 #    dictionary.create v
 #  }
 #}
-
-key_columns = Hash.new
 
 #dict.config['dictionaries']['street']['fields'].each {|key, value|
 #  puts "#{key}, #{value}"
@@ -54,4 +55,8 @@ key_columns = Hash.new
 #
 #puts "#{record.streetId}, #{record.streetName}"
 
-puts dict.get_primary_keys('fryazinovo')
+config = conf.get_config('fryazinovo')
+
+puts config
+
+puts dict.get_records(config)

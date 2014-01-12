@@ -5,7 +5,7 @@ require './models/dictionary'
 require 'digest/md5'
 
 class DictionaryConfig
-  attr_accessor :config, :name
+  attr_accessor :config, :name, :get_config
 
   def get_config(dict_name)
     dict_record = Dictionary.find_by(:name => dict_name)
@@ -22,23 +22,10 @@ class DictionaryConfig
       dict_record.save
     end
     @get_config ||= YAML.load(File.read file_path(dict_name))
-  end
 
-  def is_record(line, delimiter, fields)
-    splitted_line = split_line(line, delimiter)
+    @get_config['name'] = dict_name
 
-    if splitted_line.size == fields.size
-      @is_record = Hash.new
-
-      splitted_line.each { |line_key, line_value|
-        @is_record[fields[line_key]['name']] = line_value
-      }
-    else
-      puts "Line \"#{line}\" don't correspond to config"
-      exit
-    end
-
-    @is_record
+    @get_config
   end
 
   def get_primary_keys(dict_name)
@@ -93,49 +80,6 @@ class DictionaryConfig
     }
 
     @get_key_columns
-  end
-
-  def get_records(dict_name)
-    @get_records = Hash.new
-
-    if self.name == nil
-      self.name= dict_name
-    end
-    if self.config == nil
-      self.config= get_config(self.name)
-    end
-
-    config['dictionaries'].each do |dictionary_key, dictionary_value|
-      @get_records[dictionary_key.to_s] = Hash.new
-
-      if dictionary_value['format'] == 'txt'
-        filename = File.open('../dictionaries/' + dict_name + '/' + dictionary_key.to_s + '.txt')
-        delimiter = dictionary_value['delimiter'].to_i.chr(dictionary_value['encoding'].to_s)
-
-       index = 0
-
-        filename.each { |line|
-          index += 1
-          line = line.to_s.encode('UTF-8', dictionary_value['encoding'].to_s).delete("\n")
-          @get_records[dictionary_key.to_s][index] = is_record(line, delimiter.encode('UTF-8'), dictionary_value['fields'])
-        }
-      end
-    end
-
-    @get_records
-  end
-
-  def split_line(line, delimiter)
-    @split_line = Hash.new
-
-    index = 0
-
-    line.to_s.split(delimiter).each { |arr|
-      index += 1
-      @split_line["column" + index.to_s] = arr
-    }
-
-    @split_line
   end
 
   private
