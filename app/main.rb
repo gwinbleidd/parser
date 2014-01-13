@@ -29,28 +29,32 @@ dict = DictionaryRecords.new(conf.config)
 
 records = dict.records
 
+puts conf.foreign_keys
+puts conf.key_columns
+puts conf.primary_keys
+
 #puts records[:street]
 
-conf.config['dictionaries'].each { |key, value|
-  table = Hash.new
-  table['name'] = (conf.name.to_s.downcase + '_' + key.to_s.downcase)
-  table['fields'] = value['fields']
-  #table[dict.name.to_s.capitalize + key.to_s.capitalize] = value
-  DictionaryMigration.up(table)
-  dictionary = create_activerecord_class(table)
-
-  #puts "#{table['name']}: #{dictionary.instance_methods.sort}"
-  #puts "#{table['name']}: #{dictionary.class}, #{dictionary.superclass}"
-  records[key.to_s.to_sym].each {|k,v|
-    rec = dictionary.find_by v
-
-    if rec == nil
-      dictionary.create v
-    else
-      puts "#{rec.to_yaml}"
-    end
-  }
-}
+#conf.config['dictionaries'].each { |key, value|
+#  table = Hash.new
+#  table['name'] = (conf.name.to_s.downcase + '_' + key.to_s.downcase)
+#  table['fields'] = value['fields']
+#  #table[dict.name.to_s.capitalize + key.to_s.capitalize] = value
+#  DictionaryMigration.up(table)
+#  dictionary = create_activerecord_class(table)
+#
+#  #puts "#{table['name']}: #{dictionary.instance_methods.sort}"
+#  #puts "#{table['name']}: #{dictionary.class}, #{dictionary.superclass}"
+#  records[key.to_s.to_sym].each {|k,v|
+#    rec = dictionary.find_by v
+#
+#    if rec == nil
+#      dictionary.create v
+#    else
+#      puts "#{rec.to_yaml}"
+#    end
+#  }
+#}
 
 #dict.config['dictionaries']['street']['fields'].each {|key, value|
 #  puts "#{key}, #{value}"

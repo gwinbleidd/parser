@@ -5,7 +5,7 @@ require './models/dictionary'
 require 'digest/md5'
 
 class DictionaryConfig
-  attr_accessor :config, :name, :primary_keys, :key_columns
+  attr_accessor :config, :name, :primary_keys, :key_columns, :foreign_keys
 
   def initialize(dict_name)
     dict_record = Dictionary.find_by(:name => dict_name)
@@ -29,6 +29,41 @@ class DictionaryConfig
 
     self.primary_keys= get_primary_keys(self.name)
     self.key_columns= get_key_columns(self.name)
+    self.foreign_keys= get_foreign_keys(self.name)
+  end
+
+  def get_foreign_keys(dict_name)
+    if self.name == nil
+      self.name= dict_name
+    end
+
+    if self.config == nil
+      self.config= get_config(self.name)
+    end
+
+    @get_foreign_keys = Hash.new
+
+    self.config['dictionaries'].each { |key, value|
+      @get_foreign_keys[key] = Hash.new
+
+      i = 0
+
+      value['fields'].each { |k, v|
+        if v['fk'] != nil
+          i += 1
+
+          if @get_foreign_keys[key][('fk' + i.to_s).to_sym] == nil
+            @get_foreign_keys[key][('fk' + i.to_s).to_sym] = Hash.new
+          end
+          @get_foreign_keys[key][('fk' + i.to_s).to_sym][:table] = v['fk']['table'].to_sym
+          @get_foreign_keys[key][('fk' + i.to_s).to_sym][:column] = v['fk']['column'].to_sym
+        end
+      }
+    }
+
+    #puts @get_foreign_keys
+
+    @get_foreign_keys
   end
 
   def get_primary_keys(dict_name)

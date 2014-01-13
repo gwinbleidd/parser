@@ -60,10 +60,16 @@ dictionaries:
           name: cityId
           type: integer
           changeable: yes
+          fk:
+            table: city
+            column: cityId
         column6:
           name: streetId
           type: integer
           changeable: yes
+          fk:
+            table: street
+            column: streetId
         column7:
           name: houseNr
           type: string
