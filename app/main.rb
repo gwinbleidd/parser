@@ -5,7 +5,8 @@ require 'yaml'
 require 'logger'
 require './models/dictionary'
 require '../app/dictionary_config'
-require '../db/dictionary_migration'
+require '../db/dictionary_table_migration'
+require '../db/dictionary_uniq_const_migration'
 require '../app/dictionary_records'
 
 require File.join(File.dirname(__FILE__), '../config/environment.rb')

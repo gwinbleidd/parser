@@ -1,4 +1,4 @@
-class DictionaryMigration < ActiveRecord::Migration
+class DictionaryTableMigration < ActiveRecord::Migration
   def self.up(table)
     create_table table['name'].to_s.to_sym unless ActiveRecord::Base.connection.table_exists?(table['name'].to_s.to_sym)
     table['fields'].each do |key, value|
