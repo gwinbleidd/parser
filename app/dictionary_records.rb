@@ -5,7 +5,7 @@ class DictionaryRecords
     get_records = Hash.new
 
     config['dictionaries'].each do |dictionary_key, dictionary_value|
-      get_records[dictionary_key.to_s] = Hash.new
+      get_records[dictionary_key.to_s.to_sym] = Hash.new
 
       dict_name = config['name']
 
@@ -18,7 +18,7 @@ class DictionaryRecords
         filename.each { |line|
           index += 1
           line = line.to_s.encode('UTF-8', dictionary_value['encoding'].to_s).delete("\n")
-          get_records[dictionary_key.to_s][index] = is_record(line, delimiter.encode('UTF-8'), dictionary_value['fields'])
+          get_records[dictionary_key.to_s.to_sym][index] = is_record(line, delimiter.encode('UTF-8'), dictionary_value['fields'])
         }
       end
     end
@@ -34,7 +34,7 @@ class DictionaryRecords
       @is_record = Hash.new
 
       splitted_line.each { |line_key, line_value|
-        @is_record[fields[line_key]['name']] = line_value
+        @is_record[fields[line_key]['name'].to_s.to_sym] = line_value
       }
     else
       puts "Line \"#{line}\" don't correspond to config"
