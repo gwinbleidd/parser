@@ -1,0 +1,28 @@
+file:
+  name: fryazinovo
+  type: csv
+  fields:
+    column1:
+      name: accountNr
+      from: accountNr
+    column2:
+      name: fio
+      from: [lastName, firstName, secondName]
+    column3:
+      name: address
+      from: [city, street, houseNr, flatNr]
+    column4:
+      name: debtSum
+      from: debtSum
+    column5:
+      name: coldWater1
+      from: coldWater1
+    column6:
+      name: coldWater2
+      from: coldWater2
+    column7:
+      name: hotWater1
+      from: hotWater1
+    column8:
+      name: hotWater2
+      from: hotWater2

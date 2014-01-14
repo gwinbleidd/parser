@@ -5,31 +5,37 @@ require './models/dictionary'
 require 'digest/md5'
 
 class DictionaryConfig
-  attr_accessor :config, :name, :primary_keys, :key_columns, :foreign_keys
+  attr_accessor :config, :output_config, :name, :primary_keys, :key_columns, :foreign_keys
 
   def initialize(dict_name)
     dict_record = Dictionary.find_by(:name => dict_name)
     if dict_record == nil
       dict_record = Dictionary.new
       dict_record.name = dict_name
-      dict_record.config = File.read file_path(dict_name)
-      dict_record.config_md5 = Digest::MD5.file(file_path(dict_name)).hexdigest.to_s
+      dict_record.config = File.read input_path(dict_name)
+      dict_record.config_md5 = Digest::MD5.file(input_path(dict_name)).hexdigest.to_s
       dict_record.save
-    elsif dict_record.config_md5 != Digest::MD5.file(file_path(dict_name)).hexdigest.to_s
+    elsif dict_record.config_md5 != Digest::MD5.file(input_path(dict_name)).hexdigest.to_s
       dict_record.name = dict_name
-      dict_record.config = File.read file_path(dict_name)
-      dict_record.config_md5 = Digest::MD5.file(file_path(dict_name)).hexdigest.to_s
+      dict_record.config = File.read input_path(dict_name)
+      dict_record.config_md5 = Digest::MD5.file(input_path(dict_name)).hexdigest.to_s
       dict_record.save
     end
 
-    self.config||= YAML.load(File.read file_path(dict_name))
+    self.config||= YAML.load(File.read input_path(dict_name))
     self.config['name']= dict_name
 
-    self.name= dict_name
+    self.name = dict_name
 
-    self.primary_keys= get_primary_keys(self.name)
-    self.key_columns= get_key_columns(self.name)
-    self.foreign_keys= get_foreign_keys(self.name)
+    self.primary_keys = get_primary_keys(self.name)
+    self.key_columns = get_key_columns(self.name)
+    self.foreign_keys = get_foreign_keys(self.name)
+
+    self.output_config = get_output_config(dict_name)
+  end
+
+  def get_output_config(dict_name)
+    @get_output_config||= YAML.load(File.read output_path(dict_name))
   end
 
   def get_foreign_keys(dict_name)
@@ -60,8 +66,6 @@ class DictionaryConfig
         end
       }
     }
-
-    #puts @get_foreign_keys
 
     @get_foreign_keys
   end
@@ -121,7 +125,11 @@ class DictionaryConfig
   end
 
   private
-  def file_path(dict_name)
-    "../config/#{dict_name}/config.yml"
+  def input_path(dict_name)
+    "../config/#{dict_name}/input.yml"
+  end
+
+  def output_path(dict_name)
+    "../config/#{dict_name}/output.yml"
   end
 end

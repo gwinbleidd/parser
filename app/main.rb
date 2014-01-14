@@ -33,6 +33,7 @@ records = dict.records
 puts "Foreign keys: #{conf.foreign_keys}"
 puts "Key columns: #{conf.key_columns}"
 puts "Primary keys: #{conf.primary_keys}"
+puts "Output config: #{conf.output_config}"
 
 #puts records[:street]
 
