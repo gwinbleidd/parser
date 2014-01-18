@@ -114,9 +114,9 @@ class DictionaryConfig
       value['fields'].each { |k, v|
         if v['key'] != nil
           if @get_key_columns[key][v['key'].to_sym] == nil
-            @get_key_columns[key][v['key'].to_sym] = Hash.new
+            @get_key_columns[key][v['key'].to_sym] = Array.new
           end
-          @get_key_columns[key][v['key'].to_sym][v['name'].to_sym] = ''
+          @get_key_columns[key][v['key'].to_sym].push v['name'].to_sym
         end
       }
     }
