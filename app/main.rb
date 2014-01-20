@@ -1,34 +1,33 @@
 # encoding: utf-8
+require File.join(File.dirname(__FILE__), '../config/environment.rb')
+
 require 'rubygems'
 require 'active_record'
 require 'yaml'
 require 'logger'
-require './models/dictionary'
-require '../app/dictionary_config'
+require 'dictionary'
 require '../db/dictionary_table_migration'
 require '../db/dictionary_uniq_const_migration'
-require '../app/dictionary_records'
 
-require File.join(File.dirname(__FILE__), '../config/environment.rb')
+conf = Dictionary::Config.new('fryazinovo')
 
-def create_activerecord_class table
+dict = Dictionary::Record.new(conf.config)
+
+records = dict.records
+
+def create_activerecord_class(table)
   attrs = Array.new
 
-  table['fields'].each { |key, value|
-    attrs.push value['name'].to_sym
+  table[:fields].each { |key, value|
+    attrs.push value.to_sym
   }
 
   Class.new(ActiveRecord::Base) do
-    self.table_name = table['name']
+    self.table_name = table[:name]
+
     self.send(:attr_accessor, *attrs)
   end
 end
-
-conf = DictionaryConfig.new('fryazinovo')
-
-dict = DictionaryRecords.new(conf.config)
-
-records = dict.records
 
 puts "Foreign keys: #{conf.foreign_keys}"
 puts "Key columns: #{conf.key_columns}"
@@ -39,15 +38,24 @@ puts "Output config: #{conf.output_config}"
 
 conf.config['dictionaries'].each { |key, value|
   table = Hash.new
-  table['name'] = (conf.name.to_s.downcase + '_' + key.to_s.downcase)
-  table['fields'] = value['fields']
+  table[:name] = (conf.name.to_s.downcase + '_' + key.to_s.downcase)
+  table[:fields] = Hash.new
+  value['fields'].each {|column_name, column_code|
+    table[:fields][column_name.to_sym] = column_code['name']
+  }
   if conf.primary_keys[key][:pk] != nil
-    table['pk'] = Hash[:column.to_s => conf.primary_keys[key][:pk]]
+    table[:pk] = conf.primary_keys[key][:pk].to_s
   end
 
+  if conf.key_columns[key] != nil
+    #puts conf.foreign_keys[key]
+    table[:fk] = conf.foreign_keys[key]
+  end
+
+
   puts table
-  #table[dict.name.to_s.capitalize + key.to_s.capitalize] = value
-  #DictionaryMigration.up(table)
+
+  #DictionaryTableMigration.up(table)
   #dictionary = create_activerecord_class(table)
   #
   #puts "#{table['name']}: #{dictionary.instance_methods.sort}"

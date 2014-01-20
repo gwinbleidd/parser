@@ -7,3 +7,5 @@ gem 'rake'
 gem 'activerecord'
 gem 'sqlite3'
 gem 'rails'
+
+gem 'load_path'

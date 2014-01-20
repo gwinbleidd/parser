@@ -1,9 +1,9 @@
 require 'active_record'
-require File.dirname(__FILE__) + '/dictionary_config'
+require File.dirname(__FILE__) + '/config'
 ENV['RAILS_ENV'] = ARGV.first || ENV['RAILS_ENV'] || 'development'
 require File.expand_path(File.dirname(__FILE__) + '/../config/environment')
 
-dict = Dictionary.new
+dict = Dictionaries.new
 
 #puts dict.get_config('fryazinovo')['dictionaries']['abonent']
 
