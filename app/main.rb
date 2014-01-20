@@ -33,61 +33,22 @@ puts "Foreign keys: #{conf.foreign_keys}"
 puts "Key columns: #{conf.key_columns}"
 puts "Primary keys: #{conf.primary_keys}"
 puts "Output config: #{conf.output_config}"
+puts "Tables: #{conf.table}"
 
-#puts records[:street]
-
-conf.config['dictionaries'].each { |key, value|
-  table = Hash.new
-  table[:name] = (conf.name.to_s.downcase + '_' + key.to_s.downcase)
-  table[:fields] = Hash.new
-  value['fields'].each {|column_name, column_code|
-    table[:fields][column_name.to_sym] = column_code['name']
-  }
-
-  if conf.primary_keys.has_key?(key)
-    table[:pk] = Hash.new
-    table[:pk] = conf.primary_keys[key][:pk].to_s
-  end
-
-  if conf.foreign_keys.has_key?(key)
-    unless table.has_key?(:fk)
-      table[:fk] = Hash.new
-    end
-
-    conf.foreign_keys[key].each { |k, v|
-      table[:fk][k] = Hash.new
-      table[:fk][k][:table] = conf.name.to_s.downcase + '_' + v[:table].to_s.downcase
-      table[:fk][k][:column] = v[:column].to_s
-    }
-  end
-
-  if conf.key_columns.has_key?(key)
-    unless table.has_key?(:ak)
-      table[:ak] = Hash.new
-    end
-
-    conf.key_columns[key].each {|k, v|
-      table[:ak][k] = v
-    }
-  end
-
-  puts "Table: #{table[:name].to_s.classify},  #{table}"
-
-  #DictionaryTableMigration.up(table)
-  #dictionary = create_activerecord_class(table)
-  #
-  #puts "#{table['name']}: #{dictionary.instance_methods.sort}"
-  #puts "#{table['name']}: #{dictionary.class}, #{dictionary.superclass}"
-  #records[key.to_s.to_sym].each {|k,v|
-  #  rec = dictionary.find_by v
-  #
-  #  if rec == nil
-  #    dictionary.create v
-  #  else
-  #    puts "#{rec.to_yaml}"
-  #  end
-  #}
-}
+#DictionaryTableMigration.up(table)
+#dictionary = create_activerecord_class(table)
+#
+#puts "#{table['name']}: #{dictionary.instance_methods.sort}"
+#puts "#{table['name']}: #{dictionary.class}, #{dictionary.superclass}"
+#records[key.to_s.to_sym].each {|k,v|
+#  rec = dictionary.find_by v
+#
+#  if rec == nil
+#    dictionary.create v
+#  else
+#    puts "#{rec.to_yaml}"
+#  end
+#}
 
 #dict.config['dictionaries']['street']['fields'].each {|key, value|
 #  puts "#{key}, #{value}"

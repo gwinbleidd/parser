@@ -6,7 +6,7 @@ require 'digest/md5'
 
 module Dictionary
   class Config
-    attr_accessor :config, :output_config, :name, :primary_keys, :key_columns, :foreign_keys
+    attr_accessor :config, :output_config, :name, :primary_keys, :key_columns, :foreign_keys, :table
 
     def initialize(dict_name)
       dict_record = Dictionaries.find_by(:name => dict_name)
@@ -33,9 +33,58 @@ module Dictionary
       self.foreign_keys = get_foreign_keys(self.name)
 
       self.output_config = get_output_config(dict_name)
+
+      self.table = get_table
     end
 
     private
+    def get_table
+      unless self.config.nil?
+        @get_table = Hash.new
+
+        self.config['dictionaries'].each { |key, value|
+          table = Hash.new
+          #table[:name] = (self.name.to_s.downcase + '_' + key.to_s.downcase)
+          table[:fields] = Hash.new
+          value['fields'].each { |column_name, column_code|
+            table[:fields][column_name.to_sym] = column_code['name']
+          }
+
+          if self.primary_keys.has_key?(key)
+            table[:pk] = Hash.new
+            table[:pk] = self.primary_keys[key][:pk].to_s
+          end
+
+          if self.foreign_keys.has_key?(key)
+            unless table.has_key?(:fk)
+              table[:fk] = Hash.new
+            end
+
+            self.foreign_keys[key].each { |k, v|
+              table[:fk][k] = Hash.new
+              table[:fk][k][:table] = self.name.to_s.downcase + '_' + v[:table].to_s.downcase
+              table[:fk][k][:column] = v[:column].to_s
+            }
+          end
+
+          if self.key_columns.has_key?(key)
+            unless table.has_key?(:ak)
+              table[:ak] = Hash.new
+            end
+
+            self.key_columns[key].each { |k, v|
+              table[:ak][k] = v
+            }
+          end
+
+          @get_table[(self.name.to_s.downcase + '_' + key.to_s.downcase).to_sym] = table
+        }
+
+        @get_table
+      end
+    end
+
+
     def get_output_config(dict_name)
       @get_output_config||= YAML.load(File.read output_path(dict_name))
     end

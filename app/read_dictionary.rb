@@ -28,7 +28,10 @@ puts config
 
 class ExternalApp < ActiveRecord::Base
   self.abstract_class = true
-  def self.columns() @columns ||= []; end
+
+  def self.columns()
+    @columns ||= [];
+  end
 end
 
 test = %w['test']
