@@ -43,17 +43,35 @@ conf.config['dictionaries'].each { |key, value|
   value['fields'].each {|column_name, column_code|
     table[:fields][column_name.to_sym] = column_code['name']
   }
-  if conf.primary_keys[key][:pk] != nil
+
+  if conf.primary_keys.has_key?(key)
+    table[:pk] = Hash.new
     table[:pk] = conf.primary_keys[key][:pk].to_s
   end
 
-  if conf.key_columns[key] != nil
-    #puts conf.foreign_keys[key]
-    table[:fk] = conf.foreign_keys[key]
+  if conf.foreign_keys.has_key?(key)
+    unless table.has_key?(:fk)
+      table[:fk] = Hash.new
+    end
+
+    conf.foreign_keys[key].each { |k, v|
+      table[:fk][k] = Hash.new
+      table[:fk][k][:table] = conf.name.to_s.downcase + '_' + v[:table].to_s.downcase
+      table[:fk][k][:column] = v[:column].to_s
+    }
   end
 
+  if conf.key_columns.has_key?(key)
+    unless table.has_key?(:ak)
+      table[:ak] = Hash.new
+    end
 
-  puts table
+    conf.key_columns[key].each {|k, v|
+      table[:ak][k] = v
+    }
+  end
+
+  puts "Table: #{table[:name].to_s.classify},  #{table}"
 
   #DictionaryTableMigration.up(table)
   #dictionary = create_activerecord_class(table)

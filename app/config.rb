@@ -3,7 +3,6 @@ require 'active_record'
 require 'yaml'
 require 'dictionaries'
 require 'digest/md5'
-require 'dictionary'
 
 module Dictionary
   class Config
@@ -86,13 +85,17 @@ module Dictionary
         self.config= get_config(self.name)
       end
 
-      @get_primary_keys = Hash.new
-
       self.config['dictionaries'].each { |key, value|
-        @get_primary_keys[key] = Hash.new
-
         value['fields'].each { |k, v|
           if v['pk']
+            if @get_primary_keys == nil
+              @get_primary_keys = Hash.new
+            end
+
+            if @get_primary_keys[key] == nil
+              @get_primary_keys[key] = Hash.new
+            end
+
             if @get_primary_keys[key]['pk'.to_sym] != nil
               raise ('More than one primary key for table')
             end
