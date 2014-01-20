@@ -46,9 +46,7 @@ module Dictionary
           table = Hash.new
           #table[:name] = (self.name.to_s.downcase + '_' + key.to_s.downcase)
           table[:fields] = Hash.new
-          value['fields'].each { |column_name, column_code|
-            table[:fields][column_name.to_sym] = column_code['name']
-          }
+          table[:fields] = value['fields']
 
           if self.primary_keys.has_key?(key)
             table[:pk] = Hash.new

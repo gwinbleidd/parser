@@ -18,7 +18,7 @@ module Dictionary
 
           filename.each { |line|
             index += 1
-            line = line.to_s.encode('UTF-8', dictionary_value['encoding'].to_s).delete("\n")
+            line = line.to_s.encode('UTF-8', dictionary_value['encoding'].to_s).delete("\r\n")
             self.records[dictionary_key.to_s.to_sym][index] = is_record(line, delimiter.encode('UTF-8'), dictionary_value['fields'])
           }
         end

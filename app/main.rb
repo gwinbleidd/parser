@@ -15,25 +15,31 @@ dict = Dictionary::Record.new(conf.config)
 
 records = dict.records
 
-def create_activerecord_class(table)
-  attrs = Array.new
-
-  table[:fields].each { |key, value|
-    attrs.push value.to_sym
-  }
-
-  Class.new(ActiveRecord::Base) do
-    self.table_name = table[:name]
-
-    self.send(:attr_accessor, *attrs)
-  end
-end
+mdls = Dictionary::Model.new(conf.table)
 
 puts "Foreign keys: #{conf.foreign_keys}"
 puts "Key columns: #{conf.key_columns}"
 puts "Primary keys: #{conf.primary_keys}"
 puts "Output config: #{conf.output_config}"
-puts "Tables: #{conf.table}"
+
+mdls.objects.each { |o|
+  puts "#{o.to_s.downcase.sub(conf.name, '')}, #{o.superclass}, #{o.methods.sort}"
+  records[o.to_s.downcase.sub(conf.name, '').to_sym].each { |k, v|
+    puts "#{k}, #{v}"
+    rec = o.find_by v
+
+    if rec.nil?
+      o.create v
+    else
+      puts "#{rec.to_yaml}"
+    end
+  }
+}
+
+#conf.table.each { |key, value|
+#  puts "Table: #{key.to_s.pluralize} #{value}"
+#  puts DictionaryTableMigration.up(key.to_s.pluralize, value[:fields])
+#}
 
 #DictionaryTableMigration.up(table)
 #dictionary = create_activerecord_class(table)
