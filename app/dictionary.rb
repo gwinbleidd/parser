@@ -43,13 +43,16 @@ module Dictionary
         self.objects.append obj
 
         if table_def.has_key?(:main)
-          class_name = ('v_' + table_name.to_s).camelize
+          class_name = ('v_' + table_def[:dictionary].to_s).camelize
+          t_name = 'v_' + table_def[:dictionary].to_s
 
           klass = Class.new(ActiveRecord::Base) do
-            table_name = 'v_' + table_name.to_s
+            table_name = t_name
           end
 
           obj = Object.const_set class_name, klass
+
+          #eval "#{t_name} = #{class_name}.new" or puts "Class instantiation failed"
 
           self.main_view = obj
         end

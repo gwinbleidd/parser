@@ -21,20 +21,20 @@ class DictionaryViewMigration < ActiveRecord::Migration
       end
 
       execute <<-SQL
-        DROP VIEW IF EXISTS v_#{table[:dictionary]}
+        DROP VIEW IF EXISTS v_#{table[:dictionary].to_s.pluralize}
       SQL
 
       execute <<-SQL
-        CREATE VIEW v_#{table[:dictionary]} AS
-        SELECT #{flds.join ', '}
+        CREATE VIEW v_#{table[:dictionary].to_s.pluralize} AS
+        SELECT id, #{flds.join ', '}
         FROM #{name} a
       SQL
     end
   end
 
-  def self.down(name, fields)
+  def self.down(name, table)
     execute <<-SQL
-      DROP VIEW #{name}
+      DROP VIEW v_#{table[:dictionary].to_s.pluralize}
     SQL
   end
 end
