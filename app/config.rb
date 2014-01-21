@@ -63,6 +63,7 @@ module Dictionary
               table[:fk][k][:column] = v[:column].to_s
               table[:fk][k][:table] = self.name.to_s.downcase + '_' + v[:table].to_s.downcase
               table[:fk][k][:column_ref] = v[:column_ref].to_s
+              table[:fk][k][:return] = v[:return].to_s
             }
           end
 
@@ -118,6 +119,7 @@ module Dictionary
             @get_foreign_keys[key][('fk' + i.to_s).to_sym][:column] = v['name'].to_sym
             @get_foreign_keys[key][('fk' + i.to_s).to_sym][:table] = v['fk']['table'].to_sym
             @get_foreign_keys[key][('fk' + i.to_s).to_sym][:column_ref] = v['fk']['column'].to_sym
+            @get_foreign_keys[key][('fk' + i.to_s).to_sym][:return] = v['fk']['return'].to_sym
           end
         }
       }
