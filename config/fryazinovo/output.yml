@@ -1,30 +1,33 @@
 file:
   name: fryazinovo
   type: csv
-  fields:
-    column1:
-      name: accountNr
-      from: accountNr
-    column2:
-      name: fio
-      from: [lastName, firstName, secondName]
-      delimiter: ' '
-    column3:
-      name: address
-      from: [cityName, streetName, houseNr, flatNr]
-      delimiter: ','
-    column4:
-      name: debtSum
-      from: debtSum
-    column5:
-      name: coldWater1
-      from: coldWater1
-    column6:
-      name: coldWater2
-      from: coldWater2
-    column7:
-      name: hotWater1
-      from: hotWater1
-    column8:
-      name: hotWater2
-      from: hotWater2
+fields:
+  column1:
+    name: accountNr
+    from: accountNr
+  column2:
+    name: fio
+    from: [lastName, firstName, secondName]
+    delimiter: ' '
+  column3:
+    name: address
+    from: [cityName, streetName, houseNr, flatNr]
+    delimiter: ', '
+  column4:
+    name: debtSum
+    from: debtSum
+  column5:
+    name: coldWater1
+    from: coldWater1
+  column6:
+    name: coldWater2
+    from: coldWater2
+  column7:
+    name: hotWater1
+    from: hotWater1
+  column8:
+    name: hotWater2
+    from: hotWater2
+  column9:
+    name: currAcc
+    from: currAcc

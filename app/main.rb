@@ -23,6 +23,22 @@ puts "Key columns: #{conf.key_columns}"
 puts "Primary keys: #{conf.primary_keys}"
 puts "Output config: #{conf.output_config}"
 
+mdls.main_view.all.each { |rec|
+  record = Hash.new
+
+  conf.output_config['fields'].each { |key, value|
+    if value['from'].is_a?(String)
+      record[value['name'].to_sym] = eval 'rec.' + value['from'].to_s
+    elsif value['from'].is_a?(Array)
+      fields = Array.new
+      value['from'].each { |item| fields.push 'rec.' + item }
+      record[value['name'].to_sym] = eval fields.join "+\"#{value['delimiter']}\"+"
+    end
+  }
+
+  puts record
+}
+
 #mdls.objects.each { |o|
 #  puts "#{o.superclass}, #{o.instance_methods.sort}, #{o.respond_to?(:city)}"
 #  #records[o.to_s.downcase.sub(conf.name, '').to_sym].each { |k, v|
@@ -38,10 +54,10 @@ puts "Output config: #{conf.output_config}"
 #  #}
 #}
 
-conf.table.each { |key, value|
-  #puts "Table: #{key.to_s.pluralize} #{value}"
-  DictionaryViewMigration.up(key.to_s.pluralize, value)
-}
+#conf.table.each { |key, value|
+#  #puts "Table: #{key.to_s.pluralize} #{value}"
+#  DictionaryViewMigration.up(key.to_s.pluralize, value)
+#}
 
 #DictionaryTableMigration.up(table)
 #dictionary = create_activerecord_class(table)
