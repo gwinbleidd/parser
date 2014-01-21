@@ -8,9 +8,11 @@ file:
     column2:
       name: fio
       from: [lastName, firstName, secondName]
+      delimiter: ' '
     column3:
       name: address
-      from: [city, street, houseNr, flatNr]
+      from: [cityName, streetName, houseNr, flatNr]
+      delimiter: ','
     column4:
       name: debtSum
       from: debtSum

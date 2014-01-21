@@ -8,6 +8,7 @@ require 'logger'
 require 'dictionary'
 require '../db/dictionary_table_migration'
 require '../db/dictionary_uniq_const_migration'
+require '../db/dictionary_view_migration'
 
 conf = Dictionary::Config.new('fryazinovo')
 
@@ -22,23 +23,24 @@ puts "Key columns: #{conf.key_columns}"
 puts "Primary keys: #{conf.primary_keys}"
 puts "Output config: #{conf.output_config}"
 
-mdls.objects.each { |o|
-  puts "#{o.to_s.downcase.sub(conf.name, '')}, #{o.superclass}, #{o.methods.sort}"
-  records[o.to_s.downcase.sub(conf.name, '').to_sym].each { |k, v|
-    puts "#{k}, #{v}"
-    rec = o.find_by v
-
-    if rec.nil?
-      o.create v
-    else
-      puts "#{rec.to_yaml}"
-    end
-  }
-}
+#mdls.objects.each { |o|
+#  puts "#{o.superclass}, #{o.instance_methods.sort}, #{o.respond_to?(:city)}"
+#  #records[o.to_s.downcase.sub(conf.name, '').to_sym].each { |k, v|
+#  #  rec = o.find_by v
+#  #
+#  #  puts "#{rec.fryazinovo_streets.streetName}" if o.to_s.downcase.sub(conf.name, '').to_s == 'abonent'
+#  #
+#  #  #if rec.nil?
+#  #  #  o.create v
+#  #  #else
+#  #  #  puts "#{rec.to_yaml}"
+#  #  #end
+#  #}
+#}
 
 #conf.table.each { |key, value|
-#  puts "Table: #{key.to_s.pluralize} #{value}"
-#  puts DictionaryTableMigration.up(key.to_s.pluralize, value[:fields])
+#  #puts "Table: #{key.to_s.pluralize} #{value}"
+#  DictionaryViewMigration.up(key.to_s.pluralize, value)
 #}
 
 #DictionaryTableMigration.up(table)

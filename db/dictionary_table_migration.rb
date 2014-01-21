@@ -8,7 +8,7 @@ class DictionaryTableMigration < ActiveRecord::Migration
     end
   end
 
-  def self.down(table)
-    drop_table table['name'].to_s.to_sym
+  def self.down(name, fields)
+    drop_table name
   end
 end

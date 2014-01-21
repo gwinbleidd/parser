@@ -63,6 +63,7 @@ dictionaries:
           fk:
             table: city
             column: cityId
+            return: cityName
         column6:
           name: streetId
           type: integer
@@ -70,6 +71,7 @@ dictionaries:
           fk:
             table: street
             column: streetId
+            return: streetName
         column7:
           name: houseNr
           type: string
