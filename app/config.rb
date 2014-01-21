@@ -60,8 +60,9 @@ module Dictionary
 
             self.foreign_keys[key].each { |k, v|
               table[:fk][k] = Hash.new
-              table[:fk][k][:table] = self.name.to_s.downcase + '_' + v[:table].to_s.downcase
               table[:fk][k][:column] = v[:column].to_s
+              table[:fk][k][:table] = self.name.to_s.downcase + '_' + v[:table].to_s.downcase
+              table[:fk][k][:column_ref] = v[:column_ref].to_s
             }
           end
 
@@ -100,12 +101,12 @@ module Dictionary
         i = 0
 
         value['fields'].each { |k, v|
-          if v['fk'] != nil
-            if @get_foreign_keys == nil
+          unless v['fk'].nil?
+            if @get_foreign_keys.nil?
               @get_foreign_keys = Hash.new
             end
 
-            if @get_foreign_keys[key] == nil
+            if @get_foreign_keys[key].nil?
               @get_foreign_keys[key] = Hash.new
             end
 
@@ -114,8 +115,9 @@ module Dictionary
             if @get_foreign_keys[key][('fk' + i.to_s).to_sym] == nil
               @get_foreign_keys[key][('fk' + i.to_s).to_sym] = Hash.new
             end
+            @get_foreign_keys[key][('fk' + i.to_s).to_sym][:column] = v['name'].to_sym
             @get_foreign_keys[key][('fk' + i.to_s).to_sym][:table] = v['fk']['table'].to_sym
-            @get_foreign_keys[key][('fk' + i.to_s).to_sym][:column] = v['fk']['column'].to_sym
+            @get_foreign_keys[key][('fk' + i.to_s).to_sym][:column_ref] = v['fk']['column'].to_sym
           end
         }
       }
