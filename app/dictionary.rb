@@ -3,7 +3,7 @@ module Dictionary
   require 'record'
 
   class Model
-    attr_accessor :objects
+    attr_accessor :objects, :main_view
 
     def initialize(table)
       attrs = Array.new
@@ -41,6 +41,18 @@ module Dictionary
         eval "#{table_name} = #{class_name}.new" or puts "Class instantiation failed"
 
         self.objects.append obj
+
+        if table_def.has_key?(:main)
+          class_name = ('v_' + table_name.to_s).camelize
+
+          klass = Class.new(ActiveRecord::Base) do
+            table_name = 'v_' + table_name.to_s
+          end
+
+          obj = Object.const_set class_name, klass
+
+          self.main_view = obj
+        end
       }
     end
   end
