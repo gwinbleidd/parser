@@ -44,7 +44,7 @@ module Dictionary
 
         self.config['dictionaries'].each { |key, value|
           table = Hash.new
-          #table[:name] = (self.name.to_s.downcase + '_' + key.to_s.downcase)
+          table[:dictionary] = self.name.to_s.downcase
           table[:fields] = Hash.new
           table[:fields] = value['fields']
 
