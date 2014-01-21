@@ -45,6 +45,7 @@ module Dictionary
         self.config['dictionaries'].each { |key, value|
           table = Hash.new
           table[:dictionary] = self.name.to_s.downcase
+          table[:main] = value['main'] if value.has_key?('main')
           table[:fields] = Hash.new
           table[:fields] = value['fields']
 

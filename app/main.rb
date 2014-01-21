@@ -38,10 +38,10 @@ puts "Output config: #{conf.output_config}"
 #  #}
 #}
 
-#conf.table.each { |key, value|
-#  #puts "Table: #{key.to_s.pluralize} #{value}"
-#  DictionaryViewMigration.up(key.to_s.pluralize, value)
-#}
+conf.table.each { |key, value|
+  #puts "Table: #{key.to_s.pluralize} #{value}"
+  DictionaryViewMigration.up(key.to_s.pluralize, value)
+}
 
 #DictionaryTableMigration.up(table)
 #dictionary = create_activerecord_class(table)

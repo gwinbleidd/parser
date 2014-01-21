@@ -37,6 +37,7 @@ dictionaries:
       format: txt
       encoding: cp866
       delimiter: 179
+      main: yes
       fields:
         column1:
           name: accountNr
