@@ -3,7 +3,7 @@ module Dictionary
   require 'record'
 
   class Model
-    attr_accessor :objects, :main_view
+    attr_reader :objects, :main_view
 
     def initialize(table)
       attrs = Array.new
@@ -40,7 +40,7 @@ module Dictionary
 
         eval "#{table_name} = #{class_name}.new" or puts "Class instantiation failed"
 
-        self.objects.append obj
+        @objects.append obj
 
         if table_def.has_key?(:main)
           class_name = ('v_' + table_def[:dictionary].to_s).camelize
@@ -54,9 +54,21 @@ module Dictionary
 
           #eval "#{t_name} = #{class_name}.new" or puts "Class instantiation failed"
 
-          self.main_view = obj
+          @main_view = obj
         end
       }
+
+      @objects
+    end
+
+    private
+
+    def objects=(m)
+      @objects = m
+    end
+
+    def main_view=(m)
+      @main_view = m
     end
   end
 end
