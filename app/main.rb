@@ -6,6 +6,7 @@ require 'active_record'
 require 'yaml'
 require 'logger'
 require 'dictionary'
+require 'output_file'
 require '../db/dictionary_table_migration'
 require '../db/dictionary_uniq_const_migration'
 require '../db/dictionary_view_migration'
@@ -16,28 +17,32 @@ dict = Dictionary::Record.new(conf.config)
 
 records = dict.records
 
-mdls = Dictionary::Model.new(conf.table)
+#mdls = Dictionary::Model.new(conf.table)
+
+out = Dictionary::OutputFile.new(conf)
+
+out.start
 
 puts "Foreign keys: #{conf.foreign_keys}"
 puts "Key columns: #{conf.key_columns}"
 puts "Primary keys: #{conf.primary_keys}"
 puts "Output config: #{conf.output_config}"
 
-mdls.main_view.all.each { |rec|
-  record = Hash.new
-
-  conf.output_config['fields'].each { |key, value|
-    if value['from'].is_a?(String)
-      record[value['name'].to_sym] = eval 'rec.' + value['from'].to_s
-    elsif value['from'].is_a?(Array)
-      fields = Array.new
-      value['from'].each { |item| fields.push 'rec.' + item }
-      record[value['name'].to_sym] = eval fields.join "+\"#{value['delimiter']}\"+"
-    end
-  }
-
-  puts record
-}
+#mdls.main_view.all.each { |rec|
+#  record = Hash.new
+#
+#  conf.output_config['fields'].each { |key, value|
+#    if value['from'].is_a?(String)
+#      record[value['name'].to_sym] = eval 'rec.' + value['from'].to_s
+#    elsif value['from'].is_a?(Array)
+#      fields = Array.new
+#      value['from'].each { |item| fields.push 'rec.' + item }
+#      record[value['name'].to_sym] = eval fields.join "+\"#{value['delimiter']}\"+"
+#    end
+#  }
+#
+#  puts record
+#}
 
 #mdls.objects.each { |o|
 #  puts "#{o.superclass}, #{o.instance_methods.sort}, #{o.respond_to?(:city)}"

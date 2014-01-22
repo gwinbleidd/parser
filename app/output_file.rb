@@ -2,8 +2,6 @@ require 'dictionary'
 
 module Dictionary
   class OutputFile
-    attr_reader :output
-
     def initialize(conf)
       if conf.output_config['file'].has_key?('name') and conf.output_config['file'].has_key?('type')
         @output_file = File.expand_path "../dictionaries/" + "output/#{conf.output_config['file']['name']}.#{conf.output_config['file']['type']}"
@@ -29,11 +27,11 @@ module Dictionary
         record = Hash.new
         @config.output_config['fields'].each { |key, value|
           if value['from'].is_a?(String)
-            record[value['name'].to_sym] = eval('rec.' + value['from'].to_s).to_s.strip
+            record[value['name'].to_sym] = eval('rec.' + value['from'].to_s).to_s.strip.encode(@config.output_config['file']['encoding'])
           elsif value['from'].is_a?(Array)
             fields = Array.new
             value['from'].each { |item| fields.push 'rec.' + item }
-            record[value['name'].to_sym] = eval fields.join "+\"#{value['delimiter']}\"+"
+            record[value['name'].to_sym] = eval(fields.join "+\"#{value['delimiter']}\"+").to_s.strip.encode(@config.output_config['file']['encoding'])
           end
         }
 
@@ -50,10 +48,6 @@ module Dictionary
     end
 
     private
-    def output=(m)
-      @output = m
-    end
-
     def header(hash)
       hash.keys.join @sep
     end
