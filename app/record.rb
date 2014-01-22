@@ -1,12 +1,12 @@
 module Dictionary
   class Record
-    attr_accessor :records, :name
+    attr_reader :records, :name
 
     def initialize(config)
-      self.records = Hash.new
+      @records = Hash.new
 
       config['dictionaries'].each do |dictionary_key, dictionary_value|
-        self.records[dictionary_key.to_s.to_sym] = Hash.new
+        @records[dictionary_key.to_s.to_sym] = Hash.new
 
         dict_name = config['name']
 
@@ -19,13 +19,21 @@ module Dictionary
           filename.each { |line|
             index += 1
             line = line.to_s.encode('UTF-8', dictionary_value['encoding'].to_s).delete("\r\n")
-            self.records[dictionary_key.to_s.to_sym][index] = is_record(line, delimiter.encode('UTF-8'), dictionary_value['fields'])
+            @records[dictionary_key.to_s.to_sym][index] = is_record(line, delimiter.encode('UTF-8'), dictionary_value['fields'])
           }
         end
       end
     end
 
     private
+    def records=(m)
+      @records = m
+    end
+
+    def name=(m)
+      @name = m
+    end
+
     def is_record(line, delimiter, fields)
       splitted_line = split_line(line, delimiter)
 
