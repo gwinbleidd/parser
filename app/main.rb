@@ -8,15 +8,15 @@ require 'logger'
 require 'dictionary'
 require 'output_file'
 require 'input_file'
-require '../db/dictionary_table_migration'
-require '../db/dictionary_uniq_const_migration'
-require '../db/dictionary_view_migration'
+require 'dictionary_table_migration'
+require 'dictionary_uniq_const_migration'
+require 'dictionary_view_migration'
 
-conf = Dictionary::Config.new('fryazinovo')
-
-dict = Dictionary::Record.new(conf.config)
-
-records = dict.records
+#conf = Dictionary::Config.new('fryazinovo')
+#
+#dict = Dictionary::Record.new(conf.config)
+#
+#records = dict.records
 
 #mdls = Dictionary::Model.new(conf.table)
 
@@ -24,12 +24,14 @@ records = dict.records
 #
 #out.start
 
-puts "Foreign keys: #{conf.foreign_keys}"
-puts "Key columns: #{conf.key_columns}"
-puts "Primary keys: #{conf.primary_keys}"
-puts "Output config: #{conf.output_config}"
+#puts "Foreign keys: #{conf.foreign_keys}"
+#puts "Key columns: #{conf.key_columns}"
+#puts "Primary keys: #{conf.primary_keys}"
+#puts "Output config: #{conf.output_config}"
 
 inp = Dictionary::InputFile.new
+
+inp.finalize
 
 #mdls.main_view.all.each { |rec|
 #  record = Hash.new
@@ -48,18 +50,18 @@ inp = Dictionary::InputFile.new
 #}
 
 #mdls.objects.each { |o|
-#  puts "#{o.superclass}, #{o.instance_methods.sort}, #{o.respond_to?(:city)}"
-#  #records[o.to_s.downcase.sub(conf.name, '').to_sym].each { |k, v|
-#  #  rec = o.find_by v
-#  #
-#  #  puts "#{rec.fryazinovo_streets.streetName}" if o.to_s.downcase.sub(conf.name, '').to_s == 'abonent'
-#  #
-#  #  #if rec.nil?
-#  #  #  o.create v
-#  #  #else
-#  #  #  puts "#{rec.to_yaml}"
-#  #  #end
-#  #}
+#  records.each do |record_key, record_value|
+#    puts record_key
+#    record_value[o.to_s.downcase.sub(conf.name, '').to_sym].each { |k, v|
+#      rec = o.find_by v
+#
+#      if rec.nil?
+#        o.create v
+#      else
+#        puts rec
+#      end
+#    }
+#  end
 #}
 
 #conf.table.each { |key, value|

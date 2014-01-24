@@ -9,3 +9,5 @@ gem 'sqlite3'
 gem 'rails'
 
 gem 'load_path'
+
+gem 'rubyzip'
