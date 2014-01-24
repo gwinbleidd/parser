@@ -8,7 +8,7 @@ module Dictionary
 
       dict_name = config['name']
 
-      paths = Pathname.new(File.expand_path('../.') + '/dictionaries/' + dict_name).children.select { |c| c.directory? }.collect { |p| p.to_s }
+      paths = Pathname.new(File.expand_path('../.') + '/tmp/' + dict_name).children.select { |c| c.directory? }.collect { |p| p.to_s }
 
       paths.each do |path|
         @records[File.basename path.gsub('_', '.')] = Hash.new

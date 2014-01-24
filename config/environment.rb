@@ -5,8 +5,8 @@ require 'load_path'
 
 LoadPath.configure do
   add parent_directory('.', up: 1)
-  add path_builder { sibling_directory('app') }
-  add path_builder { sibling_directory('app').child_directory('models') }
+  add path_builder { sibling_directory('lib') }
+  add path_builder { sibling_directory('lib').child_directory('models') }
   add path_builder { sibling_directory('db') }
   add path_builder { sibling_directory('config') }
 end

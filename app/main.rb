@@ -1,5 +1,5 @@
 # encoding: utf-8
-require File.join(File.dirname(__FILE__), '../config/environment.rb')
+require File.join(File.dirname(__FILE__), 'config/environment.rb')
 
 require 'rubygems'
 require 'active_record'
@@ -12,24 +12,41 @@ require 'dictionary_table_migration'
 require 'dictionary_uniq_const_migration'
 require 'dictionary_view_migration'
 
-#conf = Dictionary::Config.new('fryazinovo')
-#
-#dict = Dictionary::Record.new(conf.config)
-#
-#records = dict.records
-
-#mdls = Dictionary::Model.new(conf.table)
-
-#out = Dictionary::OutputFile.new(conf)
-#
-#out.start
-
 #puts "Foreign keys: #{conf.foreign_keys}"
 #puts "Key columns: #{conf.key_columns}"
 #puts "Primary keys: #{conf.primary_keys}"
 #puts "Output config: #{conf.output_config}"
 
 inp = Dictionary::InputFile.new
+
+inp.config.each do |c|
+  conf = Dictionary::Config.new(c)
+
+  dict = Dictionary::Record.new(conf.config)
+
+  records = dict.records
+
+  mdls = Dictionary::Model.new(conf.table)
+
+  mdls.objects.each { |o|
+    records.each do |record_key, record_value|
+      puts record_key
+      record_value[o.to_s.downcase.sub(conf.name, '').to_sym].each { |k, v|
+        rec = o.find_by v
+
+        if rec.nil?
+          o.create v
+        else
+          puts rec
+        end
+      }
+    end
+  }
+
+  out = Dictionary::OutputFile.new(conf)
+
+  out.start
+end
 
 inp.finalize
 
@@ -47,21 +64,6 @@ inp.finalize
 #  }
 #
 #  puts record
-#}
-
-#mdls.objects.each { |o|
-#  records.each do |record_key, record_value|
-#    puts record_key
-#    record_value[o.to_s.downcase.sub(conf.name, '').to_sym].each { |k, v|
-#      rec = o.find_by v
-#
-#      if rec.nil?
-#        o.create v
-#      else
-#        puts rec
-#      end
-#    }
-#  end
 #}
 
 #conf.table.each { |key, value|
