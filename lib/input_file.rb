@@ -2,17 +2,21 @@ require 'zip/zip'
 
 module Dictionary
   class InputFile
+    attr_reader :config
+
     def initialize
-      @config||= YAML.load(File.read '..\config\dictionaries.yml')
+      conf||= YAML.load(File.read '../config/dictionaries.yml')
 
-      validate @config
+      validate conf
 
-      @files= Array.new
+      files= Array.new
 
-      @config.each do |key, value|
+      conf.each do |key, value|
+        @config = Array.new if @config.nil?
+        @config.push key
         Dir.entries('../dictionaries').each do |e|
           if e =~ value['filename']
-            @files.append File.expand_path(e, '../dictionaries')
+            files.append File.expand_path(e, '../dictionaries')
 
             case value['filetype']
               when "zip" then unzip((File.expand_path(e, '../dictionaries')), key)
@@ -23,17 +27,15 @@ module Dictionary
           end
         end
       end
+
+      @config
     end
 
     def finalize
-      @config||= YAML.load(File.read '..\config\dictionaries.yml')
-
-      puts @config
+      @config||= YAML.load(File.read '../config/dictionaries.yml')
 
       @config.each do |key, value|
-        Dir.entries(File.expand_path("../dictionaries/#{key}")).each do |e|
-          FileUtils.rm_rf File.join(File.expand_path("../dictionaries/#{key}"), e) if File.directory? File.join(File.expand_path("../dictionaries/#{key}"), e) and !(e =='.' || e == '..')
-        end
+        FileUtils.rm_rf File.join(File.expand_path("../tmp") ,key) if File.directory? File.join(File.expand_path("../tmp"), key)
       end
     end
 
@@ -41,7 +43,7 @@ module Dictionary
     def unzip(filename, path)
       Zip::ZipFile.open(filename) { |zip_file|
         zip_file.each { |f|
-          f_path=File.join(File.dirname(filename), path, File.basename(filename).gsub('.', '_'), f.name)
+          f_path=File.join(File.dirname(File.dirname(filename)), '/tmp', path, File.basename(filename).gsub('.', '_'), f.name)
           FileUtils.mkdir_p(File.dirname(f_path))
           zip_file.extract(f, f_path) unless File.exist?(f_path)
         }
@@ -49,7 +51,12 @@ module Dictionary
     end
 
     def validate(config)
+      #TODO: create config validation procedure
       config
+    end
+
+    def config=(m)
+      @config = m
     end
   end
 end
