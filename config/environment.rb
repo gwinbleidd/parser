@@ -4,9 +4,11 @@ require 'yaml'
 require 'load_path'
 
 LoadPath.configure do
+  add parent_directory('.', up: 1)
   add path_builder { sibling_directory('app') }
   add path_builder { sibling_directory('app').child_directory('models') }
   add path_builder { sibling_directory('db') }
+  add path_builder { sibling_directory('config') }
 end
 
 # Загружаем файл настройки соединения с БД

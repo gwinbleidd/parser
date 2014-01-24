@@ -1,35 +1,38 @@
 file:
-  name: fryazinovo
+  name: Fryazinovo
   type: csv
   delimiter: ';'
   encoding: cp1251
 fields:
+  column0:
+    name: AccountID
+    from: id
   column1:
-    name: accountNr
+    name: ACCOUNT
     from: accountNr
   column2:
-    name: fio
+    name: FIO
     from: [lastName, firstName, secondName]
     delimiter: ' '
   column3:
-    name: address
+    name: ADDRESS
     from: [cityName, streetName, houseNr, flatNr]
     delimiter: ', '
   column4:
-    name: debtSum
+    name: DEBT_SUM
     from: debtSum
   column5:
-    name: coldWater1
+    name: COLD_WATER1
     from: coldWater1
   column6:
-    name: coldWater2
+    name: COLD_WATER2
     from: coldWater2
   column7:
-    name: hotWater1
+    name: HOT_WATER1
     from: hotWater1
   column8:
-    name: hotWater2
+    name: HOT_WATER2
     from: hotWater2
   column9:
-    name: currAcc
+    name: CURR_ACC
     from: currAcc

@@ -11,8 +11,6 @@ module Dictionary
 
       @config = conf
 
-      puts @output_file
-
       if conf.output_config['file'].has_key?('name')
         @sep = conf.output_config['file']['delimiter']
       else @sep = nil

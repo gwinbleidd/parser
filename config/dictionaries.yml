@@ -1,2 +1,4 @@
-dictionary:
-  name: fryazinovo
+fryazinovo:
+  name: "ООО Фрязиново"
+  filename: ^S17734(\d\d)\.(\d\d\d)$
+  filetype: zip

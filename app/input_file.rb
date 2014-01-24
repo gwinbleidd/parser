@@ -3,6 +3,10 @@ module Dictionary
     def initialize
       @config||= YAML.load(File.read '..\config\dictionaries.yml')
 
+      @config.each do |key, value|
+
+      end
+
       validate @config
     end
 

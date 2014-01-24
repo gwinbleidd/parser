@@ -7,6 +7,7 @@ require 'yaml'
 require 'logger'
 require 'dictionary'
 require 'output_file'
+require 'input_file'
 require '../db/dictionary_table_migration'
 require '../db/dictionary_uniq_const_migration'
 require '../db/dictionary_view_migration'
@@ -19,14 +20,16 @@ records = dict.records
 
 #mdls = Dictionary::Model.new(conf.table)
 
-out = Dictionary::OutputFile.new(conf)
-
-out.start
+#out = Dictionary::OutputFile.new(conf)
+#
+#out.start
 
 puts "Foreign keys: #{conf.foreign_keys}"
 puts "Key columns: #{conf.key_columns}"
 puts "Primary keys: #{conf.primary_keys}"
 puts "Output config: #{conf.output_config}"
+
+inp = Dictionary::InputFile.new
 
 #mdls.main_view.all.each { |rec|
 #  record = Hash.new
