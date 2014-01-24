@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+
+params = ARGV.getopts('h', 's', 'a', 'c')
+
+if params['h']
+  puts "usage: #{File.basename(__FILE__)} [-h|-l|-i dictionary_name]"
+  puts "  -h = print this message"
+  puts "  -l = load existing files"
+  puts "  -i = initialize dictionary"
+end
