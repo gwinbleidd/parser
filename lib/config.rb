@@ -24,6 +24,9 @@ module Dictionary
       end
 
       @config||= YAML.load(File.read input_path(dict_name))
+
+      validate @config
+
       @config['name']= dict_name
 
       @name = dict_name
@@ -220,6 +223,11 @@ module Dictionary
 
     def table=(m)
       @table = m
+    end
+
+    def validate(config)
+      #TODO: method for validating config
+      config
     end
   end
 end
