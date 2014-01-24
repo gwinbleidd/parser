@@ -5,7 +5,7 @@ require 'dictionaries'
 require 'digest/md5'
 
 module Dictionary
-  class Config
+  class Configuration
     attr_reader :config, :output_config, :name, :primary_keys, :key_columns, :foreign_keys, :table
 
     def initialize(dict_name)
