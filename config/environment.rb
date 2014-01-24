@@ -11,6 +11,13 @@ LoadPath.configure do
   add path_builder { sibling_directory('config') }
 end
 
+require 'dictionary'
+require 'output_file'
+require 'input_file'
+require 'dictionary_table_migration'
+require 'dictionary_uniq_const_migration'
+require 'dictionary_view_migration'
+
 # Загружаем файл настройки соединения с БД
 dbconfig = YAML::load(File.open(File.join(File.dirname(__FILE__), 'database.yml')))
 

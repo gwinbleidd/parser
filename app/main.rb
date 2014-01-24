@@ -1,5 +1,5 @@
 # encoding: utf-8
-require File.join(File.dirname(__FILE__), '../config/environment.rb')
+require File.join(File.dirname(__FILE__), 'config/environment.rb')
 
 require 'rubygems'
 require 'active_record'
@@ -21,11 +21,6 @@ inp = Dictionary::InputFile.new
 
 inp.config.each do |c|
   conf = Dictionary::Configuration.new(c)
-
-  puts "Foreign keys: #{conf.foreign_keys}"
-  puts "Key columns: #{conf.key_columns}"
-  puts "Primary keys: #{conf.primary_keys}"
-  puts "Output config: #{conf.output_config}"
 
   dict = Dictionary::Record.new(conf.config)
 
@@ -49,8 +44,6 @@ inp.config.each do |c|
   }
 
   out = Dictionary::OutputFile.new(conf)
-
-  puts "--- Starting output"
 
   out.start
 end
