@@ -11,7 +11,7 @@ if params['h']
        "  -i = initialize dictionary"
 elsif params['i']
   puts "  Initializes new dictionary\n",
-       "   creates structurues in database"
+       "   creates structures in database"
 elsif params['l']
   puts "  Loads dictionary data in database\n",
        "   and creates output structured file\n",
