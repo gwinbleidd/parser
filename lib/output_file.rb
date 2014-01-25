@@ -17,9 +17,7 @@ module Dictionary
       end
     end
 
-    def start
-      mdls = Dictionary::Model.new(@config.table)
-
+    def start(mdls)
       records = Array.new
       mdls.main_view.all.each { |rec|
         record = Hash.new

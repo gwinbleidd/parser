@@ -5,6 +5,7 @@ module Dictionary
     attr_reader :config
 
     def initialize
+      Dictionary.logger.warn("Starting create InputFiles")
       conf||= YAML.load(File.read '../config/dictionaries.yml')
 
       validate conf

@@ -50,8 +50,6 @@ elsif params['l']
           if rec.nil?
             o.create v
           end
-
-
         }
       end
     }

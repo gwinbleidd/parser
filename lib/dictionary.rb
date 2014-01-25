@@ -2,10 +2,21 @@ module Dictionary
   require 'config'
   require 'record'
 
+  def logger
+    Dictionary.logger
+  end
+
+  # Global, memoized, lazy initialized instance of a logger
+  def self.logger
+    log_file = File.open("../log/debug.log", "a+")
+    @logger ||= Logger.new MultiIO.new(STDOUT, log_file)
+  end
+
   class Model
     attr_reader :objects, :main_view
 
     def initialize(table)
+      Dictionary.logger.warn("Starting create Models")
       attrs = Array.new
       self.objects = Array.new
 
@@ -52,7 +63,7 @@ module Dictionary
 
           obj = Object.const_set class_name, klass
 
-          #eval "#{t_name} = #{class_name}.new" or puts "Class instantiation failed"
+          eval "#{t_name} = #{class_name}.new" or puts "Class instantiation failed"
 
           @main_view = obj
         end
