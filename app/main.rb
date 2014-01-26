@@ -11,10 +11,10 @@ inp = Dictionary::InputFile.new
 inp.config.each do |c|
   conf = Dictionary::Configuration.new(c)
 
-  Dictionary.logger.warn "Foreign keys: #{conf.foreign_keys}"
-  Dictionary.logger.warn "Key columns: #{conf.key_columns}"
-  Dictionary.logger.warn "Primary keys: #{conf.primary_keys}"
-  Dictionary.logger.warn "Output config: #{conf.output_config}"
+  Dictionary.logger.debug "Foreign keys: #{conf.foreign_keys}"
+  Dictionary.logger.debug "Key columns: #{conf.key_columns}"
+  Dictionary.logger.debug "Primary keys: #{conf.primary_keys}"
+  Dictionary.logger.debug "Output config: #{conf.output_config}"
 
   dict = Dictionary::Record.new(conf.config)
 
@@ -34,22 +34,27 @@ inp.config.each do |c|
           mod = 1000
       end
 
-      i = 0
+      found = inserted = i = 0
 
-      record_value[o.to_s.downcase.sub(conf.name, '').to_sym].each { |k, v|
+      record_value[o.to_s.downcase.sub(conf.name, '').to_sym].each do |k, v|
         i += 1
-        if i == size
-          puts "#{o.to_s.gsub(conf.name.to_s.capitalize, '')}: Processed #{i} of #{size} records\n"
-          Dictionary.logger.warn("#{o.to_s.gsub(conf.name.to_s.capitalize, '')}: Processed #{i} of #{size} records")
-        else
-          print "Processing #{i} of #{size} records\r" if i % mod == 0
-        end
+        
         rec = o.find_by v
 
         if rec.nil?
           o.create v
+          inserted += 1
+        else
+          found += 1
         end
-      }
+
+        if i == size
+          puts "#{o.to_s.gsub(conf.name.to_s.capitalize, '')}: Processed #{i} of #{size} records\n"
+          Dictionary.logger.debug("#{o.to_s.gsub(conf.name.to_s.capitalize, '')}: Processed #{i} of #{size} records, inserted #{inserted}, found #{found}")
+        else
+          print "Processing #{i} of #{size} records\r" if i % mod == 0
+        end
+      end
     end
   }
 
