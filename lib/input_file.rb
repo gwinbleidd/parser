@@ -16,21 +16,28 @@ module Dictionary
 
     def start
       @files = Array.new
+      @dictionaries = Array.new if @dictionaries.nil?
 
       Dir.entries('../dictionaries').each do |e|
         Dictionary.logger.debug(" Processing file #{e}")
         @config.each do |key, value|
           if e =~ value['filename']
-            @dictionaries = Array.new if @dictionaries.nil?
-            @dictionaries.push key if @dictionaries.index(key).nil?
             Dictionary.logger.info(" Found file #{e}")
-            @files.append File.expand_path(e, '../dictionaries')
 
-            case value['filetype']
-              when "zip" then unzip((File.expand_path(e, '../dictionaries')), key)
-              else
-                Dictionary.logger.fatal "Unknown filetype #{filetype} in #{key}"
-                exit
+            if ProcessedFiles.find_by(:file_name => e) == nil
+              @dictionaries.push key if @dictionaries.index(key).nil?
+
+              @files.append File.expand_path(e, '../dictionaries')
+
+              case value['filetype']
+                when "zip" then
+                  unzip((File.expand_path(e, '../dictionaries')), key)
+                else
+                  Dictionary.logger.fatal "Unknown filetype #{filetype} in #{key}"
+                  exit
+              end
+            else
+              Dictionary.logger.info(" #{e} already processed")
             end
           end
         end
@@ -51,7 +58,7 @@ module Dictionary
       end
 
       @config.each do |key, value|
-        FileUtils.rm_rf File.join(File.expand_path("../tmp") ,key) if File.directory? File.join(File.expand_path("../tmp"), key)
+        FileUtils.rm_rf File.join(File.expand_path("../tmp"), key) if File.directory? File.join(File.expand_path("../tmp"), key)
       end
     end
 
