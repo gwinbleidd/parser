@@ -9,10 +9,10 @@ fields:
     from: id
   column1:
     name: ACCOUNT
-    from: OP_PA_CNT
+    from: op_pa_cnt
   column2:
     name: FIO
-    from: OP_PA_FIO
+    from: op_pa_fio
   column3:
     name: ADDRESS
-    from: OP_PA_ADR
+    from: op_pa_adr
