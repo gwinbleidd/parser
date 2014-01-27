@@ -9,6 +9,7 @@ module Dictionary
     attr_reader :config, :output_config, :name, :primary_keys, :key_columns, :foreign_keys, :table
 
     def initialize(dict_name)
+      Dictionary.logger.info("Starting create Config for #{dict_name}")
       dict_record = Dictionaries.find_by(:name => dict_name)
       if dict_record == nil
         dict_record = Dictionaries.new
@@ -55,7 +56,7 @@ module Dictionary
           if @primary_keys.has_key?(key)
             table[:pk] = Hash.new
             table[:pk] = @primary_keys[key][:pk].to_s
-          end
+          end unless @primary_keys.nil?
 
           if @foreign_keys.has_key?(key)
             unless table.has_key?(:fk)
@@ -69,7 +70,7 @@ module Dictionary
               table[:fk][k][:column_ref] = v[:column_ref].to_s
               table[:fk][k][:return] = v[:return].to_s
             }
-          end
+          end unless @foreign_keys.nil?
 
           if @key_columns.has_key?(key)
             unless table.has_key?(:ak)

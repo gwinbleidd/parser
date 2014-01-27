@@ -1,9 +1,13 @@
 class DictionaryTableMigration < ActiveRecord::Migration
   def self.up(name, fields)
-    create_table name.to_s.to_sym unless ActiveRecord::Base.connection.table_exists?(name.to_s.to_sym)
-    fields.each do |key, value|
-      unless ActiveRecord::Base.connection.column_exists?(name.to_s.to_sym, value['name'].to_s.to_sym, value['type'].to_s.to_sym)
-        add_column name.to_s.to_sym, value['name'].to_s.to_sym, value['type'].to_s.to_sym
+    unless ActiveRecord::Base.connection.table_exists?(name.to_s.to_sym)
+      Dictionary.logger.debug "Creating table #{name.to_s.to_sym}, #{fields}"
+      create_table name.to_s.to_sym
+      fields.each do |key, value|
+        Dictionary.logger.debug " Adding column #{value['name'].to_s.to_sym}: #{value['type'].to_s.to_sym}"
+        unless ActiveRecord::Base.connection.column_exists?(name.to_s.to_sym, value['name'].to_s.to_sym, value['type'].to_s.to_sym)
+          add_column name.to_s.to_sym, value['name'].to_s.to_sym, value['type'].to_s.to_sym
+        end
       end
     end
   end

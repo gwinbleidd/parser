@@ -1,3 +1,7 @@
 fryazinovo:
   filename: !ruby/regexp '/^S17734(\d\d)\.(\d\d\d)$/'
   filetype: zip
+
+gazpromche:
+  filename: !ruby/regexp '/^srg20(\d\d)(\d)\.(\d\d\d)$/'
+  filetype: zip

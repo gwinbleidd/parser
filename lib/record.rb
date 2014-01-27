@@ -3,6 +3,7 @@ module Dictionary
     attr_reader :records, :name
 
     def initialize(config)
+      Dictionary.logger.info "Starting create Records for #{config}"
       @records = Hash.new
       filename = nil
 
@@ -20,7 +21,7 @@ module Dictionary
             if File.exist?(path + '/' + dictionary_key.to_s + '.txt')
               filename = File.open(path.to_s + '/' + dictionary_key.to_s + '.txt')
             else
-              puts "File #{path.to_s + '/' + dictionary_key.to_s}.txt doesn\'t exist"
+              Dictionary.logger.error "File #{path.to_s + '/' + dictionary_key.to_s}.txt doesn\'t exist"
               exit
             end
 

@@ -5,24 +5,29 @@ module Dictionary
     attr_reader :config
 
     def initialize
-      Dictionary.logger.warn("Starting create InputFiles")
+      Dictionary.logger.info("Starting create InputFiles")
       conf||= YAML.load(File.read '../config/dictionaries.yml')
 
       validate conf
 
       files= Array.new
 
+      #TODO: неправильный цикл, переделать на один цикл по каталогу - много циклов по справочнику
+
       conf.each do |key, value|
+        Dictionary.logger.info(" InputFile -- #{key}, #{value}")
         @config = Array.new if @config.nil?
         @config.push key
         Dir.entries('../dictionaries').each do |e|
+          Dictionary.logger.debug(" Processing file #{e}")
           if e =~ value['filename']
+            Dictionary.logger.debug(" Found file #{e}")
             files.append File.expand_path(e, '../dictionaries')
 
             case value['filetype']
               when "zip" then unzip((File.expand_path(e, '../dictionaries')), key)
               else
-                puts "Unknown filetype #{filetype} in #{key}"
+                Dictionary.logger.error "Unknown filetype #{filetype} in #{key}"
                 exit
             end
           end

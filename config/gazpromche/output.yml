@@ -1,0 +1,18 @@
+file:
+  name: GazpromChe
+  type: csv
+  delimiter: ';'
+  encoding: cp1251
+fields:
+  column0:
+    name: AccountID
+    from: id
+  column1:
+    name: ACCOUNT
+    from: OP_PA_CNT
+  column2:
+    name: FIO
+    from: OP_PA_FIO
+  column3:
+    name: ADDRESS
+    from: OP_PA_ADR

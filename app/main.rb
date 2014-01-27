@@ -11,10 +11,10 @@ inp = Dictionary::InputFile.new
 inp.config.each do |c|
   conf = Dictionary::Configuration.new(c)
 
-  Dictionary.logger.debug "Foreign keys: #{conf.foreign_keys}"
-  Dictionary.logger.debug "Key columns: #{conf.key_columns}"
-  Dictionary.logger.debug "Primary keys: #{conf.primary_keys}"
-  Dictionary.logger.debug "Output config: #{conf.output_config}"
+  Dictionary.logger.info "Foreign keys: #{conf.foreign_keys}"
+  Dictionary.logger.info "Key columns: #{conf.key_columns}"
+  Dictionary.logger.info "Primary keys: #{conf.primary_keys}"
+  Dictionary.logger.info "Output config: #{conf.output_config}"
 
   dict = Dictionary::Record.new(conf.config)
 

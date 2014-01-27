@@ -3,6 +3,7 @@ require 'dictionary'
 module Dictionary
   class OutputFile
     def initialize(conf)
+      Dictionary.logger.new("Starting create OutputFile for #{conf}")
       if conf.output_config['file'].has_key?('name') and conf.output_config['file'].has_key?('type')
         @output_file = File.expand_path "../output/#{conf.output_config['file']['name']}.#{conf.output_config['file']['type']}"
       else
