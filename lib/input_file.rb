@@ -3,7 +3,7 @@ require 'processed_files'
 
 module Dictionary
   class InputFile
-    attr_reader :config, :files
+    attr_reader :config, :files, :dictionaries
 
     def initialize
       Dictionary.logger.info("Starting create InputFiles")
@@ -21,6 +21,8 @@ module Dictionary
         Dictionary.logger.debug(" Processing file #{e}")
         @config.each do |key, value|
           if e =~ value['filename']
+            @dictionaries = Array.new if @dictionaries.nil?
+            @dictionaries.push key if @dictionaries.index(key).nil?
             Dictionary.logger.info(" Found file #{e}")
             @files.append File.expand_path(e, '../dictionaries')
 
