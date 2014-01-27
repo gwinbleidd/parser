@@ -1,8 +1,9 @@
 require 'zip/zip'
+require 'processed_files'
 
 module Dictionary
   class InputFile
-    attr_reader :config
+    attr_reader :config, :files
 
     def initialize
       Dictionary.logger.info("Starting create InputFiles")
@@ -10,7 +11,7 @@ module Dictionary
 
       validate conf
 
-      files= Array.new
+      @files = Array.new
 
       #TODO: неправильный цикл, переделать на один цикл по каталогу - много циклов по справочнику
 
@@ -22,7 +23,7 @@ module Dictionary
           Dictionary.logger.debug(" Processing file #{e}")
           if e =~ value['filename']
             Dictionary.logger.debug(" Found file #{e}")
-            files.append File.expand_path(e, '../dictionaries')
+            @files.append File.expand_path(e, '../dictionaries')
 
             case value['filetype']
               when "zip" then unzip((File.expand_path(e, '../dictionaries')), key)
@@ -34,11 +35,18 @@ module Dictionary
         end
       end
 
+      @files
       @config
     end
 
     def finalize
       @config||= YAML.load(File.read '../config/dictionaries.yml')
+
+      unless @files.nil?
+        @files.each do |file|
+          ProcessedFiles.create(file_name: File.basename(file), file_md5: Digest::MD5.file(file).hexdigest.to_s)
+        end
+      end
 
       @config.each do |key, value|
         FileUtils.rm_rf File.join(File.expand_path("../tmp") ,key) if File.directory? File.join(File.expand_path("../tmp"), key)
@@ -63,6 +71,10 @@ module Dictionary
 
     def config=(m)
       @config = m
+    end
+
+    def files=(m)
+      @files = m
     end
   end
 end

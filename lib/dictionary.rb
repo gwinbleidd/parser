@@ -10,6 +10,8 @@ module Dictionary
   def self.logger
     log_file = File.open("../log/debug.log", "a+")
     @logger ||= Logger.new MultiIO.new(STDOUT, log_file)
+    @logger.level = Logger::INFO
+    @logger
   end
 
   class Model

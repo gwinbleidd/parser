@@ -23,7 +23,7 @@ require 'muti_io'
 dbconfig = YAML::load(File.open(File.join(File.dirname(__FILE__), 'database.yml')))
 
 # Ошибки работы с БД направим в стандартный поток (консоль)
-ActiveRecord::Base.logger = Logger.new("../log/db.log") # Simple logging utility. logger.rb -- standart lib
+ActiveRecord::Base.logger = Logger.new(File.expand_path(File.join(File.dirname(__FILE__), "../log/db.log"))) # Simple logging utility. logger.rb -- standart lib
 #ActiveRecord::Base.logger.level = Logger::WARN
 
 # Соединяемся с БД

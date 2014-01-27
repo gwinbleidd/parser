@@ -9,21 +9,21 @@ require 'logger'
 inp = Dictionary::InputFile.new
 
 inp.config.each do |c|
-  if c == 'gazpromche'
   conf = Dictionary::Configuration.new(c)
 
-  Dictionary.logger.info "Foreign keys: #{conf.foreign_keys}"
-  Dictionary.logger.info "Key columns: #{conf.key_columns}"
-  Dictionary.logger.info "Primary keys: #{conf.primary_keys}"
-  Dictionary.logger.info "Output config: #{conf.output_config}"
+  Dictionary.logger.info "Config: #{conf.table.to_yaml}" unless conf.table.nil?
+  Dictionary.logger.info "Foreign keys: #{conf.foreign_keys}" unless conf.foreign_keys.nil?
+  Dictionary.logger.info "Key columns: #{conf.key_columns}" unless conf.key_columns.nil?
+  Dictionary.logger.info "Primary keys: #{conf.primary_keys}" unless conf.primary_keys.nil?
+  Dictionary.logger.info "Output config: #{conf.output_config}" unless conf.output_config.nil?
 
   dict = Dictionary::Record.new(conf.config)
 
   records = dict.records
 
-  mdls = Dictionary::Model.new(conf.table)
+  models = Dictionary::Model.new(conf.table)
 
-  mdls.objects.each do |o|
+  models.objects.each do |o|
     records.each do |record_key, record_value|
       record_value[o.table_name.to_s.downcase.sub(conf.name + '_', '').to_sym].nil? ? size = 0 : size = record_value[o.table_name.to_s.downcase.sub(conf.name + '_', '').to_sym].size
 
@@ -55,7 +55,6 @@ inp.config.each do |c|
         end
 
         if i == size
-          puts "#{o.to_s.gsub(conf.name.to_s.capitalize, '')}: Processed #{i} of #{size} records\n"
           Dictionary.logger.info("#{o.to_s.gsub(conf.name.to_s.capitalize, '')}: Processed #{i} of #{size} records, inserted #{inserted}, found #{found}")
         else
           print "Processing #{i} of #{size} records\r" if i % mod == 0
@@ -66,8 +65,7 @@ inp.config.each do |c|
 
   out = Dictionary::OutputFile.new(conf)
 
-  out.start(mdls)
-  end
+  out.start(models)
 end
 
 inp.finalize
