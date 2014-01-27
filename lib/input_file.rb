@@ -3,23 +3,30 @@ require 'processed_files'
 
 module Dictionary
   class InputFile
-    attr_reader :config, :files
+    attr_reader :config, :files, :dictionaries
 
     def initialize
       Dictionary.logger.info("Starting create InputFiles")
-      conf||= YAML.load(File.read '../config/dictionaries.yml')
+      @config||= YAML.load(File.read '../config/dictionaries.yml')
 
       validate conf
 
+      @config.each do |key, value|
+        @dictionaries = Array.new if @config.nil?
+        @dictionaries.append key
+      end
+
+      @config
+    end
+
+    def start
       @files = Array.new
 
       #TODO: неправильный цикл, переделать на один цикл по каталогу - много циклов по справочнику
 
-      conf.each do |key, value|
+      Dir.entries('../dictionaries').each do |e|
         Dictionary.logger.info(" InputFile -- #{key}, #{value}")
-        @config = Array.new if @config.nil?
-        @config.push key
-        Dir.entries('../dictionaries').each do |e|
+        @config.each do |key, value|
           Dictionary.logger.debug(" Processing file #{e}")
           if e =~ value['filename']
             Dictionary.logger.debug(" Found file #{e}")
@@ -36,11 +43,10 @@ module Dictionary
       end
 
       @files
-      @config
     end
 
     def finalize
-      @config||= YAML.load(File.read '../config/dictionaries.yml')
+      @config||= YAML.load(File.read '../config/dictionaries.yml') unless @config.nil?
 
       unless @files.nil?
         @files.each do |file|
@@ -75,6 +81,10 @@ module Dictionary
 
     def files=(m)
       @files = m
+    end
+
+    def dictionaries=(m)
+      @dictionaries = m
     end
   end
 end
