@@ -17,3 +17,5 @@ inp.config.each do |c|
     DictionaryViewMigration.up(key.to_s.pluralize, value)
   }
 end
+
+inp.finalize

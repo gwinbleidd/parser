@@ -1,4 +1,6 @@
 module Dictionary
+  require 'dbf'
+
   class Record
     attr_reader :records, :name
 
@@ -15,9 +17,10 @@ module Dictionary
         @records[File.basename path.gsub('_', '.')] = Hash.new
 
         config['dictionaries'].each do |dictionary_key, dictionary_value|
-          @records[File.basename path.gsub('_', '.')][dictionary_key.to_s.to_sym] = Hash.new
+          @records[File.basename path.gsub('_', '.')][dictionary_key.to_s.downcase.to_sym] = Hash.new
 
           if dictionary_value['format'] == 'txt'
+            Dictionary.logger.debug " Processing text file for #{config}"
             if File.exist?(path + '/' + dictionary_key.to_s + '.txt')
               filename = File.open(path.to_s + '/' + dictionary_key.to_s + '.txt')
             else
@@ -33,6 +36,26 @@ module Dictionary
               index += 1
               line = line.to_s.encode('UTF-8', dictionary_value['encoding'].to_s).delete("\r\n")
               @records[File.basename path.gsub('_', '.')][dictionary_key.to_s.to_sym][index] = is_record(line, delimiter.encode('UTF-8'), dictionary_value['fields'])
+            end
+
+          elsif dictionary_value['format'] == 'dbf'
+            Dictionary.logger.debug " Processing DBase file for #{config}"
+            if File.exist?(path + '/' + dictionary_key.to_s + '.dbf')
+              Dictionary.logger.debug "   Filename #{path.to_s}/#{dictionary_key.to_s}.dbf"
+              filename = DBF::Table.new("#{path.to_s}/#{dictionary_key.to_s}.dbf", nil, dictionary_value['encoding'].to_s)
+            else
+              Dictionary.logger.error "File #{path.to_s + '/' + dictionary_key.to_s}.dbf doesn\'t exist"
+              exit
+            end
+
+            index = 0
+
+            filename.each do |record|
+              index += 1
+              record.attributes.each do |key, value|
+                @records[File.basename path.gsub('_', '.')][dictionary_key.to_s.downcase.to_sym][index] = Hash.new if @records[File.basename path.gsub('_', '.')][dictionary_key.to_s.downcase.to_sym][index].nil?
+                @records[File.basename path.gsub('_', '.')][dictionary_key.to_s.downcase.to_sym][index][key.to_s.downcase.to_sym.to_s] = value.to_s.encode( 'UTF-8', dictionary_value['encoding'])
+              end
             end
           end
         end

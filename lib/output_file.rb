@@ -3,7 +3,7 @@ require 'dictionary'
 module Dictionary
   class OutputFile
     def initialize(conf)
-      Dictionary.logger.new("Starting create OutputFile for #{conf}")
+      Dictionary.logger.info("Starting create OutputFile for #{conf.name}")
       if conf.output_config['file'].has_key?('name') and conf.output_config['file'].has_key?('type')
         @output_file = File.expand_path "../output/#{conf.output_config['file']['name']}.#{conf.output_config['file']['type']}"
       else
@@ -20,7 +20,7 @@ module Dictionary
 
     def start(mdls)
       records = Array.new
-      mdls.main_view.all.each { |rec|
+      mdls.main_view.all.each do |rec|
         record = Hash.new
         @config.output_config['fields'].each { |key, value|
           if value['from'].is_a?(String)
@@ -33,7 +33,7 @@ module Dictionary
         }
 
         records.append record
-      }
+      end
 
       File.open(@output_file, "w+") do |csv|
         csv.puts header(records.first)
@@ -46,7 +46,7 @@ module Dictionary
 
     private
     def header(hash)
-      hash.keys.join @sep
+      hash.keys.join @sep unless hash.nil?
     end
 
     def to_csv(hash)
