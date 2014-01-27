@@ -3,18 +3,13 @@ require 'processed_files'
 
 module Dictionary
   class InputFile
-    attr_reader :config, :files, :dictionaries
+    attr_reader :config, :files
 
     def initialize
       Dictionary.logger.info("Starting create InputFiles")
       @config||= YAML.load(File.read '../config/dictionaries.yml')
 
-      validate conf
-
-      @config.each do |key, value|
-        @dictionaries = Array.new if @config.nil?
-        @dictionaries.append key
-      end
+      validate @config
 
       @config
     end
@@ -22,20 +17,17 @@ module Dictionary
     def start
       @files = Array.new
 
-      #TODO: неправильный цикл, переделать на один цикл по каталогу - много циклов по справочнику
-
       Dir.entries('../dictionaries').each do |e|
-        Dictionary.logger.info(" InputFile -- #{key}, #{value}")
+        Dictionary.logger.debug(" Processing file #{e}")
         @config.each do |key, value|
-          Dictionary.logger.debug(" Processing file #{e}")
           if e =~ value['filename']
-            Dictionary.logger.debug(" Found file #{e}")
+            Dictionary.logger.info(" Found file #{e}")
             @files.append File.expand_path(e, '../dictionaries')
 
             case value['filetype']
               when "zip" then unzip((File.expand_path(e, '../dictionaries')), key)
               else
-                Dictionary.logger.error "Unknown filetype #{filetype} in #{key}"
+                Dictionary.logger.fatal "Unknown filetype #{filetype} in #{key}"
                 exit
             end
           end
@@ -48,7 +40,9 @@ module Dictionary
     def finalize
       @config||= YAML.load(File.read '../config/dictionaries.yml') unless @config.nil?
 
-      unless @files.nil?
+      if @files.nil?
+        Dictionary.logger.fatal "No file list"
+      else
         @files.each do |file|
           ProcessedFiles.create(file_name: File.basename(file), file_md5: Digest::MD5.file(file).hexdigest.to_s)
         end
