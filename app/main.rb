@@ -8,10 +8,12 @@ require 'logger'
 
 inp = Dictionary::InputFile.new
 
-inp.config.each do |c|
+inp.start
+
+inp.dictionaries.each do |c|
   conf = Dictionary::Configuration.new(c)
 
-  Dictionary.logger.info "Config: #{conf.table.to_yaml}" unless conf.table.nil?
+  Dictionary.logger.info "Config: #{conf.table}" unless conf.table.nil?
   Dictionary.logger.info "Foreign keys: #{conf.foreign_keys}" unless conf.foreign_keys.nil?
   Dictionary.logger.info "Key columns: #{conf.key_columns}" unless conf.key_columns.nil?
   Dictionary.logger.info "Primary keys: #{conf.primary_keys}" unless conf.primary_keys.nil?
