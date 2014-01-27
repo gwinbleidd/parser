@@ -8,7 +8,7 @@ require 'logger'
 
 inp = Dictionary::InputFile.new
 
-inp.config.each do |c|
+inp.config.each do |c, v|
   conf = Dictionary::Configuration.new(c)
 
   conf.table.each { |key, value|
