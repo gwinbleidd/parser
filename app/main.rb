@@ -21,12 +21,10 @@ inp.dictionaries.each do |c|
 
   dict = Dictionary::Record.new(conf.config)
 
-  records = dict.records
-
   models = Dictionary::Model.new(conf.table)
 
   models.objects.each do |o|
-    records.each do |record_key, record_value|
+    dict.records.each do |record_key, record_value|
       record_value[o.table_name.to_s.downcase.sub(conf.name + '_', '').to_sym].nil? ? size = 0 : size = record_value[o.table_name.to_s.downcase.sub(conf.name + '_', '').to_sym].size
 
       case size
