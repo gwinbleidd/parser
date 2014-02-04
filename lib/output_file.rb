@@ -24,7 +24,11 @@ module Dictionary
         record = Hash.new
         @config.output_config['fields'].each { |key, value|
           if value['from'].is_a?(String)
-            record[value['name'].to_sym] = eval('rec.' + value['from'].to_s).to_s.strip.encode(@config.output_config['file']['encoding'])
+            if value.has_key?('type')
+              record[value['name'].to_sym] = eval('rec.' + value['from'].to_s).to_i.to_s if value['type'] == 'number'
+            else
+              record[value['name'].to_sym] = eval('rec.' + value['from'].to_s).to_s.strip.encode(@config.output_config['file']['encoding'])
+            end
           elsif value['from'].is_a?(Array)
             fields = Array.new
             value['from'].each { |item| fields.push 'rec.' + item }
