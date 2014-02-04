@@ -1,0 +1,19 @@
+file:
+  name: GazpromVol
+  type: csv
+  delimiter: ';'
+  encoding: cp1251
+fields:
+  column0:
+    name: AccountID
+    from: id
+  column1:
+    name: ACCOUNT
+    from: op_pa_cnt
+    type: number
+  column2:
+    name: FIO
+    from: op_pa_fio
+  column3:
+    name: ADDRESS
+    from: op_pa_adr
