@@ -4,6 +4,11 @@ fryazinovo:
   type: clear
 
 gazpromche:
-  filename: !ruby/regexp '/^srg20(\d\d)(\d)\.(\d\d\d)$/'
+  filename: !ruby/regexp '/^srg10(\d\d)(\d)\.(\d\d\d)$/'
+  filetype: zip
+  type: clear
+
+gazpromvol:
+  filename: !ruby/regexp '/^srg00(\d\d)(\d)\.(\d\d\d)$/'
   filetype: zip
   type: clear
