@@ -1,2 +1,4 @@
-adapter: sqlite3
-database: ../db/development.sqlite3
+adapter: oracle_enhanced
+database: orcl
+username: test
+password: test

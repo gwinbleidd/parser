@@ -21,11 +21,7 @@ class DictionaryViewMigration < ActiveRecord::Migration
       end
 
       execute <<-SQL
-        DROP VIEW IF EXISTS v_#{table[:dictionary].to_s.pluralize}
-      SQL
-
-      execute <<-SQL
-        CREATE VIEW v_#{table[:dictionary].to_s.pluralize} AS
+        CREATE OR REPLACE FORCE VIEW v_#{table[:dictionary].to_s.pluralize} AS
         SELECT id, #{flds.join ', '}
         FROM #{name} a
       SQL

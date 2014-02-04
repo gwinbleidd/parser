@@ -11,3 +11,6 @@ gem 'rails'
 gem 'load_path'
 
 gem 'rubyzip'
+
+gem 'activerecord-oracle_enhanced-adapter'
+gem 'ruby-oci8'
