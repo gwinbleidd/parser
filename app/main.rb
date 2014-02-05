@@ -50,19 +50,13 @@ inp.dictionaries.each do |c|
             record_value[o.table_name.to_s.downcase.sub(conf.name + '_', '').to_sym].each do |k, v|
               i += 1
 
-              rec = o.find_by v
-
-              if rec.nil?
-                o.create v
-                inserted += 1
-              else
-                found += 1
-              end
+              o.create v
+              inserted += 1
 
               if i == size
                 Dictionary.logger.info("#{o.to_s.gsub(conf.name.to_s.capitalize, '')}: Processed #{i} of #{size} records, inserted #{inserted}, found #{found}")
               else
-                print "Processing #{i} of #{size} records\r" if i % mod == 0
+                print "Processing #{i} of #{size} records\r" if i % mod == 0 or i == 1
               end
             end unless record_value[o.table_name.to_s.downcase.sub(conf.name + '_', '').to_sym].nil?
           end
