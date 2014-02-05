@@ -8,12 +8,12 @@ fields:
     name: AccountID
     from: id
   column1:
-    name: ACCOUNT
+    name: Account
     from: op_pa_cnt
     type: number
   column2:
-    name: FIO
+    name: Name
     from: op_pa_fio
   column3:
-    name: ADDRESS
+    name: Address
     from: op_pa_adr
