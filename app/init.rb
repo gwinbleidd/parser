@@ -12,9 +12,9 @@ inp.config.each do |c, v|
   conf = Dictionary::Configuration.new(c)
 
   conf.table.each { |key, value|
-    #Dictionary.logger.info "Table: #{key.to_s.pluralize}, #{value}"
-    #DictionaryTableMigration.up(key.to_s.pluralize, value[:fields])
-    #DictionaryViewMigration.up(key.to_s.pluralize, value)
+    Dictionary.logger.info "Table: #{key.to_s.pluralize}, #{value}"
+    DictionaryTableMigration.up(key.to_s.pluralize, value[:fields])
+    DictionaryViewMigration.up(key.to_s.pluralize, value)
   }
 
   DictionaryUniqConstMigration.up(conf.table) unless conf.table.nil?
