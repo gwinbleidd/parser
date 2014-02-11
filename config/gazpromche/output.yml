@@ -10,7 +10,6 @@ fields:
   column1:
     name: Account
     from: op_pa_cnt
-    type: number
   column2:
     name: Name
     from: op_pa_fio

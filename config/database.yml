@@ -1,4 +1,4 @@
 adapter: oracle_enhanced
-database: orcl
+database: tvista
 username: test
 password: test
