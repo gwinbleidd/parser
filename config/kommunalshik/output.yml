@@ -1,0 +1,38 @@
+file:
+  name: Kommunalshik
+  type: csv
+  delimiter: ';'
+  encoding: cp1251
+fields:
+  column0:
+    name: AccountID
+    from: id
+  column1:
+    name: ACCOUNT
+    from: accountNr
+  column2:
+    name: FIO
+    from: [lastName, firstName, secondName]
+    delimiter: ' '
+  column3:
+    name: ADDRESS
+    from: [cityName, streetName, houseNr, flatNr]
+    delimiter: ', '
+  column4:
+    name: DEBT_SUM
+    from: debtSum
+  column5:
+    name: COLD_WATER1
+    from: coldWater1
+  column6:
+    name: COLD_WATER2
+    from: coldWater2
+  column7:
+    name: HOT_WATER1
+    from: hotWater1
+  column8:
+    name: HOT_WATER2
+    from: hotWater2
+  column9:
+    name: CURR_ACC
+    from: currAcc

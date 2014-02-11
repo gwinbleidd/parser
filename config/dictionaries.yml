@@ -12,3 +12,8 @@ gazpromvol:
   filename: !ruby/regexp '/^srg00(\d\d)(\d)\.(\d\d\d)$/'
   filetype: zip
   type: clear
+
+kommunalshik:
+  filename: !ruby/regexp '/^S14525(\d\d)\.(\d\d\d)$/'
+  filetype: zip
+  type: clear
