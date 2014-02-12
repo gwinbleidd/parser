@@ -1,13 +1,10 @@
 class DictionaryViewMigration < ActiveRecord::Migration
   def self.up(name, table)
-    puts table
-
     if table.has_key?(:main) and table[:main]
-      puts "\n #{name}"
       flds = Array.new
 
       table[:fields].each { |k, v|
-        flds.append v['name'].to_s
+        flds.append "#{v['name'].to_s}"
       }
 
       if table.has_key?(:fk)
@@ -22,7 +19,7 @@ class DictionaryViewMigration < ActiveRecord::Migration
 
       execute <<-SQL
         CREATE OR REPLACE FORCE VIEW v_#{table[:dictionary].to_s.pluralize} AS
-        SELECT id, #{flds.join ', '}
+        SELECT ID, #{flds.join ', '}
         FROM #{name} a
       SQL
     end

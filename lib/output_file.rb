@@ -31,8 +31,8 @@ module Dictionary
             end
           elsif value['from'].is_a?(Array)
             fields = Array.new
-            value['from'].each { |item| fields.push 'rec.' + item }
-            record[value['name'].to_sym] = eval(fields.join "+\"#{value['delimiter']}\"+").to_s.strip.encode(@config.output_config['file']['encoding'])
+            value['from'].each { |item| fields.push eval('rec.' + item).to_s.encode("UTF-8") }
+            record[value['name'].to_sym] = fields.join("#{value['delimiter']}").to_s.strip.encode(@config.output_config['file']['encoding'])
           end
         }
 
