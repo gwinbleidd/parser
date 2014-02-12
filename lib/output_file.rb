@@ -29,6 +29,14 @@ module Dictionary
             else
               record[value['name'].to_sym] = eval('rec.' + value['from'].to_s).to_s.strip.encode(@config.output_config['file']['encoding'])
             end
+
+            if value.has_key?('replace')
+              value['replace'].each do |k,v|
+                if eval('rec.' + value['from'].to_s).to_s.strip.encode(@config.output_config['file']['encoding']) == v.to_s.strip.encode(@config.output_config['file']['encoding'])
+                  record[value['name'].to_sym] = k.to_s.strip.encode(@config.output_config['file']['encoding'])
+                end
+              end
+            end
           elsif value['from'].is_a?(Array)
             fields = Array.new
             value['from'].each { |item| fields.push eval('rec.' + item).to_s.encode("UTF-8") }
