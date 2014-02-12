@@ -8,31 +8,31 @@ fields:
     name: AccountID
     from: id
   column1:
-    name: ACCOUNT
+    name: Account
     from: accountNr
   column2:
-    name: FIO
+    name: Name
     from: [lastName, firstName, secondName]
     delimiter: ' '
   column3:
-    name: ADDRESS
+    name: Address
     from: [cityName, streetName, houseNr, flatNr]
     delimiter: ', '
   column4:
-    name: DEBT_SUM
+    name: Debt_sum
     from: debtSum
   column5:
-    name: COLD_WATER1
+    name: Cold_water1
     from: coldWater1
   column6:
-    name: COLD_WATER2
+    name: Cold_water2
     from: coldWater2
   column7:
-    name: HOT_WATER1
+    name: Hot_water1
     from: hotWater1
   column8:
-    name: HOT_WATER2
+    name: Hot_water2
     from: hotWater2
   column9:
-    name: CURR_ACC
+    name: Curr_acc
     from: currAcc
