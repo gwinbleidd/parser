@@ -26,6 +26,8 @@ module Dictionary
           if value['from'].is_a?(String)
             if value.has_key?('type')
               record[value['name'].to_sym] = eval('rec.' + value['from'].to_s).to_i.to_s if value['type'] == 'number'
+              record[value['name'].to_sym] = eval('rec.' + value['from'].to_s).to_f.to_s if value['type'] == 'currency'
+              record[value['name'].to_sym] = eval('rec.' + value['from'].to_s).to_f.to_s if value['type'] == 'float'
             else
               record[value['name'].to_sym] = eval('rec.' + value['from'].to_s).to_s.strip.encode(@config.output_config['file']['encoding'])
             end
