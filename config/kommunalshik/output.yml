@@ -21,19 +21,27 @@ fields:
   column4:
     name: Debt_sum
     from: debtSum
+    type: currency
   column5:
     name: Cold_water1
     from: coldWater1
+    type: float
   column6:
     name: Cold_water2
     from: coldWater2
+    type: float
   column7:
     name: Hot_water1
     from: hotWater1
+    type: float
   column8:
     name: Hot_water2
     from: hotWater2
+    type: float
   column9:
+    name: Curr_acc
+    from: currAcc
+  column10:
     name: ServiceID
     from: currAcc
     replace: {931: 40702810812000009419, 955: 40702810512000008545}
