@@ -27,3 +27,8 @@ vasplus:
   filename: !ruby/regexp '/^S50232(\d\d)\.(\d\d\d)$/'
   filetype: zip
   type: clear
+
+jss:
+  filename: !ruby/regexp '/^S15413(\d\d\d)\.(\d\d\d)$/'
+  filetype: zip
+  type: clear
