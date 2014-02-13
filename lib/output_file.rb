@@ -43,6 +43,8 @@ module Dictionary
             fields = Array.new
             value['from'].each { |item| fields.push eval('rec.' + item).to_s.encode("UTF-8") }
             record[value['name'].to_sym] = fields.join("#{value['delimiter']}").to_s.strip.encode(@config.output_config['file']['encoding'])
+          elsif value.has_key?('const')
+            record[value['name'].to_sym] = value['const'].to_s
           end
         }
 

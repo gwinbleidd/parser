@@ -17,3 +17,13 @@ kommunalshik:
   filename: !ruby/regexp '/^S14525(\d\d)\.(\d\d\d)$/'
   filetype: zip
   type: clear
+
+vas:
+  filename: !ruby/regexp '/^S53353(\d\d)\.(\d\d\d)$/'
+  filetype: zip
+  type: clear
+
+vasplus:
+  filename: !ruby/regexp '/^S50232(\d\d)\.(\d\d\d)$/'
+  filetype: zip
+  type: clear
