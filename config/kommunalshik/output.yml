@@ -19,7 +19,7 @@ fields:
     from: [cityName, streetName, houseNr, flatNr]
     delimiter: ', '
   column4:
-    name: Debt_sum
+    name: Debt_summ
     from: debtSum
     type: currency
   column5:
