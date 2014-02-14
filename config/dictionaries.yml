@@ -42,3 +42,13 @@ stm:
   filename: !ruby/regexp '/^S05120(\d\d)\.(\d{1,3})$/'
   filetype: zip
   type: clear
+
+stm1:
+  filename: !ruby/regexp '/^S06850(\d\d)\.(\d{1,3})$/'
+  filetype: zip
+  type: clear
+
+souz:
+  filename: !ruby/regexp '/^S17338(\d\d)\.(\d{1,3})$/'
+  filetype: zip
+  type: clear
