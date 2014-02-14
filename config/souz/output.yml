@@ -43,4 +43,5 @@ fields:
     from: currAcc
   column10:
     name: ServiceID
-    const: 952
+    from: currAcc
+    replace: {956: 40702810312000004590, 952: 40702810312000004532}
