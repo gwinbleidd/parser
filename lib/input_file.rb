@@ -39,7 +39,7 @@ module Dictionary
 
               Dictionary.logger.info(" #{e} belongs to #{key}")
             else
-              Dictionary.logger.info(" #{e} belonging by #{key} already processed")
+              Dictionary.logger.info(" #{e} belonging to #{key} already processed")
             end
           end
         end
