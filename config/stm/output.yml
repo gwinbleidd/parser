@@ -1,5 +1,5 @@
 file:
-  name: VAS
+  name: STM
   type: csv
   delimiter: ';'
   encoding: cp1251
