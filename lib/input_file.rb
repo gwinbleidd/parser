@@ -36,8 +36,10 @@ module Dictionary
                   Dictionary.logger.fatal "Unknown filetype #{filetype} in #{key}"
                   exit
               end
+
+              Dictionary.logger.info(" #{e} belongs to #{key}")
             else
-              Dictionary.logger.info(" #{e} already processed")
+              Dictionary.logger.info(" #{e} belonging by #{key} already processed")
             end
           end
         end
