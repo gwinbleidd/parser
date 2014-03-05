@@ -38,6 +38,11 @@ uknt:
   filetype: zip
   type: clear
 
+uont:
+  filename: !ruby/regexp '/^S17964(\d\d)\.(\d{1,3})$/'
+  filetype: zip
+  type: clear
+
 stm:
   filename: !ruby/regexp '/^S05120(\d\d)\.(\d{1,3})$/'
   filetype: zip
