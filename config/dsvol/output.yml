@@ -1,0 +1,30 @@
+file:
+  name: DSVol
+  type: csv
+  delimiter: ';'
+  encoding: cp1251
+fields:
+  column0:
+    name: AccountID
+    from: id
+  column1:
+    name: Account
+    from: accountNr
+  column2:
+    name: FIO
+    from: FIO
+  column3:
+    name: Curr_acc
+    from: currAcc
+  column4:
+    name: INN
+    from: INN
+  column5:
+    name: KPP
+    from: KPP
+  column6:
+    name: OKATO
+    from: OKATO
+  column7:
+    name: KBK
+    from: KBK

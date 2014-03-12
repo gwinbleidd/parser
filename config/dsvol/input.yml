@@ -1,0 +1,45 @@
+dictionaries:
+  abonent:
+      format: txt
+      encoding: cp866
+      delimiter: 179
+      main: yes
+      fields:
+        column1:
+          name: companyID
+          type: string
+          length: 9
+          changeable: yes
+        column2:
+          name: companyName
+          type: string
+          changeable: yes
+        column3:
+          name: INN
+          type: string
+          changeable: yes
+        column4:
+          name: KPP
+          type: string
+          changeable: yes
+        column5:
+          name: OKATO
+          type: string
+          changeable: yes
+        column6:
+          name: currAcc
+          type: string
+          changeable: yes
+        column7:
+          name: KBK
+          type: string
+          changeable: yes
+        column8:
+          name: FIO
+          type: string
+          changeable: yes
+        column9:
+          name: accountNr
+          type: string
+          length: 10
+          changeable: yes
