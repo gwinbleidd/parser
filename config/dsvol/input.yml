@@ -2,7 +2,7 @@ dictionaries:
   abonent:
       format: txt
       encoding: cp866
-      delimiter: 179
+      delimiter: 124
       main: yes
       fields:
         column1:
@@ -15,15 +15,15 @@ dictionaries:
           type: string
           changeable: yes
         column3:
-          name: INN
+          name: inn
           type: string
           changeable: yes
         column4:
-          name: KPP
+          name: kpp
           type: string
           changeable: yes
         column5:
-          name: OKATO
+          name: okato
           type: string
           changeable: yes
         column6:
@@ -31,11 +31,11 @@ dictionaries:
           type: string
           changeable: yes
         column7:
-          name: KBK
+          name: kbk
           type: string
           changeable: yes
         column8:
-          name: FIO
+          name: fio
           type: string
           changeable: yes
         column9:

@@ -8,23 +8,26 @@ fields:
     name: AccountID
     from: id
   column1:
+    name: Dsname
+    from: companyName
+  column2:
     name: Account
     from: accountNr
-  column2:
-    name: FIO
-    from: FIO
   column3:
+    name: FIO
+    from: fio
+  column4:
     name: Curr_acc
     from: currAcc
-  column4:
-    name: INN
-    from: INN
   column5:
-    name: KPP
-    from: KPP
+    name: INN
+    from: inn
   column6:
-    name: OKATO
-    from: OKATO
+    name: KPP
+    from: kpp
   column7:
+    name: OKATO
+    from: okato
+  column8:
     name: KBK
-    from: KBK
+    from: kbk
