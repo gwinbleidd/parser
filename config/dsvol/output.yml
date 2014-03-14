@@ -8,26 +8,32 @@ fields:
     name: AccountID
     from: id
   column1:
+    name: Dscode
+    from: companyID
+  column2:
     name: Dsname
     from: inn
-  column2:
+  column3:
     name: Account
     from: accountNr
-  column3:
+  column4:
     name: FIO
     from: fio
-  column4:
+  column5:
     name: Curr_acc
     from: currAcc
-  column5:
+  column6:
     name: INN
     from: inn
-  column6:
+  column7:
     name: KPP
     from: kpp
-  column7:
+  column8:
     name: OKATO
     from: okato
-  column8:
+  column9:
     name: KBK
     from: kbk
+  column10:
+    name: ServiceID
+    const: 701
