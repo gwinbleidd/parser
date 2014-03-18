@@ -14,26 +14,29 @@ fields:
     name: Dsname
     from: inn
   column3:
+    name: Ds
+    from: companyName
+  column4:
     name: Account
     from: accountNr
-  column4:
+  column5:
     name: FIO
     from: fio
-  column5:
+  column6:
     name: Curr_acc
     from: currAcc
-  column6:
+  column7:
     name: INN
     from: inn
-  column7:
+  column8:
     name: KPP
     from: kpp
-  column8:
+  column9:
     name: OKATO
     from: okato
-  column9:
+  column10:
     name: KBK
     from: kbk
-  column10:
+  column11:
     name: ServiceID
     const: 701
