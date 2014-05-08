@@ -31,11 +31,11 @@ elsif params['l']
   inp.dictionaries.each do |c|
     conf = Dictionary::Configuration.new(c)
 
-    Dictionary.logger.info "Config: #{conf.table}" unless conf.table.nil?
-    Dictionary.logger.info "Foreign keys: #{conf.foreign_keys}" unless conf.foreign_keys.nil?
-    Dictionary.logger.info "Key columns: #{conf.key_columns}" unless conf.key_columns.nil?
-    Dictionary.logger.info "Primary keys: #{conf.primary_keys}" unless conf.primary_keys.nil?
-    Dictionary.logger.info "Output config: #{conf.output_config}" unless conf.output_config.nil?
+    Dictionary.logger.debug "Config: #{conf.table}" unless conf.table.nil?
+    Dictionary.logger.debug "Foreign keys: #{conf.foreign_keys}" unless conf.foreign_keys.nil?
+    Dictionary.logger.debug "Key columns: #{conf.key_columns}" unless conf.key_columns.nil?
+    Dictionary.logger.debug "Primary keys: #{conf.primary_keys}" unless conf.primary_keys.nil?
+    Dictionary.logger.debug "Output config: #{conf.output_config}" unless conf.output_config.nil?
 
     dict = Dictionary::Record.new(conf.config)
 

@@ -18,7 +18,7 @@ module Dictionary
     attr_reader :objects, :main_view
 
     def initialize(table)
-      Dictionary.logger.info("Starting create Models for #{table}")
+      Dictionary.logger.debug("Starting create Models for #{table}")
       attrs = Array.new
       self.objects = Array.new
 
