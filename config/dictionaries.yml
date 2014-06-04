@@ -34,12 +34,12 @@ jss:
   type: clear
 
 uknt:
-  filename: !ruby/regexp '/^S17162(\d\d)\.(\d{1,3})$/'
+  filename: !ruby/regexp '/^S39080(\d\d)\.(\d{1,3})$/'
   filetype: zip
   type: clear
 
 uont:
-  filename: !ruby/regexp '/^S17964(\d\d)\.(\d{1,3})$/'
+  filename: !ruby/regexp '/^S40080(\d\d)\.(\d{1,3})$/'
   filetype: zip
   type: clear
 
