@@ -14,7 +14,7 @@ fields:
     name: Account
     from: curr_acc
   column3:
-    name: Debt
+    name: Debt_summ
     from: debt
   column4:
     name: ServiceID
