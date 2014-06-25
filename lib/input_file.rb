@@ -23,7 +23,7 @@ module Dictionary
           if e =~ value['filename']
             Dictionary.logger.info(" Found file #{e}")
 
-            @files = Array.new unless @files.nil?
+            @files = Array.new if @files.nil?
 
             if ProcessedFiles.find_by(:file_name => e) == nil
               @dictionaries.push key if @dictionaries.index(key).nil?
@@ -43,7 +43,7 @@ module Dictionary
               Dictionary.logger.info(" #{e} belongs to #{key}")
             else
               Dictionary.logger.info(" #{e} belonging to #{key} already processed")
-              @processed_files = Array.new unless @processed_files.nil?
+              @processed_files = Array.new if @processed_files.nil?
               @processed_files.append File.expand_path(e, '../dictionaries')
             end
           end
