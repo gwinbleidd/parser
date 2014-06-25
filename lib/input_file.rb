@@ -31,7 +31,9 @@ module Dictionary
 
               case value['filetype']
                 when "zip" then
-                  unzip((File.expand_path(e, '../dictionaries')), key)
+                  unzip(File.expand_path(e, '../dictionaries'), key)
+                when "text" then
+                  copy(File.expand_path(e, '../dictionaries'), key)
                 else
                   Dictionary.logger.fatal "Unknown filetype #{filetype} in #{key}"
                   exit
@@ -65,6 +67,12 @@ module Dictionary
     end
 
     private
+    def copy(filename, path)
+      f_path=File.join(File.dirname(File.dirname(filename)), '/tmp', path, File.basename(filename).gsub('.', '_'), 'file.txt')
+      FileUtils.mkdir_p(File.dirname(f_path))
+      FileUtils.copy(filename, f_path)
+    end
+
     def unzip(filename, path)
       Zip::ZipFile.open(filename) { |zip_file|
         zip_file.each { |f|
