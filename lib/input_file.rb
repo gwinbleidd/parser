@@ -6,7 +6,6 @@ module Dictionary
     attr_reader :config, :files, :dictionaries
 
     def initialize
-      Dictionary.logger.info("Starting create InputFiles")
       @config||= YAML.load(File.read '../config/dictionaries.yml')
 
       validate @config
@@ -15,14 +14,16 @@ module Dictionary
     end
 
     def start
-      @files = Array.new
       @dictionaries = Array.new if @dictionaries.nil?
 
+      Dictionary.logger.info("Start working")
+
       Dir.entries('../dictionaries').each do |e|
-        Dictionary.logger.debug(" Processing file #{e}")
         @config.each do |key, value|
           if e =~ value['filename']
             Dictionary.logger.info(" Found file #{e}")
+
+            @files = Array.new unless @files.nil?
 
             if ProcessedFiles.find_by(:file_name => e) == nil
               @dictionaries.push key if @dictionaries.index(key).nil?
@@ -42,22 +43,31 @@ module Dictionary
               Dictionary.logger.info(" #{e} belongs to #{key}")
             else
               Dictionary.logger.info(" #{e} belonging to #{key} already processed")
+              @processed_files = Array.new unless @processed_files.nil?
+              @processed_files.append File.expand_path(e, '../dictionaries')
             end
           end
         end
       end
 
-      @files
+      if @files.nil?
+        Dictionary.logger.info("No new files found")
+      end
     end
 
     def finalize
       @config||= YAML.load(File.read '../config/dictionaries.yml') unless @config.nil?
 
-      if @files.nil?
-        Dictionary.logger.fatal "No file list"
-      else
+      unless @files.nil?
         @files.each do |file|
           ProcessedFiles.create(file_name: File.basename(file), file_md5: Digest::MD5.file(file).hexdigest.to_s)
+          FileUtils.move(file, File.join(File.dirname(file), 'processed', File.basename(file)))
+        end
+      end
+
+      unless @processed_files.nil?
+        @processed_files.each do |file|
+          FileUtils.move(file, File.join(File.dirname(file), 'processed', File.basename(file)))
         end
       end
 
