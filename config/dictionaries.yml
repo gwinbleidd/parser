@@ -82,3 +82,8 @@ vsc:
   filename: !ruby/regexp '/^SVSC(\d\d\d)\.(\d{1,3})$/'
   filetype: text
   type: clear
+
+jeuk:
+  filename: !ruby/regexp '/^S1584(\d\d)\.(\d{1,3})$/'
+  filetype: zip
+  type: clear
