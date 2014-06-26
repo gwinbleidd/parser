@@ -19,7 +19,7 @@ module Dictionary
         config['dictionaries'].each do |dictionary_key, dictionary_value|
           @records[File.basename path.gsub('_', '.')][dictionary_key.to_s.downcase.pluralize.to_sym] = Hash.new
 
-          config['dictionaries']['file'].has_key?('startfrom') ? start = config['dictionaries']['file']['startfrom'] : start = 1
+          dictionary_value.has_key?('startfrom') ? start = dictionary_value['startfrom'] : start = 1
 
           if dictionary_value['format'] == 'txt'
             Dictionary.logger.debug " Processing text file for #{config}"
