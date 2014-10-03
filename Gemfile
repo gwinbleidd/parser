@@ -12,5 +12,5 @@ gem 'load_path'
 
 gem 'rubyzip'
 
-gem 'activerecord-oracle_enhanced-adapter'
-gem 'ruby-oci8'
+gem "activerecord-oracle_enhanced-adapter", "~> 1.5.0"
+gem 'ruby-oci8', '~> 2.1.0'
