@@ -44,4 +44,4 @@ fields:
   column10:
     name: ServiceID
     from: currAcc
-    replace: {971: 40702810612000103670}
+    replace: {971: 40702810100000000650}
