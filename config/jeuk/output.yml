@@ -43,5 +43,4 @@ fields:
     from: currAcc
   column10:
     name: ServiceID
-    from: currAcc
     const: 971
