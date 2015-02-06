@@ -37,8 +37,8 @@ module Dictionary
             filename.each do |line|
               index += 1
               if index >= start
-                line = line.to_s.encode('UTF-8', dictionary_value['encoding'].to_s).delete("\r\n")
-                @records[File.basename path.gsub('_', '.')][dictionary_key.to_s.downcase.pluralize.to_sym][index] = is_record(line, delimiter.encode('UTF-8'), dictionary_value['fields'])
+                line = line.to_s.encode('UTF-8', dictionary_value['encoding'].to_s)
+                @records[File.basename path.gsub('_', '.')][dictionary_key.to_s.downcase.pluralize.to_sym][index] = is_record(line, delimiter.encode('UTF-8'), dictionary_value['fields']).delete("\r\n")
               end
             end
 
@@ -80,6 +80,8 @@ module Dictionary
     def is_record(line, delimiter, fields)
       splitted_line = split_line(line, delimiter)
 
+      puts splitted_line
+
       if splitted_line.size == fields.size
         @is_record = Hash.new
 
@@ -101,7 +103,7 @@ module Dictionary
 
       line.to_s.split(delimiter).each { |arr|
         index += 1
-        @split_line["column" + index.to_s] = arr
+        @split_line["column" + index.to_s] = arr.delete("\r\n")
       }
 
       @split_line

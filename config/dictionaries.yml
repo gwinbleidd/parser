@@ -102,3 +102,8 @@ mkd:
   filename: !ruby/regexp '/^S12345(\d\d)\.(\d{1,3})$/'
   filetype: text
   type: clear
+  
+vodokanal:
+  filename: !ruby/regexp '/^S04509(\d\d)\.(\d{1,3})$/'
+  filetype: text
+  type: update

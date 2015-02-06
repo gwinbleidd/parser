@@ -1,0 +1,21 @@
+file:
+  name: Vodokanal
+  type: csv
+  delimiter: ';'
+  encoding: cp1251
+fields:
+  column0:
+    name: AccountID
+    from: id
+  column1:
+    name: Address
+    from: address
+  column2:
+    name: Account
+    from: curr_acc
+  column3:
+    name: Debt_summ
+    from: debt
+  column4:
+    name: ServiceID
+    const: 998
