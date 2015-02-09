@@ -148,14 +148,12 @@ module Dictionary
               @get_primary_keys = Hash.new
             end
 
-            if @get_primary_keys[key] == nil
-              @get_primary_keys[key] = Hash.new
-            end
-
-            if @get_primary_keys[key]['pk'.to_sym] != nil
+            if @get_primary_keys[:pk] != nil
               raise ('More than one primary key for table')
             end
-            @get_primary_keys[key]['pk'.to_sym] = v['name'].to_sym
+            @get_primary_keys[:pk] = Hash.new
+            @get_primary_keys[:pk][:name] = v['name'].to_sym
+            @get_primary_keys[:pk][:type] = v['type']
           end
         }
       }
