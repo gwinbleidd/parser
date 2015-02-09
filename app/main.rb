@@ -62,6 +62,10 @@ inp.dictionaries.each do |c|
           end
 
         when 'update' then
+          if conf.primary_keys[:pk].nil?
+            Dictionary.logger.fatal("Primary key not set")
+          end
+
           dict.records.each do |record_key, record_value|
             record_value[o.table_name.to_s.downcase.sub(conf.name + '_', '').to_sym].nil? ? size = 0 : size = record_value[o.table_name.to_s.downcase.sub(conf.name + '_', '').to_sym].size
 
@@ -80,39 +84,33 @@ inp.dictionaries.each do |c|
 
             found = inserted = i = 0
 
-            unless record_value[o.table_name.to_s.downcase.sub(conf.name + '_', '').to_sym].nil?
-              record_value[o.table_name.to_s.downcase.sub(conf.name + '_', '').to_sym].each do |k, v|
-                i += 1
-                search_term = ''
+            record_value[o.table_name.to_s.downcase.sub(conf.name + '_', '').to_sym].each do |k, v|
+              i += 1
+              rec = nil
 
-                v.each do |k1, v1|
-                  puts "#{k1}, #{v1}"
-                  if k1 == conf.primary_keys[:pk][:name]
-                    case conf.primary_keys[:pk][:type]
-                      when 'string' then search_term = '"' + v1.to_s + '"'
-                      when 'number' then search_term = v1.to_i
-                      else
-                        Dictionary.logger.fatal("Unknown primary key type")
-                    end
-                  end
-                end
-
-                search_sql = "SELECT * FROM #{o.table_name.to_s} WHERE #{conf.primary_keys[:pk][:name].to_s} = #{search_term}" unless search_term.nil?
-
-                if search_sql.nil? then
-                  Dictionary.logger.fatal("Search sql doesn't exist")
+              case conf.primary_keys[:pk][:type]
+                when 'string' then
+                  rec = o.find_by conf.primary_keys[:pk][:name] => v[conf.primary_keys[:pk][:name]].to_s
+                when 'number' then
+                  rec = o.find_by conf.primary_keys[:pk][:name] => v[conf.primary_keys[:pk][:name]].to_i
                 else
-                  o.find_by_sql(search_sql)
-                end
-                # inserted += 1
-                #
-                # if i == size
-                #   Dictionary.logger.info("#{o.to_s.gsub(conf.name.to_s.capitalize, '')}: Processed #{i} of #{size} records, inserted #{inserted}, found #{found}")
-                # else
-                #   print "Processing #{i} of #{size} records\r" if i % mod == 0 or i == 1
-                # end
+                  Dictionary.logger.fatal("Unknown primary key type")
               end
-            end
+
+              if rec.nil?
+                o.create v
+                inserted += 1
+              else
+                rec.update v
+                found += 1
+              end
+
+              if i == size
+                Dictionary.logger.info("#{o.to_s.gsub(conf.name.to_s.capitalize, '')}: Processed #{i} of #{size} records, inserted #{inserted}, found #{found}")
+              else
+                print "Processing #{i} of #{size} records\r" if i % mod == 0 or i == 1
+              end
+            end unless record_value[o.table_name.to_s.downcase.sub(conf.name + '_', '').to_sym].nil?
           end
 
         when 'append' then
