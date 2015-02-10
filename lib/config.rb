@@ -32,9 +32,9 @@ module Dictionary
 
       @name = dict_name
 
-      @primary_keys = get_primary_keys(@name)
-      @key_columns = get_key_columns(@name)
-      @foreign_keys = get_foreign_keys(@name)
+      @primary_keys = get_primary_keys
+      @key_columns = get_key_columns
+      @foreign_keys = get_foreign_keys
 
       @output_config = get_output_config(dict_name)
 
@@ -43,149 +43,127 @@ module Dictionary
 
     private
     def get_table
-      unless @config.nil?
-        @get_table = Hash.new
+      config = self.config
+      get_table = Hash.new
 
-        @config['dictionaries'].each { |key, value|
-          table = Hash.new
-          table[:dictionary] = @name.to_s.downcase
-          table[:main] = value['main'] if value.has_key?('main')
-          table[:fields] = Hash.new
-          table[:fields] = value['fields']
+      config['dictionaries'].each { |key, value|
+        table = Hash.new
+        table[:dictionary] = self.name.to_s.downcase
+        table[:main] = value['main'] if value.has_key?('main')
+        table[:fields] = Hash.new
+        table[:fields] = value['fields']
 
-          if @primary_keys.has_key?(key)
-            table[:pk] = Hash.new
-            table[:pk] = @primary_keys[key][:pk].to_s
-          end unless @primary_keys.nil?
+        if self.primary_keys.has_key?(key)
+          table[:pk] = Hash.new
+          table[:pk] = self.primary_keys[key][:name].to_s
+        end unless self.primary_keys.nil?
 
-          if @foreign_keys.has_key?(key)
-            unless table.has_key?(:fk)
-              table[:fk] = Hash.new
-            end
-
-            @foreign_keys[key].each { |k, v|
-              table[:fk][k] = Hash.new
-              table[:fk][k][:column] = v[:column].to_s
-              table[:fk][k][:table] = @name.to_s.downcase + '_' + v[:table].to_s.downcase
-              table[:fk][k][:column_ref] = v[:column_ref].to_s
-              table[:fk][k][:return] = v[:return].to_s
-            }
-          end unless @foreign_keys.nil?
-
-          if @key_columns.has_key?(key)
-            unless table.has_key?(:ak)
-              table[:ak] = Hash.new
-            end
-
-            @key_columns[key].each { |k, v|
-              table[:ak][k] = v
-            }
+        if self.foreign_keys.has_key?(key)
+          unless table.has_key?(:fk)
+            table[:fk] = Hash.new
           end
 
-          @get_table[(@name.to_s.downcase + '_' + key.to_s.downcase).to_sym] = table
-        }
+          self.foreign_keys[key].each { |k, v|
+            table[:fk][k] = Hash.new
+            table[:fk][k][:column] = v[:column].to_s
+            table[:fk][k][:table] = self.name.to_s.downcase + '_' + v[:table].to_s.downcase
+            table[:fk][k][:column_ref] = v[:column_ref].to_s
+            table[:fk][k][:return] = v[:return].to_s
+          }
+        end unless self.foreign_keys.nil?
 
-        @get_table
-      end
+        if self.key_columns.has_key?(key)
+          unless table.has_key?(:ak)
+            table[:ak] = Hash.new
+          end
+
+          self.key_columns[key].each { |k, v|
+            table[:ak][k] = v
+          }
+        end
+
+        get_table[(self.name.to_s.downcase + '_' + key.to_s.downcase).to_sym] = table
+      }
+
+      get_table
     end
 
 
     def get_output_config(dict_name)
-      @get_output_config||= YAML.load(File.read output_path(dict_name))
+      output_config||= YAML.load(File.read output_path(dict_name))
     end
 
-    def get_foreign_keys(dict_name)
-      if @name.nil?
-        @name= dict_name
-      end
+    def get_foreign_keys
+      config = self.config
 
-      if @config.nil?
-        @config= get_config(@name)
-      end
+      foreign_keys = Hash.new
 
-      @config['dictionaries'].each { |key, value|
+      config['dictionaries'].each { |key, value|
         i = 0
 
         value['fields'].each { |k, v|
           unless v['fk'].nil?
-            if @get_foreign_keys.nil?
-              @get_foreign_keys = Hash.new
-            end
-
-            if @get_foreign_keys[key].nil?
-              @get_foreign_keys[key] = Hash.new
+            if foreign_keys[key].nil?
+              foreign_keys[key] = Hash.new
             end
 
             i += 1
-
-            if @get_foreign_keys[key][('fk' + i.to_s).to_sym] == nil
-              @get_foreign_keys[key][('fk' + i.to_s).to_sym] = Hash.new
+            if foreign_keys[key][('fk' + i.to_s).to_sym] == nil
+              foreign_keys[key][('fk' + i.to_s).to_sym] = Hash.new
             end
-            @get_foreign_keys[key][('fk' + i.to_s).to_sym][:column] = v['name'].to_sym
-            @get_foreign_keys[key][('fk' + i.to_s).to_sym][:table] = v['fk']['table'].to_sym
-            @get_foreign_keys[key][('fk' + i.to_s).to_sym][:column_ref] = v['fk']['column'].to_sym
-            @get_foreign_keys[key][('fk' + i.to_s).to_sym][:return] = v['fk']['return'].to_sym
+            foreign_keys[key][('fk' + i.to_s).to_sym][:column] = v['name'].to_sym
+            foreign_keys[key][('fk' + i.to_s).to_sym][:table] = v['fk']['table'].to_sym
+            foreign_keys[key][('fk' + i.to_s).to_sym][:column_ref] = v['fk']['column'].to_sym
+            foreign_keys[key][('fk' + i.to_s).to_sym][:return] = v['fk']['return'].to_sym
           end
         }
       }
 
-      @get_foreign_keys
+      foreign_keys
     end
 
-    def get_primary_keys(dict_name)
-      if @name.nil?
-        @name = dict_name
-      end
+    def get_primary_keys
+      config = self.config
 
-      if @config.nil?
-        @config= get_config(@name)
-      end
+      primary_keys = Hash.new
 
-      @config['dictionaries'].each { |key, value|
+      config['dictionaries'].each { |key, value|
         value['fields'].each { |k, v|
           if v['pk']
-            if @get_primary_keys == nil
-              @get_primary_keys = Hash.new
-            end
-
-            if @get_primary_keys[key] != nil
+            if primary_keys[key].nil?
+              primary_keys[key] = Hash.new
+            else
               raise ('More than one primary key for table')
             end
-            @get_primary_keys[key] = Hash.new
-            @get_primary_keys[key][:name] = v['name'].to_sym
-            @get_primary_keys[key][:type] = v['type']
+
+            primary_keys[key][:name] = v['name'].to_sym
+            primary_keys[key][:type] = v['type']
           end
         }
       }
 
-      @get_primary_keys
+      primary_keys
     end
 
-    def get_key_columns(dict_name)
-      if @name.nil?
-        @name= dict_name
-      end
+    def get_key_columns
+      config = self.config
 
-      if @config.nil?
-        @config= get_config(@name)
-      end
+      key_columns = Hash.new
 
-      @get_key_columns = Hash.new
-
-      @config['dictionaries'].each { |key, value|
-        @get_key_columns[key] = Hash.new
+      config['dictionaries'].each { |key, value|
+        key_columns[key] = Hash.new
 
         value['fields'].each { |k, v|
           if v['key'] != nil
-            if @get_key_columns[key][v['key'].to_sym] == nil
-              @get_key_columns[key][v['key'].to_sym] = Array.new
+            if key_columns[key][v['key'].to_sym] == nil
+              key_columns[key][v['key'].to_sym] = Array.new
             end
-            @get_key_columns[key][v['key'].to_sym].push v['name'].to_sym
+            key_columns[key][v['key'].to_sym].push v['name'].to_sym
           end
         }
       }
 
-      @get_key_columns
+      key_columns
     end
 
     def input_path(dict_name)
