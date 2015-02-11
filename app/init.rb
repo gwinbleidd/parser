@@ -9,6 +9,7 @@ require 'logger'
 inp = Dictionary::InputFile.new
 
 inp.config.each do |c, v|
+  if c == 'jeuk'
   conf = Dictionary::Configuration.new(c)
 
   conf.table.each { |key, value|
@@ -18,4 +19,5 @@ inp.config.each do |c, v|
   }
 
   DictionaryUniqConstMigration.up(conf.table) unless conf.table.nil?
+  end
 end

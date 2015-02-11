@@ -21,6 +21,18 @@ inp.dictionaries.each do |c|
 
   dict = Dictionary::Record.new(conf.config)
 
+  join = Hash.new
+
+  dict.records.each do |key, value|
+    join[key] = Dictionary::Joined.new(conf, value)
+  end
+
+  out = Hash.new
+
+  join.each do |key, value|
+    out[key] = Dictionary::Output.new(conf, value.joined)
+  end
+
   models = Dictionary::Model.new(conf.table)
 
   models.objects.each do |o|
@@ -62,11 +74,12 @@ inp.dictionaries.each do |c|
           end
 
         when 'update' then
-          if conf.primary_keys[:pk].nil?
-            Dictionary.logger.fatal("Primary key not set")
-          end
-
           dict.records.each do |record_key, record_value|
+            if conf.primary_keys[o.to_s.downcase.sub(conf.name,'')].nil?
+              Dictionary.logger.fatal("Primary key not set for #{o.table_name}")
+              raise "Primary key not set for #{o.table_name}"
+            end
+
             record_value[o.table_name.to_s.downcase.sub(conf.name + '_', '').to_sym].nil? ? size = 0 : size = record_value[o.table_name.to_s.downcase.sub(conf.name + '_', '').to_sym].size
 
             case size
@@ -84,33 +97,36 @@ inp.dictionaries.each do |c|
 
             found = inserted = i = 0
 
-            record_value[o.table_name.to_s.downcase.sub(conf.name + '_', '').to_sym].each do |k, v|
-              i += 1
-              rec = nil
+            unless record_value[o.table_name.to_s.downcase.sub(conf.name + '_', '').to_sym].nil?
+              record_value[o.table_name.to_s.downcase.sub(conf.name + '_', '').to_sym].each do |k, v|
+                i += 1
+                rec = nil
 
-              case conf.primary_keys[:pk][:type]
-                when 'string' then
-                  rec = o.find_by conf.primary_keys[:pk][:name] => v[conf.primary_keys[:pk][:name]].to_s
-                when 'number' then
-                  rec = o.find_by conf.primary_keys[:pk][:name] => v[conf.primary_keys[:pk][:name]].to_i
+                case conf.primary_keys[o.to_s.downcase.sub(conf.name, '')][:type]
+                  when 'string' then
+                    rec = o.find_by conf.primary_keys[o.to_s.downcase.sub(conf.name, '')][:name] => v[conf.primary_keys[o.to_s.downcase.sub(conf.name, '')][:name]].to_s
+                  when 'integer' then
+                    rec = o.find_by conf.primary_keys[o.to_s.downcase.sub(conf.name, '')][:name] => v[conf.primary_keys[o.to_s.downcase.sub(conf.name, '')][:name]].to_i
+                  else
+                    Dictionary.logger.fatal("Unknown primary key type for #{o.table_name}")
+                    raise "Unknown primary key type for #{o.table_name}"
+                end
+
+                if rec.nil?
+                  o.create v
+                  inserted += 1
                 else
-                  Dictionary.logger.fatal("Unknown primary key type")
-              end
+                  rec.update v
+                  found += 1
+                end
 
-              if rec.nil?
-                o.create v
-                inserted += 1
-              else
-                rec.update v
-                found += 1
+                if i == size
+                  Dictionary.logger.info("#{o.to_s.gsub(conf.name.to_s.capitalize, '')}: Processed #{i} of #{size} records, inserted #{inserted}, found #{found}")
+                else
+                  print "Processing #{i} of #{size} records\r" if i % mod == 0 or i == 1
+                end
               end
-
-              if i == size
-                Dictionary.logger.info("#{o.to_s.gsub(conf.name.to_s.capitalize, '')}: Processed #{i} of #{size} records, inserted #{inserted}, found #{found}")
-              else
-                print "Processing #{i} of #{size} records\r" if i % mod == 0 or i == 1
-              end
-            end unless record_value[o.table_name.to_s.downcase.sub(conf.name + '_', '').to_sym].nil?
+            end
           end
 
         when 'append' then
