@@ -63,6 +63,7 @@ module Dictionary
             end
           else
             Dictionary.logger.fatal "Unknown format"
+            raise "Unknown format"
           end
         end
       end
@@ -80,31 +81,31 @@ module Dictionary
     def is_record(line, delimiter, fields)
       splitted_line = split_line(line, delimiter)
 
-      if splitted_line.size == fields.size
-        @is_record = Hash.new
+      is_record = Hash.new
 
+      if splitted_line.size == fields.size
         splitted_line.each { |line_key, line_value|
-          @is_record[fields[line_key]['name'].to_sym] = line_value
+          is_record[fields[line_key]['name'].to_sym] = line_value
         }
       else
         puts "Line \"#{line}\" don't correspond to config"
         exit
       end
 
-      @is_record
+      is_record
     end
 
     def split_line(line, delimiter)
-      @split_line = Hash.new
+      split_line = Hash.new
 
       index = 0
 
       line.to_s.split(delimiter).each { |arr|
         index += 1
-        @split_line["column" + index.to_s] = arr.delete("\r\n")
+        split_line["column" + index.to_s] = arr.delete("\r\n")
       }
 
-      @split_line
+      split_line
     end
   end
 end

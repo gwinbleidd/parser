@@ -18,6 +18,8 @@ require 'dictionary_table_migration'
 require 'dictionary_uniq_const_migration'
 require 'dictionary_view_migration'
 require 'muti_io'
+require '../lib/output'
+require 'joined'
 
 # Загружаем файл настройки соединения с БД
 dbconfig = YAML::load(File.open(File.join(File.dirname(__FILE__), 'database.yml')))

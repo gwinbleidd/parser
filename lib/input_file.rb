@@ -43,8 +43,7 @@ module Dictionary
               Dictionary.logger.info(" #{e} belongs to #{key}")
             else
               Dictionary.logger.info(" #{e} belonging to #{key} already processed")
-              @processed_files = Array.new if @processed_files.nil?
-              @processed_files.append File.expand_path(e, '../dictionaries')
+              @processed_files.nil? ? @processed_files = Array.new :  @processed_files.append(File.expand_path(e, '../dictionaries'))
             end
           end
         end
