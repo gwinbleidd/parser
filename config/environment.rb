@@ -11,7 +11,7 @@ LoadPath.configure do
   add path_builder { sibling_directory('config') }
 end
 
-require 'dictionary'
+require 'model'
 require 'output_file'
 require 'input_file'
 require 'dictionary_table_migration'
