@@ -1,4 +1,4 @@
-require 'dictionary'
+require 'model'
 
 module Dictionary
   class OutputFile
