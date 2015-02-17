@@ -1,10 +1,11 @@
 module Dictionary
   class Output
+    attr_reader :records
+
     def initialize(config, records)
       output = Hash.new
 
       records.each do |key, data|
-        output=Hash.new
         @name = config.name
 
         output[:data] = Hash.new
@@ -17,7 +18,6 @@ module Dictionary
               when 'String' then
                 output[:data][id][cdesc['name']] = rdata[cdesc['from'].to_sym] unless cdesc['from'] == 'id'
               when 'Array'
-                puts output[:data][id]
                 tmp = Hash[(0...cdesc['from'].size).zip cdesc['from']]
                 str = ''
                 tmp.each do |k, v|
