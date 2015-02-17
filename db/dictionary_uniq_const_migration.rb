@@ -37,6 +37,17 @@ class DictionaryUniqConstMigration < ActiveRecord::Migration
       if value.has_key?(:pk)
         remove_index key.to_s.pluralize.to_sym, value[:pk][:name]
       end
+
+      if value.has_key?(:keys)
+        keys = Array.new
+        value[:keys].each do |k, v|
+          v.each do |key_column|
+            keys.append key_column[:name]
+          end
+        end
+
+        remove_index key.to_s.pluralize.to_sym, keys, unique: true
+      end
     end
   end
 end
