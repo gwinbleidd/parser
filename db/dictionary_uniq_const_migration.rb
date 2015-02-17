@@ -15,10 +15,8 @@ class DictionaryUniqConstMigration < ActiveRecord::Migration
 
       if value.has_key?(:keys)
         keys = Array.new
-        value[:keys].each do |k, v|
-          v.each do |key_column|
-            keys.append key_column[:name]
-          end
+        value[:keys].each do |key_column|
+          keys.append key_column[:name]
         end
         if ActiveRecord::Base.connection.index_exists? key.to_s.pluralize.to_sym, keys, unique: true
           Dictionary.logger.debug " Index for #{keys} exists"
