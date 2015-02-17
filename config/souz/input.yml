@@ -44,7 +44,7 @@ dictionaries:
           type: string
           length: 10
           changeable: no
-          pk: yes
+          key: ak1
         column2:
           name: lastName
           type: string
