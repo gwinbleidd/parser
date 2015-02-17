@@ -43,47 +43,55 @@ module Dictionary
 
     private
     def get_table
-      config = self.config
       get_table = Hash.new
 
-      config['dictionaries'].each { |key, value|
-        table = Hash.new
-        table[:dictionary] = self.name.to_s.downcase
-        table[:main] = value['main'] if value.has_key?('main')
-        table[:fields] = Hash.new
-        table[:fields] = value['fields']
+      config = self.config
+      table = Hash.new
+      table[:dictionary] = self.name.to_s.downcase
+      table[:fields] = Hash.new
 
-        if self.primary_keys.has_key?(key)
-          table[:pk] = Hash.new
-          table[:pk] = self.primary_keys[key][:name].to_s
-        end unless self.primary_keys.nil?
+      @output_config['fields'].each { |key, value|
+        if value['from'] != 'id'
+          table[:fields][key] = Hash.new
+          case value['from'].class.to_s
+            when 'String'
+              config['dictionaries'].each { |dname, ddesc|
+                ddesc['fields'].each { |cname, cdesc|
+                  if cdesc['name'] == value['from']
+                    table[:fields][key] = cdesc.clone
+                    if cdesc.has_key?('pk')
+                      raise "More than 1 pk defined for table #{self.name}" unless table[:pk].nil?
+                      table[:pk] = Hash.new
+                      table[:pk][:name] = value['name']
+                      table[:pk][:type] = cdesc['type']
+                    end
 
-        if self.foreign_keys.has_key?(key)
-          unless table.has_key?(:fk)
-            table[:fk] = Hash.new
+                    if cdesc.has_key?('key') and ddesc.has_key?('main')
+                      table[:keys] = Array.new if table[:keys].nil?
+                      key_column = Hash.new
+                      key_column[:name] = value['name']
+                      key_column[:type] = cdesc['type']
+                      table[:keys].append key_column
+                    end
+                  end
+                }
+              }
+              table[:fields][key]['name'] = value['name']
+              table[:fields][key]['type'] = value['type'] if value.has_key?('type')
+              table[:fields][key]['type'] = 'string' if value.has_key?('replace')
+            when 'Array'
+              table[:fields][key]['name'] = value['name']
+              table[:fields][key]['type'] = 'string'
+            else
+              if value.has_key?('const')
+                table[:fields][key]['name'] = value['name']
+                table[:fields][key]['type'] = 'string'
+              end
           end
-
-          self.foreign_keys[key].each { |k, v|
-            table[:fk][k] = Hash.new
-            table[:fk][k][:column] = v[:column].to_s
-            table[:fk][k][:table] = self.name.to_s.downcase + '_' + v[:table].to_s.downcase
-            table[:fk][k][:column_ref] = v[:column_ref].to_s
-            table[:fk][k][:return] = v[:return].to_s
-          }
-        end unless self.foreign_keys.nil?
-
-        if self.key_columns.has_key?(key)
-          unless table.has_key?(:ak)
-            table[:ak] = Hash.new
-          end
-
-          self.key_columns[key].each { |k, v|
-            table[:ak][k] = v
-          }
         end
-
-        get_table[(self.name.to_s.downcase + '_' + key.to_s.downcase).to_sym] = table
       }
+
+      get_table[self.name.to_s.downcase.to_sym] = table
 
       get_table
     end
