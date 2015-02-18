@@ -127,7 +127,7 @@ module Dictionary
         }
       }
 
-      foreign_keys
+      foreign_keys unless foreign_keys.size == 0
     end
 
     def get_primary_keys
