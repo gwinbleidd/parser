@@ -21,7 +21,7 @@ fields:
   column4:
     name: Debt_summ
     from: debtSum
-    type: currency
+    type: string
   column5:
     name: Cold_water1
     from: coldWater1
