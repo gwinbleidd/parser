@@ -21,16 +21,11 @@ inp.dictionaries.each do |c|
 
   dict = Dictionary::Record.new(conf.config)
 
-  join = Hash.new
-
-  dict.records.each do |key, value|
-    join[key] = Dictionary::Joined.new(conf, value)
-  end
-
   out = Hash.new
 
-  join.each do |key, value|
-    out[key] = Dictionary::Output.new(conf, value.joined)
+  dict.records.each do |key, value|
+    Dictionary.logger.info("Starting creating output array of data for file #{key}")
+    out[key] = Dictionary::Output.new(conf, Dictionary::Joined.new(conf, value).joined)
   end
 
   models = Dictionary::Model.new(conf.table)
@@ -41,11 +36,13 @@ inp.dictionaries.each do |c|
         when 'clear' then
           o.delete_all
 
-          dict.records.each do |record_key, record_value|
-            record_value[o.table_name.to_s.downcase.sub(conf.name + '_', '').to_sym].nil? ? size = 0 : size = record_value[o.table_name.to_s.downcase.sub(conf.name + '_', '').to_sym].size
+          out.each do |filename, filecontent|
+            filecontent.records[:data].nil? ? size = 0 : size = filecontent.records[:data].size
 
             case size
-              when 0 .. 10 then
+              when 0 then
+                raise "No data for #{o.to_s}"
+              when 1 .. 10 then
                 mod = 1
               when 11 .. 1000 then
                 mod = 5
@@ -59,7 +56,7 @@ inp.dictionaries.each do |c|
 
             found = inserted = i = 0
 
-            record_value[o.table_name.to_s.downcase.sub(conf.name + '_', '').to_sym].each do |k, v|
+            filecontent.records[:data].each do |k, v|
               i += 1
 
               o.create v
@@ -70,20 +67,22 @@ inp.dictionaries.each do |c|
               else
                 print "Processing #{i} of #{size} records\r" if i % mod == 0 or i == 1
               end
-            end unless record_value[o.table_name.to_s.downcase.sub(conf.name + '_', '').to_sym].nil?
+            end
           end
 
         when 'update' then
-          dict.records.each do |record_key, record_value|
-            if conf.primary_keys[o.to_s.downcase.sub(conf.name,'')].nil?
-              Dictionary.logger.fatal("Primary key not set for #{o.table_name}")
-              raise "Primary key not set for #{o.table_name}"
+          out.each do |filename, filecontent|
+            if conf.table[o.to_s.downcase.to_sym][:keys].nil?
+              Dictionary.logger.fatal("Key fields not set for #{o.table_name}")
+              raise "Key fields not set for #{o.table_name}"
             end
 
-            record_value[o.table_name.to_s.downcase.sub(conf.name + '_', '').to_sym].nil? ? size = 0 : size = record_value[o.table_name.to_s.downcase.sub(conf.name + '_', '').to_sym].size
+            filecontent.records[:data].nil? ? size = 0 : size = filecontent.records[:data].size
 
             case size
-              when 0 .. 10 then
+              when 0 then
+                raise "No data for #{o.to_s}"
+              when 1 .. 10 then
                 mod = 1
               when 11 .. 1000 then
                 mod = 5
@@ -97,44 +96,50 @@ inp.dictionaries.each do |c|
 
             found = inserted = i = 0
 
-            unless record_value[o.table_name.to_s.downcase.sub(conf.name + '_', '').to_sym].nil?
-              record_value[o.table_name.to_s.downcase.sub(conf.name + '_', '').to_sym].each do |k, v|
-                i += 1
-                rec = nil
+            filecontent.records[:data].each do |k, v|
+              i += 1
+              rec = nil
 
-                case conf.primary_keys[o.to_s.downcase.sub(conf.name, '')][:type]
-                  when 'string' then
-                    rec = o.find_by conf.primary_keys[o.to_s.downcase.sub(conf.name, '')][:name] => v[conf.primary_keys[o.to_s.downcase.sub(conf.name, '')][:name]].to_s
-                  when 'integer' then
-                    rec = o.find_by conf.primary_keys[o.to_s.downcase.sub(conf.name, '')][:name] => v[conf.primary_keys[o.to_s.downcase.sub(conf.name, '')][:name]].to_i
+              sfields = Hash.new
+
+              conf.table[o.to_s.downcase.to_sym][:keys].each do |keyfield|
+                case keyfield[:type]
+                  when 'string'
+                    sfields[keyfield[:name]] = v[keyfield[:name]].to_s
+                  when 'integer'
+                    sfields[keyfield[:name]] = v[keyfield[:name]].to_i
                   else
                     Dictionary.logger.fatal("Unknown primary key type for #{o.table_name}")
                     raise "Unknown primary key type for #{o.table_name}"
                 end
+              end
 
-                if rec.nil?
-                  o.create v
-                  inserted += 1
-                else
-                  rec.update v
-                  found += 1
-                end
+              rec = o.find_by sfields
 
-                if i == size
-                  Dictionary.logger.info("#{o.to_s.gsub(conf.name.to_s.capitalize, '')}: Processed #{i} of #{size} records, inserted #{inserted}, found #{found}")
-                else
-                  print "Processing #{i} of #{size} records\r" if i % mod == 0 or i == 1
-                end
+              if rec.nil?
+                o.create v
+                inserted += 1
+              else
+                rec.update v
+                found += 1
+              end
+
+              if i == size
+                Dictionary.logger.info("#{o.to_s.gsub(conf.name.to_s.capitalize, '')}: Processed #{i} of #{size} records, inserted #{inserted}, found #{found}")
+              else
+                print "Processing #{i} of #{size} records\r" if i % mod == 0 or i == 1
               end
             end
           end
 
         when 'append' then
-          dict.records.each do |record_key, record_value|
-            record_value[o.table_name.to_s.downcase.sub(conf.name + '_', '').to_sym].nil? ? size = 0 : size = record_value[o.table_name.to_s.downcase.sub(conf.name + '_', '').to_sym].size
+          out.each do |filename, filecontent|
+            filecontent.records[:data].nil? ? size = 0 : size = filecontent.records[:data].size
 
             case size
-              when 0 .. 10 then
+              when 0 then
+                raise "No data for #{o.to_s}"
+              when 1 .. 10 then
                 mod = 1
               when 11 .. 1000 then
                 mod = 5
@@ -148,8 +153,25 @@ inp.dictionaries.each do |c|
 
             found = inserted = i = 0
 
-            record_value[o.table_name.to_s.downcase.sub(conf.name + '_', '').to_sym].each do |k, v|
+            filecontent.records[:data].each do |k, v|
               i += 1
+              rec = nil
+
+              sfields = Hash.new
+
+              conf.table[o.to_s.downcase.to_sym][:keys].each do |keyfield|
+                case keyfield[:type]
+                  when 'string'
+                    sfields[keyfield[:name]] = v[keyfield[:name]].to_s
+                  when 'integer'
+                    sfields[keyfield[:name]] = v[keyfield[:name]].to_i
+                  else
+                    Dictionary.logger.fatal("Unknown primary key type for #{o.table_name}")
+                    raise "Unknown primary key type for #{o.table_name}"
+                end
+              end
+
+              rec = o.find_by sfields
 
               o.create v
               inserted += 1
@@ -159,15 +181,15 @@ inp.dictionaries.each do |c|
               else
                 print "Processing #{i} of #{size} records\r" if i % mod == 0 or i == 1
               end
-            end unless record_value[o.table_name.to_s.downcase.sub(conf.name + '_', '').to_sym].nil?
+            end
           end
         else
           Dictionary.logger.fatal("Unknown type #{inp.config[c]['type']} of dictionary #{c}")
-          exit
+          raise "Unknown type #{inp.config[c]['type']} of dictionary #{c}"
       end
     else
       Dictionary.logger.fatal("Dictionary #{c} does not have type")
-      exit
+      raise "Dictionary #{c} does not have type"
     end
   end
 
