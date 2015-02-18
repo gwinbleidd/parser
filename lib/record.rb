@@ -5,7 +5,7 @@ module Dictionary
     attr_reader :records, :name
 
     def initialize(config)
-      Dictionary.logger.debug "Starting create Records for #{config}"
+      Dictionary.logger.info "Starting create Records for #{config.name}"
       @records = Hash.new
       filename = nil
 
