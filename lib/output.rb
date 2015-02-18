@@ -3,7 +3,6 @@ module Dictionary
     attr_reader :records
 
     def initialize(config, records)
-      Dictionary.logger.info("Starting create output array of data for #{config.name}")
       output = Hash.new
 
       records.each do |key, data|
