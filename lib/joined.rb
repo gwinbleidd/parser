@@ -13,7 +13,7 @@ module Dictionary
       raise("No main table set for #{config.name}") if @main.nil?
 
       fk = Array.new
-      config.foreign_keys[@main.to_s].each { |name, desc| fk.append desc[:column] }
+      config.foreign_keys[@main.to_s].each { |name, desc| fk.append desc[:column] } unless config.foreign_keys.nil?
 
       output[:data] = Hash.new
 
