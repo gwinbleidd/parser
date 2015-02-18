@@ -79,7 +79,7 @@ module Dictionary
     def copy(filename, path)
       f_path=File.join(File.dirname(File.dirname(filename)), '/tmp', path, File.basename(filename).gsub('.', '_'), 'file.txt')
       FileUtils.mkdir_p(File.dirname(f_path))
-      FileUtils.copy(filename, f_path)
+      FileUtils.copy(filename, f_path) unless File.exist?(f_path)
     end
 
     def unzip(filename, path)
