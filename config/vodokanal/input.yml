@@ -18,24 +18,8 @@ dictionaries:
           name: curr_acc
           type: string
           changeable: no
-          pk: yes
+          key: ak1
         column4:
           name: debt
           type: string
-          changeable: yes
-        column5:
-          name: subservice
-          type: string
-          changeable: yes
-        column6:
-          name: sttl_begin
-          type: string
-          changeable: yes
-        column7:
-          name: sttl_end
-          type: string
-          changeable: yes
-        column8:
-          name: add_info
-          type: string
-          changeable: yes		  
+          changeable: yes 
