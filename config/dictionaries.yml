@@ -81,7 +81,7 @@ dsvol:
 vsc:
   filename: !ruby/regexp '/^S16958(\d\d)\.(\d{1,3})$/'
   filetype: text
-  type: clear
+  type: update
 
 jeuk:
   filename: !ruby/regexp '/^S06780(\d\d)\.(\d{1,3})$/'
@@ -101,7 +101,7 @@ byvalovo:
 mkd:
   filename: !ruby/regexp '/^S12345(\d\d)\.(\d{1,3})$/'
   filetype: text
-  type: clear
+  type: update
   
 vodokanal:
   filename: !ruby/regexp '/^S04509(\d\d)\.(\d{1,3})$/'
