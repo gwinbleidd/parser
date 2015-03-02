@@ -5,12 +5,17 @@ require File.expand_path('../config/environment.rb')
 
 params = ARGV.getopts('h', 'l', 'i', 'n', 'u')
 
-if params['h']
+def help
   puts "usage: #{File.basename(__FILE__)} [-h|-l|-n|-u dictionary_name|-i dictionary_name]\n",
        "  -h = print this message\n",
        "  -l = load existing files\n",
        "  -i = initialize dictionary\n",
+       "  -u = unload dictionary\n",
        "  -n = initialize all dictionaries"
+end
+
+if params['h']
+  help
 elsif params['n']
   inp = Dictionary::InputFile.new
 
@@ -242,9 +247,5 @@ elsif params['l']
 
   inp.finalize
 else
-  puts "usage: #{File.basename(__FILE__)} [-h|-l|-n|-i dictionary_name]"
-  puts "  -h = print this message"
-  puts "  -l = load existing files"
-  puts "  -i = initialize dictionary"
-  puts "  -n = initialize all dictionaries"
+  help
 end
