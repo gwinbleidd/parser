@@ -67,9 +67,9 @@ module Dictionary
             i+=1
 
             if i == size
-              Dictionary.logger.info("#{dict.to_s}: Outputed #{i} of #{size} records")
+              Dictionary.logger.info("#{dict.to_s}: Derived #{i} of #{size} records")
             else
-              print "Outputed #{i} of #{size} records\r" if i % mod == 0 or i == 1
+              print "Derived #{i} of #{size} records\r" if i % mod == 0 or i == 1
             end
           end
         end
