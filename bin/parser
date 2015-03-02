@@ -3,10 +3,10 @@
 require 'optparse'
 require File.expand_path('../config/environment.rb')
 
-params = ARGV.getopts('h', 'l', 'i', 'n')
+params = ARGV.getopts('h', 'l', 'i', 'n', 'u')
 
 if params['h']
-  puts "usage: #{File.basename(__FILE__)} [-h|-l|-n|-i dictionary_name]\n",
+  puts "usage: #{File.basename(__FILE__)} [-h|-l|-n|-u dictionary_name|-i dictionary_name]\n",
        "  -h = print this message\n",
        "  -l = load existing files\n",
        "  -i = initialize dictionary\n",
@@ -38,6 +38,15 @@ elsif params['i']
   }
 
   DictionaryUniqConstMigration.up(conf.table) unless conf.table.nil?
+elsif params['u']
+  filename = ARGV.shift
+
+  conf = Dictionary::Configuration.new(filename)
+  raise "You must supply a filename on the command line" unless filename
+  models = Dictionary::Model.new(conf.table)
+  out = Dictionary::OutputFile.new(conf)
+
+  out.start(models)
 elsif params['l']
   inp = Dictionary::InputFile.new
 
