@@ -58,10 +58,10 @@ module Dictionary
             }
 
             if i == 0
-              csv.write header(record)
-              csv.write to_csv record
+              csv.puts header(record)
+              csv.puts to_csv record
             else
-              csv.write to_csv record
+              csv.puts to_csv record
             end
 
             i+=1
