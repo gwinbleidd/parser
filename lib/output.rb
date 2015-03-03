@@ -35,9 +35,9 @@ module Dictionary
                   str = ''
                   tmp.each do |k, v|
                     if k != cdesc['from'].index(cdesc['from'].last)
-                      str << rdata[v.to_sym] + cdesc['delimiter']
+                      str << rdata[v.to_sym].to_s + cdesc['delimiter']
                     else
-                      str << rdata[v.to_sym]
+                      str << rdata[v.to_sym].to_s
                     end
                   end
 
