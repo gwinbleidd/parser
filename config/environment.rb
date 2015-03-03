@@ -17,7 +17,7 @@ require 'input_file'
 require 'dictionary_table_migration'
 require 'dictionary_uniq_const_migration'
 require 'dictionary_view_migration'
-require 'muti_io'
+require 'multi_io'
 require 'output'
 require 'joined'
 
