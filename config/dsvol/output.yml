@@ -20,22 +20,22 @@ fields:
     name: Account
     from: accountNr
   column5:
-    name: FIO
-    from: fio
+    name: Fio
+    from: FIO
   column6:
     name: Curr_acc
     from: currAcc
   column7:
-    name: INN
+    name: Inn
     from: inn
   column8:
-    name: KPP
+    name: Kpp
     from: kpp
   column9:
-    name: OKATO
+    name: Okato
     from: okato
   column10:
-    name: KBK
+    name: Kbk
     from: kbk
   column11:
     name: ServiceID

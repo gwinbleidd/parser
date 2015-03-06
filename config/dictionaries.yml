@@ -76,7 +76,7 @@ vuk:
 dsvol:
   filename: !ruby/regexp '/^S(DS)(\d\d\d)\.(\d{1,3})$/'
   filetype: zip
-  type: clear
+  type: update
 
 vsc:
   filename: !ruby/regexp '/^S16958(\d\d)\.(\d{1,3})$/'
