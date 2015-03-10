@@ -107,3 +107,8 @@ vodokanal:
   filename: !ruby/regexp '/^S04509(\d\d)\.(\d{1,3})$/'
   filetype: text
   type: update
+  
+vgts:
+  filename: !ruby/regexp '/^S173160653(\d\d\d)\.(\d{1,3})$/'
+  filetype: text
+  type: update

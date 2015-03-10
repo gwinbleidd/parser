@@ -1,0 +1,29 @@
+dictionaries:
+  file:
+      format: txt
+      encoding: cp1251
+      delimiter: 59
+      main: yes
+      startfrom: 5
+      fields:
+        column1:
+          name: name
+          type: string
+          changeable: yes
+        column2:
+          name: address
+          type: string
+          changeable: yes
+        column3:
+          name: curr_acc
+          type: string
+          changeable: no
+          key: ak1
+        column4:
+          name: debt
+          type: string
+          changeable: yes 
+        column5:
+          name: blank
+          type: string
+          changeable: yes  
