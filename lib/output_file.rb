@@ -49,6 +49,7 @@ module Dictionary
               else
                 if value.has_key?('type')
                   record[value['name'].to_sym] = eval('rec.' + value['name'].to_s).to_i.to_s if value['type'] == 'number'
+                  record[value['name'].to_sym] = eval('rec.' + value['name'].to_s).to_s      if value['type'] == 'string'
                   record[value['name'].to_sym] = eval('rec.' + value['name'].to_s).to_f.to_s if value['type'] == 'currency'
                   record[value['name'].to_sym] = eval('rec.' + value['name'].to_s).to_f.to_s if value['type'] == 'float'
                 else
