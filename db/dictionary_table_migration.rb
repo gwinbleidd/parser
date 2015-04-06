@@ -11,7 +11,7 @@ class DictionaryTableMigration < ActiveRecord::Migration
         end
       end
 
-      change_table(name.to_s.to_sym) { |t| t.timestamps null: true }
+      change_table(name.to_s.to_sym) { |t| t.timestamps }
     end
   end
 
