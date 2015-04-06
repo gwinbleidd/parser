@@ -1,9 +1,11 @@
-adapter: oracle_enhanced
-database: tvista
-username: test
-password: test
+production:
+ adapter: oracle_enhanced
+ database: tvista
+ username: test
+ password: test
 
-#adapter: sqlite3
-#database: ../db/development.sqlite3
-#pool: 5
-#timeout: 5000
+development:
+ adapter: sqlite3
+ database: ../db/development.sqlite3
+ pool: 5
+ timeout: 5000
