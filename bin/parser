@@ -2,6 +2,9 @@
 
 require 'optparse'
 require File.expand_path('../config/environment.rb')
+ENV['PATH'] = "D:\\oracle\\instantclient_11_2;#{ENV['PATH']}"
+ENV['NLS_LANG']="AMERICAN_CIS.CL8MSWIN1251"
+ENV['ENV'] = 'production'
 
 params = ARGV.getopts('h', 'l', 'i', 'n', 'u')
 
