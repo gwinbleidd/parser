@@ -29,4 +29,4 @@ ActiveRecord::Base.logger = Logger.new(File.expand_path(File.join(File.dirname(_
 ActiveRecord::Base.logger.level = Logger::INFO
 
 # Соединяемся с БД
-ActiveRecord::Base.establish_connection(dbconfig)
+ActiveRecord::Base.establish_connection(dbconfig[ENV['ENV']])
