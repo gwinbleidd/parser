@@ -5,24 +5,10 @@ dictionaries:
       delimiter: 59
       main: yes
       startfrom: 5
-      header:
-        column1:
-          name: FILESUM
-          type: string
-        column2:
-          name: TYPE
-          type: string
-        column3:
-          name: SERVICE
-          type: integer
-        column4:
-          name: NOTE
-          type: string
       fields:
         column1:
           name: name
           type: string
-          length: 0
           changeable: yes
         column2:
           name: address
@@ -31,9 +17,13 @@ dictionaries:
         column3:
           name: curr_acc
           type: string
-          changeable: yes
+          changeable: no
           key: ak1
         column4:
           name: debt
           type: string
-          changeable: yes
+          changeable: yes 
+        column5:
+          name: blank
+          type: string
+          changeable: yes  

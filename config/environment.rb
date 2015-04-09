@@ -17,9 +17,13 @@ require 'input_file'
 require 'dictionary_table_migration'
 require 'dictionary_uniq_const_migration'
 require 'dictionary_view_migration'
-require 'muti_io'
+require 'multi_io'
 require 'output'
 require 'joined'
+
+ENV['PATH'] = "D:\\oracle\\instantclient_11_2;#{ENV['PATH']}"
+ENV['NLS_LANG']="AMERICAN_CIS.CL8MSWIN1251"
+ENV['ENV'] = 'production'
 
 # Загружаем файл настройки соединения с БД
 dbconfig = YAML::load(File.open(File.join(File.dirname(__FILE__), 'database.yml')))
@@ -29,4 +33,4 @@ ActiveRecord::Base.logger = Logger.new(File.expand_path(File.join(File.dirname(_
 ActiveRecord::Base.logger.level = Logger::INFO
 
 # Соединяемся с БД
-ActiveRecord::Base.establish_connection(dbconfig)
+ActiveRecord::Base.establish_connection(dbconfig[ENV['ENV']])

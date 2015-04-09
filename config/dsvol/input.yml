@@ -9,7 +9,8 @@ dictionaries:
           name: companyID
           type: string
           length: 9
-          changeable: yes
+          changeable: no
+          key: ak1
         column2:
           name: companyName
           type: string
@@ -35,11 +36,12 @@ dictionaries:
           type: string
           changeable: yes
         column8:
-          name: fio
+          name: FIO
           type: string
           changeable: yes
         column9:
           name: accountNr
           type: string
           length: 10
-          changeable: yes
+          changeable: no
+          key: ak1

@@ -7,7 +7,7 @@ module Dictionary
 
       @name = config.name
       config.config['dictionaries'].each do |dictionary, props|
-        @main = dictionary if props['main']
+        @main = dictionary.to_s.downcase if props['main']
       end
 
       raise("No main table set for #{config.name}") if @main.nil?

@@ -1,5 +1,5 @@
-require 'zip/zip'
 require 'processed_files'
+require 'zip'
 
 module Dictionary
   class InputFile
@@ -83,7 +83,7 @@ module Dictionary
     end
 
     def unzip(filename, path)
-      Zip::ZipFile.open(filename) { |zip_file|
+      Zip::File.open(filename) { |zip_file|
         zip_file.each { |f|
           f_path=File.join(File.dirname(File.dirname(filename)), '/tmp', path, File.basename(filename).gsub('.', '_'), f.name)
           FileUtils.mkdir_p(File.dirname(f_path))

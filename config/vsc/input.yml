@@ -19,6 +19,7 @@ dictionaries:
           name: curr_acc
           type: string
           changeable: yes
+          key: ak1
         column4:
           name: debt
           type: string

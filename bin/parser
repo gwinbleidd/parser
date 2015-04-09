@@ -2,6 +2,9 @@
 
 require 'optparse'
 require File.expand_path('../config/environment.rb')
+ENV['PATH'] = "D:\\oracle\\instantclient_11_2;#{ENV['PATH']}"
+ENV['NLS_LANG']="AMERICAN_CIS.CL8MSWIN1251"
+ENV['ENV'] = 'production'
 
 params = ARGV.getopts('h', 'l', 'i', 'n', 'u')
 
@@ -110,7 +113,7 @@ elsif params['l']
                 inserted += 1
 
                 if i == size
-                  Dictionary.logger.info("#{o.to_s.gsub(conf.name.to_s.capitalize, '')}: Processed #{i} of #{size} records, inserted #{inserted}, found #{found}")
+                  Dictionary.logger.info("#{o.to_s}: Processed #{i} of #{size} records, inserted #{inserted}, found #{found}")
                 else
                   print "Processing #{i} of #{size} records\r" if i % mod == 0 or i == 1
                 end
@@ -172,7 +175,7 @@ elsif params['l']
                 end
 
                 if i == size
-                  Dictionary.logger.info("#{o.to_s.gsub(conf.name.to_s.capitalize, '')}: Processed #{i} of #{size} records, inserted #{inserted}, found #{found}")
+                  Dictionary.logger.info("#{o.to_s}: Processed #{i} of #{size} records, inserted #{inserted}, found #{found}")
                 else
                   print "Processing #{i} of #{size} records\r" if i % mod == 0 or i == 1
                 end
@@ -224,7 +227,7 @@ elsif params['l']
                 inserted += 1
 
                 if i == size
-                  Dictionary.logger.info("#{o.to_s.gsub(conf.name.to_s.capitalize, '')}: Processed #{i} of #{size} records, inserted #{inserted}, found #{found}")
+                  Dictionary.logger.info("#{o.to_s}: Processed #{i} of #{size} records, inserted #{inserted}, found #{found}")
                 else
                   print "Processing #{i} of #{size} records\r" if i % mod == 0 or i == 1
                 end

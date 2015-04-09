@@ -1,5 +1,5 @@
 file:
-  name: Fryazinovo
+  name: VISIS
   type: csv
   delimiter: ';'
   encoding: cp1251
@@ -21,7 +21,7 @@ fields:
   column4:
     name: Debt_summ
     from: debtSum
-    type: string
+    type: float
   column5:
     name: Cold_water1
     from: coldWater1
@@ -43,5 +43,4 @@ fields:
     from: currAcc
   column10:
     name: ServiceID
-    from: currAcc
-    replace: {972: 40702810800000001373, 973: 40702810200000006852}
+    const: 985

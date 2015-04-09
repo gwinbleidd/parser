@@ -1,6 +1,8 @@
 # encoding: utf-8
 require File.join(File.dirname(__FILE__), '../config/environment.rb')
 
+ENV['ENV'] = 'development'
+
 require 'rubygems'
 require 'active_record'
 require 'yaml'
@@ -63,7 +65,7 @@ inp.dictionaries.each do |c|
               inserted += 1
 
               if i == size
-                Dictionary.logger.info("#{o.to_s.gsub(conf.name.to_s.capitalize, '')}: Processed #{i} of #{size} records, inserted #{inserted}, found #{found}")
+                Dictionary.logger.info("#{o.to_s}: Processed #{i} of #{size} records, inserted #{inserted}, found #{found}")
               else
                 print "Processing #{i} of #{size} records\r" if i % mod == 0 or i == 1
               end
@@ -125,7 +127,7 @@ inp.dictionaries.each do |c|
               end
 
               if i == size
-                Dictionary.logger.info("#{o.to_s.gsub(conf.name.to_s.capitalize, '')}: Processed #{i} of #{size} records, inserted #{inserted}, found #{found}")
+                Dictionary.logger.info("#{o.to_s}: Processed #{i} of #{size} records, inserted #{inserted}, found #{found}")
               else
                 print "Processing #{i} of #{size} records\r" if i % mod == 0 or i == 1
               end
@@ -177,7 +179,7 @@ inp.dictionaries.each do |c|
               inserted += 1
 
               if i == size
-                Dictionary.logger.info("#{o.to_s.gsub(conf.name.to_s.capitalize, '')}: Processed #{i} of #{size} records, inserted #{inserted}, found #{found}")
+                Dictionary.logger.info("#{o.to_s}: Processed #{i} of #{size} records, inserted #{inserted}, found #{found}")
               else
                 print "Processing #{i} of #{size} records\r" if i % mod == 0 or i == 1
               end

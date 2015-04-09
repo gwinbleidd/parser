@@ -58,7 +58,7 @@ module Dictionary
               index += 1
               record.attributes.each do |key, value|
                 @records[File.basename path.gsub('_', '.')][dictionary_key.to_s.downcase.pluralize.to_sym][index] = Hash.new if @records[File.basename path.gsub('_', '.')][dictionary_key.to_s.downcase.pluralize.to_sym][index].nil?
-                @records[File.basename path.gsub('_', '.')][dictionary_key.to_s.downcase.pluralize.to_sym][index][key.to_s.downcase.to_sym.to_s] = value.to_s.encode( 'UTF-8', dictionary_value['encoding'])
+                @records[File.basename path.gsub('_', '.')][dictionary_key.to_s.downcase.pluralize.to_sym][index][key.to_s.downcase.to_sym.to_sym] = value.to_s.encode( 'UTF-8', dictionary_value['encoding'])
               end
             end
           else
