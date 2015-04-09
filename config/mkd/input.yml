@@ -5,6 +5,19 @@ dictionaries:
       delimiter: 59
       main: yes
       startfrom: 5
+      header:
+        column1:
+          name: FILESUM
+          type: string
+        column2:
+          name: TYPE
+          type: string
+        column3:
+          name: SERVICE
+          type: integer
+        column4:
+          name: NOTE
+          type: string
       fields:
         column1:
           name: name
