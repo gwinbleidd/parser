@@ -1,87 +1,35 @@
-module Dictionary
-  require 'config'
-  require 'record'
+require 'config_file'
+require 'configuration'
 
-  def logger
-    Dictionary.logger
+class Model
+  attr_reader :config, :name
+
+  def initialize(dict_name)
+    cf = ConfigFile.new
+    @name = dict_name
+    @config = Configuration.new(@name)
   end
 
-  # Global, memoized, lazy initialized instance of a logger
-  def self.logger
-    log_file = File.open("../log/debug.log", "a+")
-    @logger ||= Logger.new MultiIO.new(STDOUT, log_file)
-    @logger.level = Logger::INFO
-    @logger
-  end
+  def objects
+    attrs = Array.new
+    objects = Array.new
 
-  class Model
-    attr_reader :objects, :main_view
+    @config.table[:fields].each { |field_name, field_def|
+      attrs.push field_def['name'].to_sym
+    }
 
-    def initialize(table)
-      Dictionary.logger.debug("Starting create Models for #{table}")
-      attrs = Array.new
-      self.objects = Array.new
+    class_name = @name.to_s.camelize
 
-      table.each { |table_name, table_def|
-        table_def[:fields].each { |key, value|
-          attrs.push value['name'].to_sym
-        }
-
-        methods = Hash.new
-
-        if table_def.has_key?(:fk)
-          table_def[:fk].each { |key, value|
-            methods[value[:table].to_s.downcase.sub(table_def[:dictionary].to_s + '_', '').to_sym] = value
-          }
-        end
-
-        class_name = table_name.to_s.camelize
-
-        klass = Class.new(ActiveRecord::Base) do
-          table_name = table_name
-          if table_def.has_key?(:fk)
-            methods.each { |key, value|
-              method_name = key
-              define_method method_name do
-                puts method_name
-              end
-            }
-          end
-        end
-
-        obj = Object.const_set class_name, klass
-
-        eval "#{table_name} = #{class_name}.new" or puts "Class instantiation failed"
-
-        @objects.append obj
-
-        if table_def.has_key?(:main)
-          class_name = ('v_' + table_def[:dictionary].to_s).camelize
-          t_name = 'v_' + table_def[:dictionary].to_s
-
-          klass = Class.new(ActiveRecord::Base) do
-            table_name = t_name
-          end
-
-          obj = Object.const_set class_name, klass
-
-          eval "#{t_name} = #{class_name}.new" or puts "Class instantiation failed"
-
-          @main_view = obj
-        end
-      }
-
-      @objects
+    klass = Class.new(ActiveRecord::Base) do
+      table_name = @name
     end
 
-    private
+    obj = Object.const_set class_name, klass
 
-    def objects=(m)
-      @objects = m
-    end
+    eval "#{@name} = #{class_name}.new" or abort "Class instantiation failed"
 
-    def main_view=(m)
-      @main_view = m
-    end
+    objects.append obj
+
+    objects
   end
 end
