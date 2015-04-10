@@ -11,6 +11,7 @@ class DictConfig
 
   def input_config
     @input_config||= YAML.load(File.read input_path(self.name))
+    @input_config['name'] = self.name
   end
 
   def output_config
