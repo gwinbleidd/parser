@@ -7,9 +7,10 @@ require 'rubygems'
 require 'active_record'
 require 'yaml'
 require 'logger'
+require '../lib/configuration'
 
-conf = Dictionary::Configuration.new('souz')
-models = Dictionary::Model.new(conf.table)
-out = Dictionary::OutputFile.new(conf)
+conf = Configuration.new('mkd')
+models = Model.new(conf.table[:dictionary])
+out = OutputFile.new(conf)
 
 out.start(models)
