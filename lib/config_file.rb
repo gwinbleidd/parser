@@ -5,7 +5,9 @@ require '../lib/models/dictionaries'
 require 'digest/md5'
 
 class ConfigFile
-  def config
+  attr :config
+
+  def initialize
     @config||= YAML.load(File.read '../config/dictionaries.yml')
   end
 end
