@@ -10,27 +10,27 @@ class DictConfig
   end
 
   def input_config
-    @input_config||= YAML.load(File.read input_path(self.name))
+    @input_config||= YAML.load(File.read input_path(@name))
   end
 
   def output_config
-    @output_config||= YAML.load(File.read output_path(self.name))
+    @output_config||= YAML.load(File.read output_path(@name))
   end
 
   def upload_config
-    dict_record = Dictionaries.find_by(:name => self.name)
+    dict_record = Dictionaries.find_by(:name => @name)
     if dict_record == nil
-      Dictionaries.create(:name => self.name,
-                          :input_config => File.read(input_path(self.name)),
-                          :input_config_md5 => Digest::MD5.file(input_path(self.name)).hexdigest.to_s,
-                          :output_config => File.read(output_path(self.name)),
-                          :output_config_md5 => Digest::MD5.file(output_path(self.name)).hexdigest.to_s)
-    elsif dict_record.input_config_md5 != Digest::MD5.file(input_path(self.name)).hexdigest.to_s
-      dict_record.update(:input_config => File.read(input_path(self.name)),
-                         :input_config_md5 => Digest::MD5.file(input_path(self.name)).hexdigest.to_s)
-    elsif dict_record.output_config_md5 != Digest::MD5.file(output_path(self.name)).hexdigest.to_s
-      dict_record.update(:output_config => File.read(output_path(self.name)),
-                         :output_config_md5 => Digest::MD5.file(output_path(self.name)).hexdigest.to_s)
+      Dictionaries.create(:name => @name,
+                          :input_config => File.read(input_path(@name)),
+                          :input_config_md5 => Digest::MD5.file(input_path(@name)).hexdigest.to_s,
+                          :output_config => File.read(output_path(@name)),
+                          :output_config_md5 => Digest::MD5.file(output_path(@name)).hexdigest.to_s)
+    elsif dict_record.input_config_md5 != Digest::MD5.file(input_path(@name)).hexdigest.to_s
+      dict_record.update(:input_config => File.read(input_path(@name)),
+                         :input_config_md5 => Digest::MD5.file(input_path(@name)).hexdigest.to_s)
+    elsif dict_record.output_config_md5 != Digest::MD5.file(output_path(@name)).hexdigest.to_s
+      dict_record.update(:output_config => File.read(output_path(@name)),
+                         :output_config_md5 => Digest::MD5.file(output_path(@name)).hexdigest.to_s)
     end
   end
 
