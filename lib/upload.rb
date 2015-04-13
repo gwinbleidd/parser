@@ -1,5 +1,5 @@
 class Upload
-  def initialize
+  def proceed
     fl = FileLoader.new
 
     fl.dictionaries.each do |c|
@@ -117,6 +117,9 @@ class Upload
             abort "Unknown type #{inp.config[c]['type']} of dictionary #{c}"
         end
       end
+
+      out = OutputFile.new(conf)
+      out.start(model)
     end
 
     fl.finalize
