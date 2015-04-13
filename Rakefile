@@ -29,8 +29,15 @@ namespace :db do
 
   desc 'Drops the database for the current DATABASE_ENV'
   task :drop => :configure_connection do
-    ActiveRecord::Base.connection.drop_database @config['database']
+    if @config['adapter'] == 'sqlite3'
+      File.delete @config['database']
+    else
+      ActiveRecord::Base.connection.drop_database @config['database']
+    end
   end
+
+  desc 'Recreates the database for the current DATABASE_ENV'
+  task :recreate => [ :drop, :create, :migrate ]
 
   desc 'Rolls the schema back to the previous version (specify steps w/ STEP=n).'
   task :rollback => :configure_connection do
