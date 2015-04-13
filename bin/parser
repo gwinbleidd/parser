@@ -47,7 +47,7 @@ elsif params['u']
   out.start(models)
 elsif params['l']
   u = Upload.new
-  u.finalize
+  u.proceed
 else
   help
 end
