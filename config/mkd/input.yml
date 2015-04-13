@@ -5,6 +5,7 @@ dictionaries:
       delimiter: 59
       main: yes
       startfrom: 5
+      header_def_symbol: #
       header:
         column1:
           name: FILESUM
