@@ -1,11 +1,3 @@
-require 'file_loader'
-require 'configuration'
-require 'record'
-require 'output'
-require 'joined'
-
-require 'awesome_print'
-
 class Upload
   def initialize
     fl = FileLoader.new

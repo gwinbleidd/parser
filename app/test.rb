@@ -1,18 +1,9 @@
-ENV['ENV'] = 'development'
-
 require File.join(File.dirname(__FILE__), '../config/environment.rb')
 
 require 'rubygems'
 require 'active_record'
 require 'yaml'
 require 'logger'
-require '../lib/config_file'
-require '../lib/configuration'
-require '../lib/model'
-require '../lib/dict_config'
-require '../lib/file_loader'
-require '../lib/upload'
-
 require 'awesome_print'
 
 #cf = ConfigFile.new
