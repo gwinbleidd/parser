@@ -12,7 +12,7 @@ def help
        "  -l = load existing files\n",
        "  -i = initialize dictionary\n",
        "  -u = unload dictionary\n",
-       "  -n = initialize all dictionaries"
+       '  -n = initialize all dictionaries'
 end
 
 if params['h']
@@ -20,7 +20,7 @@ if params['h']
 elsif params['n']
   cf = ConfigFile.new
 
-  cf.config.each do |c, v|
+  cf.config.each_key do |c|
     conf = Configuration.new(c)
 
     $log.info "Table: #{conf.table[:name]}"
@@ -31,7 +31,7 @@ elsif params['i']
   filename = ARGV.shift
 
   conf = Configuration.new(filename)
-  abort "You must supply a filename on the command line" unless filename
+  abort 'You must supply a filename on the command line' unless filename
 
   $log.info "Table: #{conf.table[:name]}"
   DictionaryTableMigration.up(conf.table[:name], conf.table[:fields])
@@ -40,7 +40,7 @@ elsif params['u']
   filename = ARGV.shift
 
   conf = Configuration.new(filename)
-  abort "You must supply a filename on the command line" unless filename
+  abort 'You must supply a filename on the command line' unless filename
   models = Model.new(conf.table[:dictionary])
   out = OutputFile.new(conf)
 
