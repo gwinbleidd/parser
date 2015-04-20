@@ -28,10 +28,10 @@ class Upload
           when 'clear' then
             o.delete_all
 
-            out.each do |filename, file_content|
+            out.each_value do |file_content|
               found = inserted = i = 0
 
-              file_content.records[:data].each do |k, v|
+              file_content.records[:data].each_value do |v|
                 i += 1
 
                 o.create v
@@ -46,7 +46,7 @@ class Upload
             end
 
           when 'update' then
-            out.each do |filename, file_content|
+            out.each_value do |file_content|
               if conf.table[:keys].nil?
                 $log.fatal("Key fields not set for #{o.table_name}")
                 abort "Key fields not set for #{o.table_name}"
@@ -54,7 +54,7 @@ class Upload
 
               found = inserted = i = 0
 
-              file_content.records[:data].each do |k, v|
+              file_content.records[:data].each_value do |v|
                 i += 1
                 rec = nil
 
@@ -91,10 +91,10 @@ class Upload
             end
 
           when 'append' then
-            out.each do |filename, file_content|
+            out.each_value do |file_content|
               found = inserted = i = 0
 
-              file_content.records[:data].each do |k, v|
+              file_content.records[:data].each_value do |v|
                 i += 1
 
                 o.create v
@@ -113,8 +113,8 @@ class Upload
             abort "Dictionary #{c} does not have type"
 
           else
-            $log.fatal("Unknown type #{inp.config[c]['type']} of dictionary #{c}")
-            abort "Unknown type #{inp.config[c]['type']} of dictionary #{c}"
+            $log.fatal("Unknown type #{fl.config[c]['type']} of dictionary #{c}")
+            abort "Unknown type #{fl.config[c]['type']} of dictionary #{c}"
         end
       end
 
