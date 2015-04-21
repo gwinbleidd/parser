@@ -18,7 +18,7 @@ LoadPath.configure do
 end
 
 ENV['PATH'] = "D:\\oracle\\instantclient_11_2;#{ENV['PATH']}"
-ENV['NLS_LANG'] = "AMERICAN_CIS.CL8MSWIN1251"
+ENV['NLS_LANG'] = 'AMERICAN_CIS.CL8MSWIN1251'
 ENV['ENV'] ||= 'development'
 
 logger_level = Logger::DEBUG
@@ -31,20 +31,20 @@ if ENV['ENV'] == 'development'
 end
 
 # Ошибки работы с БД направим в стандартный поток (консоль)
-ActiveRecord::Base.logger = Logger.new(File.expand_path(File.join(File.dirname(__FILE__), "../log/db.log"))) # Simple logging utility. logger.rb -- standart lib
+ActiveRecord::Base.logger = Logger.new(File.expand_path(File.join(File.dirname(__FILE__), '../log/db.log'))) # Simple logging utility. logger.rb -- standart lib
 ActiveRecord::Base.logger.level = logger_level
 
 # Соединяемся с БД
 ActiveRecord::Base.establish_connection(dbconfig[ENV['ENV']])
 
 if File.exists? "log/#{ENV['ENV']}.log"
-  log_file = File.open("log/#{ENV['ENV']}.log", "a+")
+  log_file = File.open("log/#{ENV['ENV']}.log", 'a+')
 else
-  log_file = File.open("../log/#{ENV['ENV']}.log", "a+")
+  log_file = File.open("../log/#{ENV['ENV']}.log", 'a+')
 end
 $log = Logger.new MultiIO.new(STDOUT, log_file)
 $log.level = logger_level
 $log.formatter = proc do |severity, datetime, progname, msg|
-  date_format = datetime.strftime("%d.%m.%Y %H:%M:%S")
+  date_format = datetime.strftime('%d.%m.%Y %H:%M:%S')
   "[#{date_format}] #{severity}: #{msg}\n"
 end
