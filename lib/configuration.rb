@@ -120,4 +120,19 @@ class Configuration < DictConfig
 
     key_columns
   end
+
+  def header
+    header = Hash.new
+
+    input_config['dictionaries'].each { |key, value|
+      if value.has_key?('header')
+        header[key] = Hash.new
+        header[key][:def] = value['header_def_symbol'] if value.has_key?('header_def_symbol')
+        header[key][:fields] = Hash.new
+        value['header'].each { |column_name, column_def| header[key][:fields][column_name.to_sym] = column_def }
+      end
+    }
+
+    header
+  end
 end
