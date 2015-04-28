@@ -5,18 +5,18 @@ dictionaries:
       delimiter: 59
       main: yes
       startfrom: 5
-      header_def_symbol: #
+      header_def_symbol: "#"
       header:
-        column1:
+        field1:
           name: FILESUM
           type: string
-        column2:
+        field2:
           name: TYPE
           type: string
-        column3:
+        field3:
           name: SERVICE
           type: integer
-        column4:
+        field4:
           name: NOTE
           type: string
       fields:
