@@ -1,5 +1,5 @@
 file:
-  name: Vodokanal
+  name: VGTS
   type: csv
   delimiter: ';'
   encoding: cp1251

@@ -23,7 +23,3 @@ dictionaries:
           name: debt
           type: string
           changeable: yes 
-        column5:
-          name: blank
-          type: string
-          changeable: yes  
