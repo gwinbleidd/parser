@@ -38,7 +38,7 @@ class Upload
                 inserted += 1
 
                 if i == file_content.size
-                  $log.info("#{o.to_s}: Processed #{i} of #{size} records, inserted #{inserted}, found #{found}")
+                  $log.info("#{o.to_s}: Processed #{i} of #{file_content.size} records, inserted #{inserted}, found #{found}")
                 else
                   print "Processing #{i} of #{file_content.size} records\r" if i % file_content.mod == 0 or i == 1
                 end
