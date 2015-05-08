@@ -19,9 +19,11 @@ end
 
 ENV['PATH'] = "D:\\oracle\\instantclient_11_2;#{ENV['PATH']}"
 ENV['NLS_LANG'] = 'AMERICAN_CIS.CL8MSWIN1251'
-ENV['ENV'] ||= 'development'
+ENV['ENV'] ||= 'production'
+# ENV['ENV'] ||= 'development'
 
-logger_level = Logger::DEBUG
+# logger_level = Logger::DEBUG
+logger_level = Logger::INFO
 
 # Загружаем файл настройки соединения с БД
 dbconfig = YAML::load(File.open(File.join(File.dirname(__FILE__), 'database.yml')))
