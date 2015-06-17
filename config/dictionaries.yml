@@ -1,12 +1,7 @@
-gazpromche:
-  filename: !ruby/regexp '/^(srg|SRG)10(\d\d)(\d)\.(\d{1,3})$/'
-  filetype: zip
-  type: clear
-
 gazpromvol:
-  filename: !ruby/regexp '/^(srg|SRG)00(\d\d)(\d)\.(\d{1,3})$/'
+  filename: !ruby/regexp '/^(srg|SRG)(\d\d)(\d\d)(\d)\.(\d{1,3})$/'
   filetype: zip
-  type: clear
+  type: update
 
 fryazinovo:
   filename: !ruby/regexp '/^S17734(\d\d)\.(\d{1,3})$/'
