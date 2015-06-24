@@ -16,12 +16,12 @@ class FileLoader
         if e =~ value['filename']
           $log.info(" Found file #{e}")
 
-          @files = Array.new if @files.nil?
+          @files = Hash.new if @files.nil?
 
           if ProcessedFiles.find_by(:file_name => e) == nil
             @dictionaries.push key if @dictionaries.index(key).nil?
 
-            @files.append File.expand_path(e, '../dictionaries')
+            @files[e] = key
 
             case value['filetype']
               when "zip" then
@@ -49,9 +49,9 @@ class FileLoader
 
   def finalize
     unless @files.nil?
-      @files.each do |file|
-        ProcessedFiles.create(file_name: File.basename(file), file_md5: Digest::MD5.file(file).hexdigest.to_s)
-        FileUtils.move(file, File.join(File.dirname(file), 'processed', File.basename(file)))
+      @files.each do |file, dict|
+        ProcessedFiles.create(name: dict, file_name: file, file_md5: Digest::MD5.file(File.expand_path(file, '../dictionaries')).hexdigest.to_s)
+        FileUtils.move(File.expand_path(file, '../dictionaries'), File.expand_path(file, '../dictionaries/processed'))
       end
     end
 
