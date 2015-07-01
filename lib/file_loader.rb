@@ -23,17 +23,19 @@ class FileLoader
 
             @files[e] = key
 
+            $log.info(" #{e} belongs to #{key}")
+
             case value['filetype']
               when "zip" then
                 unzip(File.expand_path(e, '../dictionaries'), key)
+                $log.info(" Unzipping #{e}")
               when "text" then
+                $log.info(" Copying #{e}")
                 copy(File.expand_path(e, '../dictionaries'), key)
               else
                 $log.fatal "Unknown filetype #{filetype} in #{key}"
                 exit
             end
-
-            $log.info(" #{e} belongs to #{key}")
           else
             $log.info(" #{e} belonging to #{key} already processed")
             @processed_files.nil? ? @processed_files = Array.new : @processed_files.append(File.expand_path(e, '../dictionaries'))
