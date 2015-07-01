@@ -3,6 +3,7 @@ require 'active_record'
 require 'yaml'
 require 'load_path'
 require 'logger'
+require 'zip'
 
 LoadPath.configure do
   add parent_directory('.', up: 1)
