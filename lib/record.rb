@@ -37,7 +37,7 @@ class Record
             index += 1
             if index >= start
               line = line.to_s.encode('UTF-8', dictionary_value['encoding'].to_s)
-              @records[File.basename path.gsub('_', '.')][dictionary_key.to_s.downcase.pluralize.to_sym][index] = is_record(line, delimiter.encode('UTF-8'), dictionary_value['fields'])
+              @records[File.basename path.gsub('_', '.')][dictionary_key.to_s.downcase.pluralize.to_sym][index] = is_record(index, line, delimiter.encode('UTF-8'), dictionary_value['fields'])
             end
           end
 
@@ -77,7 +77,7 @@ class Record
     @name = m
   end
 
-  def is_record(line, delimiter, fields)
+  def is_record(index, line, delimiter, fields)
     splitted_line = split_line(line, delimiter)
 
     is_record = Hash.new
@@ -87,7 +87,7 @@ class Record
         is_record[fields[line_key]['name'].to_sym] = line_value
       }
     else
-      puts "Line \"#{line}\" don't correspond to config"
+      $log.fatal "Row #{index}: Line \"#{line}\" don't correspond to config"
       exit
     end
 
