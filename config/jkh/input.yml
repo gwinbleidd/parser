@@ -1,0 +1,109 @@
+dictionaries:
+  street:
+    format: txt
+    encoding: cp866
+    delimiter: 179
+    fields:
+      column1:
+        name: streetId
+        type: integer
+        pk: yes
+        key: ak1
+        changeable: no
+      column2:
+        name: streetName
+        type: string
+        changeable: yes
+        key: ak1
+
+  city:
+    format: txt
+    encoding: cp866
+    delimiter: 179
+    fields:
+      column1:
+        name: cityId
+        type: integer
+        pk: yes
+        changeable: no
+        key: ak1
+      column2:
+        name: cityName
+        type: string
+        changeable: yes
+        key: ak1
+
+  abonent:
+      format: txt
+      encoding: cp866
+      delimiter: 179
+      main: yes
+      fields:
+        column1:
+          name: accountNr
+          type: string
+          length: 10
+          changeable: no
+          key: ak1
+        column2:
+          name: lastName
+          type: string
+          changeable: yes
+        column3:
+          name: firstName
+          type: string
+          changeable: yes
+        column4:
+          name: secondName
+          type: string
+          changeable: yes
+        column5:
+          name: cityId
+          type: integer
+          changeable: yes
+          fk:
+            table: city
+            column: cityId
+            return: cityName
+        column6:
+          name: streetId
+          type: integer
+          changeable: yes
+          fk:
+            table: street
+            column: streetId
+            return: streetName
+        column7:
+          name: houseNr
+          type: string
+          changeable: yes
+        column8:
+          name: flatNr
+          type: string
+          changeable: yes
+        column9:
+          name: debtSum
+          type: string
+          changeable: yes
+        column10:
+          name: coldWater1
+          type: string
+          changeable: yes
+        column11:
+          name: coldWater2
+          type: string
+          changeable: yes
+        column12:
+          name: hotWater1
+          type: string
+          changeable: yes
+        column13:
+          name: hotWater2
+          type: string
+          changeable: yes
+        column14:
+          name: currAcc
+          type: string
+          length: 20
+          changeable: yes
+          key: ak1
