@@ -41,12 +41,12 @@ uont:
 stm:
   filename: !ruby/regexp '/^S05120(\d\d)\.(\d{1,3})$/'
   filetype: zip
-  type: clear
+  type: update
 
 stm1:
   filename: !ruby/regexp '/^S06850(\d\d)\.(\d{1,3})$/'
   filetype: zip
-  type: clear
+  type: update
 
 souz:
   filename: !ruby/regexp '/^S17338(\d\d)\.(\d{1,3})$/'
@@ -61,7 +61,7 @@ podshipnik:
 cjs:
   filename: !ruby/regexp '/^S07210(\d\d)\.(\d{1,3})$/'
   filetype: zip
-  type: clear
+  type: update
 
 vuk:
   filename: !ruby/regexp '/^S01091(\d\d)\.(\d{1,3})$/'
