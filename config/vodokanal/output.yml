@@ -1,5 +1,5 @@
 file:
-  name: Vodokanal
+  name: Voda
   type: csv
   delimiter: ';'
   encoding: cp1251
@@ -8,17 +8,20 @@ fields:
     name: AccountID
     from: id
   column1:
+    name: Fio
+    from: name
+  column2:
     name: Address
     from: address
-  column2:
+  column3:
     name: Account
     from: curr_acc
-  column3:
+  column4:
     name: Debt_summ
     from: debt
-  column4:
+  column5:
     name: ServiceID
     const: 998
-  column5:
+  column6:
     name: Service
-    const: 35313	
+    const: 35313
