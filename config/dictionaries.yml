@@ -94,9 +94,9 @@ byvalovo:
   type: clear
 
 mkd:
-  filename: !ruby/regexp '/^S12345\d{7}\.(\d{1,3})$/'
+  filename: !ruby/regexp '/^Sa492500793\d{2}\.(\d{1,3})$/'
   filetype: text
-  type: update
+  type: clear
   
 vodokanal:
   filename: !ruby/regexp '/^S16673(\d\d)(\d{5})\.(\d{1,3})$/'
