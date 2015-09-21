@@ -114,14 +114,14 @@ visis:
   type: update
   
 vselennaya:
-  filename: !ruby/regexp '/^S51752(\d\d)\.(\d{1,3})$/'
+  filename: !ruby/regexp '/^S51753(\d\d)\.(\d{1,3})$/'
   filetype: text
-  type: update
+  type: clear
   
 ukvselennaya:
-  filename: !ruby/regexp '/^S51752(\d\d\d)\.(\d{1,3})$/'
+  filename: !ruby/regexp '/^S51752(\d\d)\.(\d{1,3})$/'
   filetype: text
-  type: update
+  type: clear
   
 jkh:
   filename: !ruby/regexp '/^S\d{4}\.(\d{1,3})$/'
