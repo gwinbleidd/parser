@@ -1,6 +1,6 @@
 production:
  adapter: oracle_enhanced
- database: tvista
+ database: test
  username: test
  password: test
 

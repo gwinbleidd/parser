@@ -1,0 +1,4 @@
+example:
+  filename: !ruby/regexp '/^[Ruby-regex from files names]$/'
+  filetype: zip|text
+  type: update|clear

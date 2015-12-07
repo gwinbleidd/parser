@@ -23,4 +23,8 @@ Gemfile.lock
 records.yml
 dictionaries/*
 *.tim
-/config/*/*.yml~
+config/*
+!config/example
+!config/dictionaries.yml.example
+!config/database.yml.example
+!config/environment.rb

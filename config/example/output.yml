@@ -1,5 +1,5 @@
 file:
-  name: DSVol
+  name: Example
   type: csv
   delimiter: ';'
   encoding: cp1251
