@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'optparse'
-require File.expand_path('../config/environment.rb')
+require File.expand_path(File.join(File.dirname(__FILE__), '../config/environment.rb'))
 require '../lib/config_file'
 
 params = ARGV.getopts('h', 'l', 'i', 'n', 'u')
