@@ -75,8 +75,14 @@ class Upload
                 rec = o.find_by search_fields
 
                 if rec.nil?
+                  begin
                   o.create v
                   inserted += 1
+                  rescue Exception => e
+                    $log.fatal "Error in line #{i}"
+                    $log.fatal e
+                    exit 1
+                  end
                 else
                   rec.update v
                   found += 1

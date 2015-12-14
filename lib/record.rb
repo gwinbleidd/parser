@@ -36,11 +36,17 @@ class Record
           filename.each do |line|
             index += 1
             if index >= start
-              line = line.to_s.encode('UTF-8', dictionary_value['encoding'].to_s)
-              @records[File.basename path.gsub('_', '.')][dictionary_key.to_s.downcase.pluralize.to_sym][index] = is_record(index, line, delimiter.encode('UTF-8'), dictionary_value['fields'])
+              begin
+                line = line.to_s.encode('UTF-8', dictionary_value['encoding'].to_s)
+                @records[File.basename path.gsub('_', '.')][dictionary_key.to_s.downcase.pluralize.to_sym][index] = is_record(index, line, delimiter.encode('UTF-8'), dictionary_value['fields'])
+              rescue Exception => e
+                $log.fatal "Error in line #{index}"
+                $log.fatal e
+                $log.fatal e.backtrace.inspect
+                exit 1
+              end
             end
           end
-
         elsif dictionary_value['format'] == 'dbf'
           $log.debug " Processing DBase file for #{config.name}"
           if File.exist?(path + '/' + dictionary_key.to_s + '.dbf')
