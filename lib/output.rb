@@ -2,6 +2,8 @@ class Output
   attr_reader :records, :size, :mod
 
   def initialize(config, records)
+    @log = ParserLogger.instance
+
     output = Hash.new
 
     records.each do |key, data|
@@ -61,7 +63,7 @@ class Output
 
     case @size
       when 0 then
-        abort "No data for #{@name}"
+        @log.abort "No data for #{@name}"
       when 1 .. 10 then
         @mod = 1
       when 11 .. 1000 then
