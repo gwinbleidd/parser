@@ -28,3 +28,4 @@ config/*
 !config/dictionaries.yml.example
 !config/database.yml.example
 !config/environment.rb
+!config/application.rb
