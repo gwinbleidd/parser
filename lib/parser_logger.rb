@@ -18,6 +18,11 @@ class ParserLogger < Logger
     end
   end
 
+  def abort(message)
+    self.fatal message
+    exit 1
+  end
+
   private
   def logger_level
     case ENV['ENV']
