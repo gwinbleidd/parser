@@ -5,6 +5,8 @@ class Configuration < DictConfig
   attr_reader :cf, :name
 
   def table
+    @log = ParserLogger.instance
+    
     table = Hash.new
     table[:dictionary] = self.name.to_s.downcase
     table[:name] = self.name.to_s.pluralize
@@ -20,7 +22,7 @@ class Configuration < DictConfig
                 if cdesc['name'] == value['from']
                   table[:fields][key.to_sym] = cdesc.clone
                   if cdesc.has_key?('pk')
-                    abort "More than 1 pk defined for table #{self.name}" unless table[:pk].nil?
+                    @log.abort "More than 1 pk defined for table #{self.name}" unless table[:pk].nil?
                     table[:pk] = Hash.new
                     table[:pk][:name] = value['name']
                     table[:pk][:type] = cdesc['type']
@@ -90,7 +92,7 @@ class Configuration < DictConfig
           if primary_keys[key].nil?
             primary_keys[key] = Hash.new
           else
-            abort ('More than one primary key for table')
+            @log.abort ('More than one primary key for table')
           end
 
           primary_keys[key][:name] = v['name'].to_sym
