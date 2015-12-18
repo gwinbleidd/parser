@@ -3,7 +3,9 @@
 require 'optparse'
 require File.expand_path(File.join(File.dirname(__FILE__), '../config/environment.rb'))
 require '../lib/config_file'
+require '../lib/configuration'
 
+log = ParserLogger.instance
 params = ARGV.getopts('h', 'l', 'i', 'n', 'u')
 
 def help
@@ -23,7 +25,7 @@ elsif params['n']
   cf.config.each_key do |c|
     conf = Configuration.new(c)
 
-    $log.info "Table: #{conf.table[:name]}"
+    log.info "Table: #{conf.table[:name]}"
     DictionaryTableMigration.up(conf.table[:name], conf.table[:fields])
     DictionaryUniqConstMigration.up(conf.table) unless conf.table.nil?
   end
@@ -33,7 +35,7 @@ elsif params['i']
   conf = Configuration.new(filename)
   abort 'You must supply a filename on the command line' unless filename
 
-  $log.info "Table: #{conf.table[:name]}"
+  log.info "Table: #{conf.table[:name]}"
   DictionaryTableMigration.up(conf.table[:name], conf.table[:fields])
   DictionaryUniqConstMigration.up(conf.table) unless conf.table.nil?
 elsif params['u']
