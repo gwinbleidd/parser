@@ -4,7 +4,9 @@ class Record
   attr_reader :records, :name
 
   def initialize(config)
-    $log.info "Starting loading records into memory for #{config.name}"
+    @log = ParserLogger.instance
+    
+    @log.info "Starting loading records into memory for #{config.name}"
     @records = Hash.new
     filename = nil
 
@@ -21,11 +23,11 @@ class Record
         dictionary_value.has_key?('startfrom') ? start = dictionary_value['startfrom'] : start = 1
 
         if dictionary_value['format'] == 'txt'
-          $log.debug " Processing text file for #{config.name}"
+          @log.debug " Processing text file for #{config.name}"
           if File.exist?(path + '/' + dictionary_key.to_s + '.txt')
             filename = File.open(path.to_s + '/' + dictionary_key.to_s + '.txt')
           else
-            $log.error "File #{path.to_s + '/' + dictionary_key.to_s}.txt doesn\'t exist"
+            @log.error "File #{path.to_s + '/' + dictionary_key.to_s}.txt doesn\'t exist"
             exit
           end
 
@@ -40,20 +42,20 @@ class Record
                 line = line.to_s.encode('UTF-8', dictionary_value['encoding'].to_s)
                 @records[File.basename path.gsub('_', '.')][dictionary_key.to_s.downcase.pluralize.to_sym][index] = is_record(index, line, delimiter.encode('UTF-8'), dictionary_value['fields'])
               rescue Exception => e
-                $log.fatal "Error in line #{index}"
-                $log.fatal e
-                $log.fatal e.backtrace.inspect
+                @log.fatal "Error in line #{index}"
+                @log.fatal e
+                @log.fatal e.backtrace.inspect
                 exit 1
               end
             end
           end
         elsif dictionary_value['format'] == 'dbf'
-          $log.debug " Processing DBase file for #{config.name}"
+          @log.debug " Processing DBase file for #{config.name}"
           if File.exist?(path + '/' + dictionary_key.to_s + '.dbf')
-            $log.debug "   Filename #{path.to_s}/#{dictionary_key.to_s}.dbf"
+            @log.debug "   Filename #{path.to_s}/#{dictionary_key.to_s}.dbf"
             filename = DBF::Table.new("#{path.to_s}/#{dictionary_key.to_s}.dbf", nil, dictionary_value['encoding'].to_s)
           else
-            $log.error "File #{path.to_s + '/' + dictionary_key.to_s}.dbf doesn\'t exist"
+            @log.error "File #{path.to_s + '/' + dictionary_key.to_s}.dbf doesn\'t exist"
             exit
           end
 
@@ -67,7 +69,7 @@ class Record
             end
           end
         else
-          $log.fatal "Unknown format"
+          @log.fatal "Unknown format"
           raise "Unknown format"
         end
       end
@@ -93,7 +95,7 @@ class Record
         is_record[fields[line_key]['name'].to_sym] = line_value
       }
     else
-      $log.fatal "Row #{index}: Line \"#{line}\" don't correspond to config"
+      @log.fatal "Row #{index}: Line \"#{line}\" don't correspond to config"
       exit
     end
 
