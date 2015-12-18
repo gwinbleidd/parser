@@ -4,17 +4,19 @@ class FileLoader
   attr_reader :config, :files, :dictionaries
 
   def initialize
+    @log = ParserLogger.instance
+    
     cf = ConfigFile.new
     @config = cf.config
 
-    $log.info("Start working")
+    @log.info("Start working")
 
     @dictionaries = Array.new if @dictionaries.nil?
 
     Dir.entries('../dictionaries').each do |e|
       @config.each do |key, value|
         if e =~ value['filename']
-          $log.info(" Found file #{e}")
+          @log.info(" Found file #{e}")
 
           @files = Hash.new if @files.nil?
 
@@ -23,21 +25,21 @@ class FileLoader
 
             @files[e] = key
 
-            $log.info(" #{e} belongs to #{key}")
+            @log.info(" #{e} belongs to #{key}")
 
             case value['filetype']
               when "zip" then
                 unzip(File.expand_path(e, '../dictionaries'), key)
-                $log.info(" Unzipping #{e}")
+                @log.info(" Unzipping #{e}")
               when "text" then
-                $log.info(" Copying #{e}")
+                @log.info(" Copying #{e}")
                 copy(File.expand_path(e, '../dictionaries'), key)
               else
-                $log.fatal "Unknown filetype #{filetype} in #{key}"
+                @log.fatal "Unknown filetype #{filetype} in #{key}"
                 exit
             end
           else
-            $log.info(" #{e} belonging to #{key} already processed")
+            @log.info(" #{e} belonging to #{key} already processed")
             @processed_files.nil? ? @processed_files = Array.new : @processed_files.append(File.expand_path(e, '../dictionaries'))
           end
         end
@@ -45,7 +47,7 @@ class FileLoader
     end
 
     if @files.nil?
-      $log.info("No new files found")
+      @log.info("No new files found")
     end
   end
 
