@@ -54,8 +54,7 @@ class Upload
           when 'update' then
             out.each_value do |file_content|
               if conf.table[:keys].nil?
-                @log.fatal("Key fields not set for #{o.table_name}")
-                abort "Key fields not set for #{o.table_name}"
+                @log.abort "Key fields not set for #{o.table_name}"
               end
 
               found = inserted = i = 0
@@ -73,8 +72,7 @@ class Upload
                     when 'integer'
                       search_fields[key_field[:name]] = v[key_field[:name]].to_i
                     else
-                      @log.fatal("Unknown primary key type for #{o.table_name}")
-                      abort "Unknown primary key type for #{o.table_name}"
+                      @log.abort "Unknown primary key type for #{o.table_name}"
                   end
                 end
 
@@ -82,8 +80,8 @@ class Upload
 
                 if rec.nil?
                   begin
-                  o.create v
-                  inserted += 1
+                    o.create v
+                    inserted += 1
                   rescue Exception => e
                     @log.fatal "Error in line #{i}"
                     @log.fatal e
@@ -121,12 +119,9 @@ class Upload
             end
 
           when nil
-            @log.fatal("Dictionary #{c} does not have type")
-            abort "Dictionary #{c} does not have type"
-
+            @log.abort "Dictionary #{c} does not have type"
           else
-            @log.fatal("Unknown type #{fl.config[c]['type']} of dictionary #{c}")
-            abort "Unknown type #{fl.config[c]['type']} of dictionary #{c}"
+            @log.abort "Unknown type #{fl.config[c]['type']} of dictionary #{c}"
         end
       end
 
