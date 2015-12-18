@@ -2,6 +2,7 @@ class Joined
   attr_reader :joined
 
   def initialize(config, records)
+    @log = ParserLogger.instance
     output = Hash.new
 
     @name = config.name
@@ -9,7 +10,7 @@ class Joined
       @main = dictionary.to_s.downcase if props['main']
     end
 
-    raise("No main table set for #{config.name}") if @main.nil?
+    @log.abort "No main table set for #{config.name}" if @main.nil?
 
     fk = Array.new
     config.foreign_keys[@main.to_s].each { |name, desc| fk.append desc[:column] } unless config.foreign_keys.nil?
