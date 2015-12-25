@@ -3,5 +3,6 @@ ENV['NLS_LANG'] = 'AMERICAN_CIS.CL8MSWIN1251'
 ENV['ENV'] ||= 'development'
 
 require File.expand_path('../application', __FILE__)
+require 'zip'
 
 Application.initialize!
