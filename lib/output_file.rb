@@ -2,7 +2,9 @@ require 'model'
 
 class OutputFile
   def initialize(conf)
-    $log.info("Starting create OutputFile for #{conf.name}")
+    @log = ParserLogger.instance
+	
+    @log.info("Starting create OutputFile for #{conf.name}")
     if conf.output_config['file'].has_key?('name') and conf.output_config['file'].has_key?('type')
       @output_file = File.expand_path "../output/#{conf.output_config['file']['name']}.#{conf.output_config['file']['type']}"
     else
@@ -67,7 +69,7 @@ class OutputFile
           i+=1
 
           if i == size
-            $log.info("#{dict.to_s}: Derived #{i} of #{size} records")
+            @log.info("#{dict.to_s}: Derived #{i} of #{size} records")
           else
             print "Derived #{i} of #{size} records\r" if i % mod == 0 or i == 1
           end
