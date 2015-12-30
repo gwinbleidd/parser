@@ -1,11 +1,11 @@
 class DictionaryUniqConstMigration < ActiveRecord::Migration
   def self.up(table)
-    $log.debug "Creating unique index for #{table[:name]}"
+    puts "Creating unique index for #{table[:name]}"
     if table.has_key?(:pk)
       if ActiveRecord::Base.connection.index_exists? table[:name], table[:pk], unique: true
-        $log.debug " Index for #{table[:pk][:name]} exists"
+        puts " Index for #{table[:pk][:name]} exists"
       else
-        $log.debug " Index for #{table[:pk][:name]} doesn\'t exists"
+        puts " Index for #{table[:pk][:name]} doesn\'t exists"
       end
       unless ActiveRecord::Base.connection.index_exists? table[:name], table[:pk], unique: true
         add_index table[:name], table[:pk][:name], unique: true
@@ -18,9 +18,9 @@ class DictionaryUniqConstMigration < ActiveRecord::Migration
         keys.append key_column[:name]
       end
       if ActiveRecord::Base.connection.index_exists? table[:name], keys, unique: true
-        $log.debug " Index for #{keys} exists"
+        puts " Index for #{keys} exists"
       else
-        $log.debug " Index for #{keys} doesn\'t exists"
+        puts " Index for #{keys} doesn\'t exists"
       end
       unless ActiveRecord::Base.connection.index_exists? table[:name], keys, unique: true
         add_index table[:name], keys, unique: true

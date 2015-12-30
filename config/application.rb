@@ -23,9 +23,13 @@ class Application
     def models_path
       File.expand_path(File.join(lib_path, 'models'))
     end
+	
+	def db_path
+	  path('db')
+	end
 
     def autoload_paths
-      [lib_path, models_path].each do |path|
+      [lib_path, models_path, db_path].each do |path|
         $LOAD_PATH << path
         Dir[path + '/*.rb'].each { |file| require file }
       end

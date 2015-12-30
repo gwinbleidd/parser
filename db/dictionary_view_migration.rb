@@ -1,5 +1,7 @@
 class DictionaryViewMigration < ActiveRecord::Migration
   def self.up(name, table)
+    @log = Parser::ParserLogger.instance
+	
     if table.has_key?(:main) and table[:main]
       flds = Array.new
 
