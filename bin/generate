@@ -1,0 +1,36 @@
+#!/usr/bin/env ruby
+
+require File.join(File.dirname(__FILE__), '../config/environment.rb')
+
+@log = SCParser::ParserLogger.instance
+
+begin
+  if ARGV[0] == 'migration'
+    migration_name = ARGV[1]
+    @log.abort 'More than one argument used' if ARGV.size > 2
+    @log.abort 'No migration name set' if ARGV.size == 1
+
+    @log.debug SCParser::Application.migration_path
+
+    current_timestamp = Time.now.strftime("%Y%m%d%H%M%S")
+    @log.debug current_timestamp
+
+    filename = "#{current_timestamp}_#{migration_name.underscore}.rb"
+    @log.info filename
+    any_file = "*_#{migration_name.underscore}.rb"
+
+    @log.info File.expand_path(File.join(migration_path, filename))
+    @log.abort "File like #{any_file} already exists" if Dir.glob(File.expand_path(File.join(migration_path, any_file))).size > 0
+    migration_file = File.open(File.expand_path(File.join(migration_path, filename)), 'w+') { |file|
+      file.write ("class #{migration_name} < ActiveRecord::Migration\n")
+      file.write ("  def change\n")
+      file.write ("  end\n")
+      file.write ("end")
+    }
+  else
+    @log.fatal 'Unknown type of object to generate'
+  end
+rescue Exception => e
+  @log.fatal e.message
+  @log.fatal e.backtrace.inspect
+end

@@ -1,55 +1,91 @@
 #!/usr/bin/env ruby
-
+# encoding: utf-8
 require 'optparse'
-require File.expand_path(File.join(File.dirname(__FILE__), '../config/environment.rb'))
-require '../lib/config_file'
-require '../lib/configuration'
 
-log = ParserLogger.instance
-params = ARGV.getopts('h', 'l', 'i', 'n', 'u')
+require File.expand_path(File.join(File.dirname(__FILE__), '../config/environment.rb'))
+
+@log = SCParser::ParserLogger.instance
+
+params = ARGV.getopts('h', 'l', 'i', 'r', 'u', 'n')
 
 def help
   puts "usage: #{File.basename(__FILE__)} [-h|-l|-n|-u dictionary_name|-i dictionary_name]\n",
        "  -h = print this message\n",
        "  -l = load existing files\n",
        "  -i = initialize dictionary\n",
+       "  -r = reinitialize dictionary\n",
        "  -u = unload dictionary\n",
        '  -n = initialize all dictionaries'
+end
+
+def init_all
+  gf = SCParser::GeneralConfig.instance
+
+  gf.config.each_key do |c|
+    conf = SCParser::DictionaryConfig.new(c)
+
+    @log.info "Table: #{conf.table[:name]}"
+    DictionaryTableMigration.up(conf.table[:name], conf.table[:fields])
+    DictionaryUniqConstMigration.up(conf.table) unless conf.table.nil?
+  end
+end
+
+def init(filename)
+  conf = SCParser::DictionaryConfig.new(filename)
+
+  @log.info "Table: #{conf.table[:name]}"
+  DictionaryTableMigration.up(conf.table[:name], conf.table[:fields])
+  DictionaryUniqConstMigration.up(conf.table) unless conf.table.nil?
+end
+
+def reinit(filename)
+  conf = SCParser::DictionaryConfig.new(filename)
+
+  @log.info "Table: #{conf.table[:name]}"
+  DictionaryTableMigration.down(conf.table[:name], conf.table[:fields])
+  DictionaryTableMigration.up(conf.table[:name], conf.table[:fields])
+  DictionaryUniqConstMigration.up(conf.table) unless conf.table.nil?
+end
+
+def unload(filename)
+  of = SCParser::OutputFile.new(name: filename)
+  of.process
+end
+
+def load_dictionaries
+  fp = SCParser::FileProcessor.new
+  fp.process_files
+
+  fp.files.each do |dictionary_name, files|
+    dp = SCParser::DictionaryProcessor.new(name: dictionary_name, files: files)
+    dp.process_files
+    fp.finalize(dictionary_name: dictionary_name, files: files)
+    of = SCParser::OutputFile.new(name: dictionary_name)
+    of.process
+  end
 end
 
 if params['h']
   help
 elsif params['n']
-  cf = ConfigFile.new
-
-  cf.config.each_key do |c|
-    conf = Configuration.new(c)
-
-    log.info "Table: #{conf.table[:name]}"
-    DictionaryTableMigration.up(conf.table[:name], conf.table[:fields])
-    DictionaryUniqConstMigration.up(conf.table) unless conf.table.nil?
-  end
+  init_all
 elsif params['i']
   filename = ARGV.shift
 
-  conf = Configuration.new(filename)
-  abort 'You must supply a filename on the command line' unless filename
+  @log.abort 'You must supply a filename on the command line' unless filename
+  init(filename)
+elsif params['r']
+  filename = ARGV.shift
 
-  log.info "Table: #{conf.table[:name]}"
-  DictionaryTableMigration.up(conf.table[:name], conf.table[:fields])
-  DictionaryUniqConstMigration.up(conf.table) unless conf.table.nil?
+  @log.abort 'You must supply a filename on the command line' unless filename
+  reinit(filename)
 elsif params['u']
   filename = ARGV.shift
 
-  conf = Configuration.new(filename)
-  abort 'You must supply a filename on the command line' unless filename
-  models = Model.new(conf.table[:dictionary])
-  out = OutputFile.new(conf)
-
-  out.start(models)
+  @log.abort 'You must supply a filename on the command line' unless filename
+  unload(filename)
 elsif params['l']
-  u = Upload.new
-  u.proceed
+  load_dictionaries
 else
   help
 end

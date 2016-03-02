@@ -4,6 +4,7 @@ class CreateDictionaries < ActiveRecord::Migration
       t.string :name
       t.text :config
       t.string :config_md5
+      t.timestamps :null => false
     end
   end
 end

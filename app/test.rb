@@ -1,12 +1,25 @@
-# encoding: utf-8
-require File.join(File.dirname(__FILE__), '../config/environment.rb')
+require File.expand_path(File.join(File.dirname(__FILE__), '../config/environment.rb'))
 
-conf = Configuration.new('mkd')
+@log = SCParser::ParserLogger.instance
+#
+# dc = SCParser::DictionaryConfig.new('visis')
+#
+# puts "Table def: #{dc.table}"
+# puts "Foreign keys: #{dc.foreign_keys}"
+# puts "Primary keys: #{dc.primary_keys}"
+# puts "Key columns: #{dc.key_columns}"
+# puts "Side files: #{dc.side_files}"
 
-$log.debug "Table: #{conf.table}" unless conf.table.nil?
-$log.debug "Foreign keys: #{conf.foreign_keys}" unless conf.foreign_keys.nil?
-$log.debug "Key columns: #{conf.key_columns}" unless conf.key_columns.nil?
-$log.debug "Primary keys: #{conf.primary_keys}" unless conf.primary_keys.empty?
-$log.debug "Input config: #{conf.input_config}" unless conf.output_config.nil?
-$log.debug "Output config: #{conf.output_config}" unless conf.output_config.nil?
-$log.debug "Header config: #{conf.header}" unless conf.header.nil?
+fp = SCParser::FileProcessor.new
+fp.process_files
+
+fp.files.each do |dictionary_name, files|
+
+  dp = SCParser::DictionaryProcessor.new(name: dictionary_name, files: files)
+  dp.process_files
+  of = SCParser::OutputFile.new(name: dictionary_name)
+  of.process
+  fp.finalize(dictionary_name: dictionary_name, files: files)
+end
+
+

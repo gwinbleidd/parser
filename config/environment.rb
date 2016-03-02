@@ -1,8 +1,14 @@
-ENV['PATH'] = "D:\\oracle\\instantclient_11_2;#{ENV['PATH']}"
-ENV['NLS_LANG'] = 'AMERICAN_CIS.CL8MSWIN1251'
+require 'logger'
+require 'singleton'
+require 'yaml'
+require 'awesome_print'
+require 'optparse'
+require 'active_record'
+require 'digest'
+require 'zip'
+
 ENV['ENV'] ||= 'development'
 
 require File.expand_path('../application', __FILE__)
-require 'zip'
 
-Application.initialize!
+SCParser::Application.initialize!
