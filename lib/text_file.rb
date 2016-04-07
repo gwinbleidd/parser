@@ -17,7 +17,7 @@ module SCParser
           begin
             splitted_line = line.to_s.encode('UTF-8', file_desc['encoding'].to_s).split(delimiter)
             if splitted_line.size != file_desc['fields'].size
-              @log.abort "Row #{index}: Line \"#{line}\" don't correspond to config, columns in row #{splitted_line.size}, columns in config #{fields.size}"
+              @log.abort "Row #{line_index}: Line \"#{line}\" don't correspond to config, columns in row #{splitted_line.size}, columns in config #{file_desc['fields'].size}"
             end
 
             records[splitted_line[file_desc['pk_column_id']]] = Hash.new if records[splitted_line[file_desc['pk_column_id']]].nil?
