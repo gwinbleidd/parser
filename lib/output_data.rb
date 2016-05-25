@@ -29,8 +29,8 @@ module SCParser
             when 'String'
               if column_desc.has_key?('replace')
                 column_desc['replace'].each do |k, v|
-                  if data[column_desc['from'].to_sym].to_s == v.to_s
-                    output[id][column_desc['name']] = k.to_s
+                  if data[column_desc['from'].to_sym].to_s == k.to_s
+                    output[id][column_desc['name']] = v.to_s
                   end
                 end
               else
